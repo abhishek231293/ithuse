@@ -17,6 +17,10 @@ Route::auth();
 
 Route::get('/home', 'HomeController@index');
 
+Route::post('/getFilter', 'HomeController@getFilter');
+
+Route::post('/getDocumentLists', 'HomeController@getDocumentLists');
+
 
 /*---------------------- Auth Controller ----------------------*/
 

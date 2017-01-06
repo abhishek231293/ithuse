@@ -1,6 +1,6 @@
 @section('template')
     <body ng-app="ithuse">
-    <div id="wrapper" ng-controller="DashboardController"  ng-click="bodyFocus($event)" ng-init="getFilters()">
+    <div id="wrapper" ng-controller="DocumentController">
         <nav class="navbar-default navbar-static-side" role="navigation">
             <div class="sidebar-collapse">
                 <ul class="nav" id="side-menu">

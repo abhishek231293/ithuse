@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests;
 use Illuminate\Http\Request;
+use App\Document;
 
 class HomeController extends Controller
 {
@@ -28,5 +29,15 @@ class HomeController extends Controller
     public function index()
     {
         return view('home');
+    }
+
+    public function getFilter(){
+        die('test');
+    }
+
+    public function getDocumentLists(){
+        $document = new \App\Document();
+        $documentRowSets = $document->getDocumentLists();
+        die(json_encode($documentRowSets->toArray()));
     }
 }
