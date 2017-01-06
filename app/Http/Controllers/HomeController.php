@@ -32,7 +32,15 @@ class HomeController extends Controller
     }
 
     public function getFilter(){
-        die('test');
+        $category = new \App\Category();
+        $categoryRowSets = $category->getCategoryWithSubCategoryList();
+        $categoryRowSets = $categoryRowSets->toArray();
+        $finalCategoryList = array();
+        array_walk($categoryRowSets, function($detail) use( &$finalCategoryList ) {
+
+            $finalCategoryList[$detail['category_name']][$detail['sub_category_name']] = $detail;
+        });
+        die(json_encode($finalCategoryList));
     }
 
     public function getDocumentLists(){

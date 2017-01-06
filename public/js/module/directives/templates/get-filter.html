@@ -1,35 +1,40 @@
 
     <div ng-init="getFilters()">
+
         <div class="row">
             <div class="col-lg-12">
                 <div class="ibox">
-
                         <div class="row">
                             <div class="col-sm-4">
                                 <div class="form-group">
-                                    <label class="control-label" for="product_name">Project Name</label>
-                                    <input type="text" id="product_name" name="product_name" value="" placeholder="Project Name" class="form-control">
+                                    <select ng-change="getSubCategoryList()" ng-model="searchFields.category_name" name="category" id="category" class="form-control">
+                                        <option value="" selected="selected">Select Category</option>
+                                        <option ng-repeat="(category_name,subCategoryDetail) in filterData" value="{{category_name}}">
+                                            {{category_name}}
+                                        </option>
+                                    </select>
                                 </div>
                             </div>
-                            <div class="col-sm-2">
+                            <div ng-if="subCategoryList" class="col-sm-4">
                                 <div class="form-group">
-                                    <label class="control-label" for="price">Name</label>
-                                    <input type="text" id="price" name="price" value="" placeholder="Name" class="form-control">
+                                    <select  name="sub-category" id="sub-category" class="form-control" ng-model="searchFields.subcategory_name" >
+                                        <option value="" selected="selected">Select Sub Category</option>
+                                        <option ng-repeat="(sub_category_name,subCategoryDetail) in subCategoryList" value="{{sub_category_name}}">
+                                            {{sub_category_name}}
+                                        </option>
+                                    </select>
                                 </div>
                             </div>
-                            <div class="col-sm-2">
-                                <div class="form-group">
-                                    <label class="control-label" for="quantity">Company</label>
-                                    <input type="text" id="quantity" name="quantity" value="" placeholder="Company" class="form-control">
-                                </div>
-                            </div>
+
                             <div class="col-sm-4">
                                 <div class="form-group">
-                                    <label class="control-label" for="status">Status</label>
-                                    <select name="status" id="status" class="form-control">
-                                        <option value="1" selected="">Completed</option>
-                                        <option value="0">Pending</option>
-                                    </select>
+                                    <button class="btn btn-primary " type="button">
+                                        <i class="fa fa-search"></i>&nbsp;Go
+                                    </button>
+
+                                    <button class="btn btn-danger " type="button">
+                                        <i class="fa fa-refresh"></i>&nbsp;Reset
+                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -37,4 +42,3 @@
             </div>
         </div>
     </div>
-

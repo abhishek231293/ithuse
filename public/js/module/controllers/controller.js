@@ -3,7 +3,8 @@
 function DocumentController($scope, $rootScope, requestHandler, $timeout, $http) {
 
     $scope.loader = false;
-    
+    $scope.searchFields = {};
+
     $scope.getFilters = function(){
 
         requestHandler.preparePostRequest({
@@ -12,15 +13,26 @@ function DocumentController($scope, $rootScope, requestHandler, $timeout, $http)
 
         }).then(function (response) {
 
-            $scope.filter = response;
-
             $scope.filterData = response;
-
-            console.log($scope.filterData);
 
         }).catch(function () {
 
         })
+    };
+
+    $scope.getSubCategoryList = function(data){
+
+        var dataToreturn = true;
+        $scope.subCategoryList = false;
+
+        angular.forEach($scope.filterData, function(value, key) {
+            if(dataToreturn){
+                if(key == $scope.searchFields.category_name){
+                    $scope.subCategoryList = value;
+                    dataToreturn = false;
+                }
+            }
+        });
     };
     
     $scope.getDocuments = function () {
@@ -31,7 +43,7 @@ function DocumentController($scope, $rootScope, requestHandler, $timeout, $http)
             url: '/getDocumentLists'
 
         }).then(function (response) {
-            
+
             $scope.loader = false;
             $scope.documentData = response;
         }).catch(function () {

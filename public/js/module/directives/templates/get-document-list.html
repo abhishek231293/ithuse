@@ -12,7 +12,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr ng-if="!documentData" ng-repeat="details in documentData">
+                <tr ng-if="documentData" ng-repeat="details in documentData">
                     <td>{{details.title}}</td>
                     <td>{{details.category_name}}</td>
                     <td>{{details.sub_category_name}}</td>
@@ -22,7 +22,7 @@
                         <button class="btn btn-info btn-sm btn-circle" type="button"><i class="fa fa-paste"></i> </button>
                     </td>
                 </tr>
-                <tr ng-if="documentData">
+                <tr ng-if="!documentData">
                     <td style="text-align: center" colspan="5"><p><span class="label label-danger">No Document Found.</span></p></td>
                 </tr>
                 </tbody>
