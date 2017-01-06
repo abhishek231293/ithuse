@@ -77,12 +77,15 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="row">
-
+                            @yield('documentList')
+                            @yield('uplodDocument')
+                            @yield('manageEvent')
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+
         <div class="footer">
             <div>
                 <strong>Copyright</strong> iTHUSE &copy; 2016-2017

@@ -100,9 +100,8 @@
 </head>
 <body id="app-layout">
 
-@yield('template')
-@yield('login')
-@yield('register')
+    @yield('template')
+    @yield('content')
 
 </body>
 </html>

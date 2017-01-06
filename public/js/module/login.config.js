@@ -5,7 +5,7 @@ function config($stateProvider, $urlRouterProvider, USER_ROLES) {
             url: "/login",
             data: {
                 authorizedRoles: [USER_ROLES.admin, USER_ROLES.dept, USER_ROLES.guest],
-                module: 'dashboard'
+                module: 'document'
             },
             templateUrl: clientUrl + "/user/signin",
             controller: function () {
