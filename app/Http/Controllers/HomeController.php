@@ -45,6 +45,7 @@ class HomeController extends Controller
 
     public function getDocumentLists(){
         $document = new \App\Document();
+
         $documentRowSets = $document->getDocumentLists();
         die(json_encode($documentRowSets->toArray()));
     }

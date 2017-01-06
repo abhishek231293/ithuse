@@ -80,8 +80,6 @@
                     <div class="col-lg-12">
                         <div class="row">
                             @yield('documentList')
-                            @yield('uplodDocument')
-                            @yield('manageEvent')
                         </div>
                     </div>
                 </div>
