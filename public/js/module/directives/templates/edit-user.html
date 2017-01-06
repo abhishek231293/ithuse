@@ -1,0 +1,44 @@
+<form role="form" method="POST" ng-submit="updateUserProfile(updateProfileFields, 'user')">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label>First Name *
+                    <span id="first_name_req" class="text-danger" style="display: none"></span>
+                </label>
+                <input type="text" class="form-control" placeholder="Enter first name" ng-model="updateProfileFields.first_name" id="first_name_field">
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label>Last Name *
+                    <span id="last_name_req" class="text-danger" style="display: none"></span>
+                </label>
+                <input type="text" class="form-control" placeholder="Enter your surname" ng-model="updateProfileFields.last_name" id="last_name_field">
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label>Cellphone number *
+                    <span id="contact_number_req" class="text-danger" style="display: none"></span>
+                </label>
+                <input type="text" class="form-control" placeholder="Enter cellphone number" ng-model="updateProfileFields.contact_number" id="contact_number_field">
+            </div>
+        </div>
+    </div>
+    <div class="pull-left">
+        <div class="clearfix"></div>
+
+        <div id="success"></div>
+        <button type="submit" class="btn btn-w-m btn-success">
+            <i class="fa fa-check-circle-o"></i> Update
+        </button>
+
+        <a ng-click="addNewUser=false;profile=true;profileUpdate=false;resetUserMessage(updateProfileFields);
+                                 moveToTop()"class="btn btn-w-m btn-danger">
+            <i class="fa fa-remove"></i>
+            Cancel</a>
+
+        <i class="fa fa-spinner fa-spin fa-2x fa-fw" ng-show="loader"></i>
+
+    </div>
+</form>

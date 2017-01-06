@@ -1,0 +1,57 @@
+<div id="add-user-container">
+    <h1 class="title" style="margin-left: -2%;">Add User</h1>
+    <form class="form-horizontal" role="form" method="POST" ng-submit="addUser();">
+        {!! csrf_field() !!}
+
+
+        <div class="form-group">
+            <input type="text" class="form-control" id="name_field" name="name"
+                   ng-model="userFields.name" placeholder="Name">
+                        <span id="name_req" class="text-danger" style="display: none">
+                            &nbsp;&nbsp;This field is required</span>
+        </div>
+
+        <div class="form-group">
+            <input type="text" class="form-control" id="email_field" name="email"
+                   ng-model="userFields.email" placeholder="Email">
+                        <span id="email_req" class="text-danger" style="display: none">
+                            &nbsp;&nbsp;This field is required</span>
+        </div>
+
+        <div class="form-group">
+            <input type="password" class="form-control" id="password_field" name="password"
+                   ng-model="userFields.password" placeholder="Password">
+                        <span id="password_req" class="text-danger" style="display: none">
+                            &nbsp;&nbsp;This field is required</span>
+        </div>
+
+        <div class="form-group">
+            <input type="password" class="form-control" id="confirm_password_field" name="confirm_password"
+                   ng-model="userFields.confirm_password" placeholder="Confirm Password">
+                        <span id="confirm_password_req" class="text-danger" style="display: none">
+                            &nbsp;&nbsp;This field is required</span>
+        </div>
+
+        {{--<div class="form-group">--}}
+        {{--<label>Job Description</label>--}}
+        {{--<textarea type="text" class="form-control" name="description" style="height: 100px" required="true" min="100" ng-model="jobFields.description"></textarea>--}}
+        {{--</div>--}}
+
+        <div class="form-group">
+            <button type="submit" ng-show="!isUserUpdate" class="btn btn-w-m btn-success">
+                <i class="fa fa-check-circle-o"></i>
+                Add
+            </button>
+            <button type="submit" ng-show="isUserUpdate" class="btn btn-w-m btn-success">
+                <i class="fa fa-check-circle-o"></i> Update
+            </button>
+            <a ng-click="addNewUser=false;profile=true;moveToTop()"class="btn btn-w-m btn-danger">
+                <i class="fa fa-remove"></i>
+                Cancel</a>
+            <i class="fa fa-spinner fa-spin fa-2x fa-fw" ng-show="loader"></i>
+            {{--<span style="font-size: 14px;margin-left: 3%;">@{{message}}</span>--}}
+        </div>
+    </form>
+
+</div>
+<br>

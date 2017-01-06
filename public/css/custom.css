@@ -1,0 +1,184 @@
+.footer {
+  position: fixed;
+}
+
+.smallInput {
+  width: 17%;
+}
+
+.mediumInput {
+  width: 34%;
+}
+
+.largeInput {
+  width: 56.5%;
+}
+
+.inputPadding{
+  padding-left: 2%;
+}
+
+.topPadding{
+  padding-top: 1%;
+}
+
+.center{
+  margin-left: 25%;
+}
+
+.media-body, .sidebard-panel p {
+  font-size: 15px;
+}
+
+.ui-datepicker-trigger{
+  display: none;
+}
+
+.am-multiselect .dropdown-menu{
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+.am-multiselect .dropdown-menu > li > a {
+  padding: 3px 10px;
+  cursor:pointer;
+}
+
+.am-multiselect .dropdown-menu > li.selected {
+  background-color: #ADD8E6;
+}
+
+.hide{
+  display: none;
+}
+
+.show{
+  display: inline!important;
+}
+
+.multiSlect{
+  background-color: white !important;
+  color: #676A75 !important;
+  text-align: left;
+  border: 1px solid #E5E6E7 !important;
+}
+
+.multiSlect :hover{
+    color: #A9776C !important;
+}
+
+.multiDrop>li>a:hover, .multiDrop>li>a:focus {
+    background-color: #4182F8 !important;
+    color:white !important;
+}
+
+.multiDrop{
+  overflow-y: scroll;
+  max-height: 200px;
+}
+
+.red{
+  color:red !important;
+}
+
+.green{
+  color:green !important;
+}
+
+.gray{
+  color:gray !important;
+}
+
+.redColor{
+  background-color: red !important;
+}
+
+.greenColor{
+  background-color: green !important;
+}
+
+.grayColor{
+  background-color: gray !important;
+}
+.inputPadding{
+  margin-bottom: -8px !important;
+  height: 68px !important;
+}
+
+@keyframes blink {
+  0% { color: red }
+  35% { color:#fff;}
+  50% { color:red;}
+  100% { color: red; }
+}
+@-webkit-keyframes blink {
+  0% { color: red }
+  35% { color: #fff;}
+  50% { color:red;}
+  100% { color: red; }
+}
+.blink {
+  -webkit-animation: blink 0.7s linear infinite;
+  -moz-animation: blink 0.7s linear infinite;
+  -ms-animation: blink 0.7s linear infinite;
+  -o-animation: blink 0.7s linear infinite;
+  animation: blink 0.7s linear infinite;
+}
+@keyframes blink-success {
+  0% { color:#fff;}
+  40% { color: forestgreen; }
+  100% { color: forestgreen; }
+}
+@-webkit-keyframes blink-success {
+  0% { color: #fff;}
+  40% { color: forestgreen; }
+  100% { color: forestgreen; }
+}
+.blink-success {
+  -webkit-animation: blink-success 0.7s linear infinite;
+  -moz-animation: blink-success 0.7s linear infinite;
+  -ms-animation: blink-success 0.7s linear infinite;
+  -o-animation: blink-success 0.7s linear infinite;
+  animation: blink-success 0.7s linear infinite;
+}
+
+@keyframes blink-info {
+  0% { color:#fff;}
+  40% { color: forestgreen; }
+  100% { color: forestgreen; }
+}
+@-webkit-keyframes blink-info {
+  0% { color: #fff;}
+  40% { color: forestgreen; }
+  100% { color: forestgreen; }
+}
+.blink-info {
+  -webkit-animation: blink-info 0.7s linear infinite;
+  -moz-animation: blink-info 0.7s linear infinite;
+  -ms-animation: blink-info 0.7s linear infinite;
+  -o-animation: blink-info 0.7s linear infinite;
+  animation: blink-info 0.7s linear infinite;
+}
+.controlTopPadding{
+  padding-top: .5%;
+}
+
+.info{
+   background-color: #5BC0DE;
+   border-color: #5BC0DE;
+   color: #FFFFFF;
+   font-weight: bold;
+}
+
+.rotate90{
+  width:200px !important;
+  height:200px !important;
+  -ms-transform: rotate(90deg);
+  -webkit-transform: rotate(90deg);
+  transform: rotate(90deg);
+}
+
+.normal{
+  width:200px !important;
+  height:200px !important;
+}

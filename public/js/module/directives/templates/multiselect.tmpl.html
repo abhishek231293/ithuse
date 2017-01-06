@@ -1,0 +1,25 @@
+<div class="btn-group" style="margin-top: 1px !important;
+    min-width: 100%;" ng-style="{marginLeft: marginLeft}">
+    <button ng-style="{width: multiWidth}" type="button" class="btn btn-default dropdown-toggle multiSlect" ng-click="toggleSelect()"
+            ng-disabled="disabled"
+            ng-class="{'error': !valid()}" style="height: 33px;">
+        {{header}}
+        <span class="caret pull-right" style="margin-top: 2%;"></span>
+    </button>
+    <ul class="dropdown-menu multiDrop" style="min-width: 100%;font-size: 14px !important;">
+        <li>
+            <input class="form-control input-sm" type="text" ng-model="searchText.label" ng-keydown="keydown($event)" autofocus="autofocus" placeholder="Filter" />
+        </li>
+        <li ng-show="multiple" role="presentation" class="">
+            <!--<button class="btn btn-link btn-xs" ng-click="checkAll()" type="button"><i class="glyphicon glyphicon-ok"></i> Check all</button>-->
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <button class="btn btn-link btn-xs unCheckAll" ng-click="uncheckAll()" type="button"><i class="glyphicon glyphicon-remove"></i> Uncheck all</button>
+        </li>
+        <li ng-repeat="(key, i) in items | filter:searchText" ng-class="{'selected': $index === selectedIndex}">
+            <a ng-click="select(i); focus()">
+                <!--<i class='glyphicon' ng-class="{'glyphicon-ok': i.checked, 'empty': !i.checked}" ng-show="multiMax > newValue-1"></i> {{i.label}}</a>-->
+                <!--<i class='glyphicon' ng-class="{'glyphicon-ok': i.checked, 'empty': !i.checked}" ng-show="allowCheck[key]"></i> {{i.label}}</a>-->
+                <i class='glyphicon' ng-class="{'glyphicon-ok': i.checked, 'empty': !i.checked}"></i> {{i.label}}</a>
+        </li>
+    </ul>
+</div>

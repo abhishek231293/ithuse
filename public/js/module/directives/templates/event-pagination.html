@@ -1,0 +1,32 @@
+<div class="pull-right" style="padding-right: 1.5%;padding-bottom: 1%;">
+
+    <table ng-hide="paginate.last_page == 1" class="">
+        <colgroup>
+            <col style="width: 45%;">
+        </colgroup>
+        <tbody><tr>
+            <td>
+                <!--<a ng-show="previousButton">-->
+                    <!--<i class="fa fa-backward" ng-model="currentPage" ng-click="previousPage()" title="Previous"></i>-->
+                <!--</a>-->
+                <a ng-hide="" href="" class="gray" ng-click="previousPage()" ng-model="currentPage">
+                    <i class="fa fa-backward" title="Previous"></i>
+                </a>
+
+                <span style="margin-left: 25% ! important;"></span>
+                <!--<a ng-show="nextBotton">-->
+                    <!--<i class="fa fa-forward" ng-model="currentPage" ng-click="nextPage()" title="Next"></i>-->
+                <!--</a>-->
+                <a ng-hide="" href="" class="gray">
+                    <i class="fa fa-forward" title="Next" ng-model="currentPage" ng-click="nextPage()"></i>
+                </a>
+            </td>
+
+            <td>
+                <select class="form-control" ng-options="item for item in pages" ng-model="currentPage" ng-change="changePage()"></select>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+</div>
