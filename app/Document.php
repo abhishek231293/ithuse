@@ -26,10 +26,12 @@ class Document extends Authenticatable
         $category = \App\Document::query();
 
         $category->join('pdf_reports', 'pdf_reports.document_id', '=', 'document_lists.id');
+        $category->join('categorys', 'categorys.id', '=', 'document_lists.category_id');
+        $category->join('sub_categorys', 'sub_categorys.id', '=', 'document_lists.sub_category_id');
         $category->where('document_lists.is_active','=', 1);
         $category->where('pdf_reports.is_active','=', 1);
         $data = $category->orderby('document_lists.category_id','DESC')->get();
-        
+
         return $data;
     }
 

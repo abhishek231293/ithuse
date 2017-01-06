@@ -1,5 +1,32 @@
 <div class="row">
-    <div class="col-lg-6" ng-init="getDocuments()">
-        {{documentData}}
+    <div class="col-lg-12" ng-init="getDocuments()">
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Category Name</th>
+                    <th>Sub Category Name</th>
+                    <th>Uploading Time</th>
+                    <th>Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-if="!documentData" ng-repeat="details in documentData">
+                    <td>{{details.title}}</td>
+                    <td>{{details.category_name}}</td>
+                    <td>{{details.sub_category_name}}</td>
+                    <td>{{details.uploading_date}}</td>
+                    <td>
+                        <button class="btn btn-success btn-sm btn-circle" type="button"><i class="fa fa-upload"></i></button>
+                        <button class="btn btn-info btn-sm btn-circle" type="button"><i class="fa fa-paste"></i> </button>
+                    </td>
+                </tr>
+                <tr ng-if="documentData">
+                    <td style="text-align: center" colspan="5"><p><span class="label label-danger">No Document Found.</span></p></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
