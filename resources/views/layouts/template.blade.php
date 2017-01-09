@@ -31,14 +31,14 @@
             </div>
             </li>
 
-            <li class="active" id="tabEvent" ng-click="activeMe('tabDocuments')">
+            <li class="active" id="tabDocumentList" ng-click="activeMe('tabDocumentList')">
                 <a ng-click="">
                     <i class="fa fa-book"></i>
                     <span class="nav-label">Documents List</span>
                 </a>
             </li>
 
-            <li ng-init="showProfile()" id="tabProfile" ng-click="activeMe('tabProfile')">
+            <li ng-init="showProfile()" id="tabAddDocument" ng-click="activeMe('tabAddDocument')">
                 <a ng-click="">
                     <i class="fa fa-user"></i>
                     <span class="nav-label">Manage Documents</span>
@@ -47,7 +47,7 @@
 
 
 
-            <li ng-init="showProfile()" id="tabProfile" ng-click="activeMe('tabEvents')">
+            <li ng-init="showProfile()" id="tabEvents" ng-click="activeMe('tabEvents')">
                 <a ng-click="">
                     <i class="fa fa-user"></i>
                     <span class="nav-label">Manage Events </span>
@@ -80,8 +80,6 @@
                     <div class="col-lg-12">
                         <div class="row">
                             @yield('documentList')
-                            @yield('uplodDocument')
-                            @yield('manageEvent')
                         </div>
                     </div>
                 </div>

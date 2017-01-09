@@ -4,6 +4,22 @@ function DocumentController($scope, $rootScope, requestHandler, $timeout, $http)
 
     $scope.loader = false;
     $scope.searchFields = {};
+    $scope.login = false;
+
+    $scope.setLoginText = function (value) {
+        if($scope.login){
+            $scope.loadValue = value;
+        }else {
+            $scope.login = true;
+            $scope.loadValue = value;
+        }
+
+    }
+
+    $scope.activeMe = function(id){
+        $( ".nav-label" ).parent().parent().removeClass( "active" );
+        $('#'+id).addClass("active");
+    };
 
     $scope.getFilters = function(){
 
@@ -21,7 +37,7 @@ function DocumentController($scope, $rootScope, requestHandler, $timeout, $http)
     };
 
     $scope.getSubCategoryList = function(data){
-
+        $scope.searchFields.subcategory_name = '';
         var dataToreturn = true;
         $scope.subCategoryList = false;
 
@@ -36,21 +52,23 @@ function DocumentController($scope, $rootScope, requestHandler, $timeout, $http)
     };
     
     $scope.getDocuments = function () {
+
         $scope.loader = true;
 
         requestHandler.preparePostRequest({
-
-            url: '/getDocumentLists'
-
+            url: '/getDocumentLists',
+            data :{
+                category :$scope.searchFields.category_name,
+                subCategory:$scope.searchFields.subcategory_name
+            }
         }).then(function (response) {
-
-            $scope.loader = false;
+            $timeout(function(){$scope.loader = false;}, 2000);
             $scope.documentData = response;
         }).catch(function () {
 
         })
     }
-    
+
 }
 
 angular.module('ithuse')

@@ -6,6 +6,7 @@
         <div class="ibox-content" style="display: block;">
 
             <get-filter></get-filter>
+            <loader></loader>
             <document-list></document-list>
 
         </div>

@@ -36,16 +36,22 @@ class HomeController extends Controller
         $categoryRowSets = $category->getCategoryWithSubCategoryList();
         $categoryRowSets = $categoryRowSets->toArray();
         $finalCategoryList = array();
-        array_walk($categoryRowSets, function($detail) use( &$finalCategoryList ) {
 
+        array_walk($categoryRowSets, function($detail) use( &$finalCategoryList ) {
             $finalCategoryList[$detail['category_name']][$detail['sub_category_name']] = $detail;
         });
+
         die(json_encode($finalCategoryList));
     }
 
-    public function getDocumentLists(){
+    public function getDocumentLists(Request $request){
+        $data = $request->all();
+        $category = ($request->input('category'));
+        $subCategory = ($request->input('subCategory'));
+
         $document = new \App\Document();
-        $documentRowSets = $document->getDocumentLists();
+
+        $documentRowSets = $document->getDocumentLists($category,$subCategory);
         die(json_encode($documentRowSets->toArray()));
     }
 }

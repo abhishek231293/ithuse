@@ -61,6 +61,16 @@
             };
         }])
 
+        .directive('loader', [function() {
+            return {
+                restrict: 'E',
+                scope: false,
+                replace: true,
+                controller : DocumentController,
+                templateUrl: 'js/module/directives/templates/loader.html'
+            };
+        }])
+
         .directive('documentList', [function() {
             return {
                 restrict: 'E',
@@ -68,6 +78,16 @@
                 replace: true,
                 controller : DocumentController,
                 templateUrl: 'js/module/directives/templates/get-document-list.html'
+            };
+        }])
+
+        .directive('loginButton', [function() {
+            return {
+                restrict: 'E',
+                scope: false,
+                replace: true,
+                controller : DocumentController,
+                templateUrl: 'js/module/directives/templates/get-login-button.html'
             };
         }])
 

@@ -1,14 +1,14 @@
 @extends('layouts.app')
 
 @section('content')
-    <body class="gray-bg">
+    <body class="gray-bg" ng-app="ithuse">
 
-    <div class="middle-box text-center loginscreen  animated fadeInDown " style="margin-top: -350px !important;">
+    <div ng-controller="DocumentController"  ng-init="valueGet()" class="middle-box text-center loginscreen  animated fadeInDown " style="margin-top: -350px !important;">
         <div>
             <p>
                 <img src="{{ asset('img/ithuse.png') }}" style="width: 50%;">
             </p>
-            <form class="login-form" role="form" method="POST" action="{{ url('/login') }}">
+            <form  class="login-form" role="form" method="POST" action="{{ url('/login') }}">
                 {!! csrf_field() !!}
                 <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
                     <input type="text" class="form-control" name="email" value="{{ old('email') }}" placeholder="Email" >
@@ -30,10 +30,9 @@
                 </div>
 
                 <div class="form-group">
+                    <login-button></login-button>
 
-                    <button type="submit" class="btn btn-primary block full-width m-b">
-                        <i class="fa fa-btn fa-sign-in"></i>Login
-                    </button>
+
 
                     <a class="btn btn-link" href="{{ url('/activation/reset-password') }}">Forgot Password? </a>
                     {{--<a class="btn btn-link" href="{{ url('/register') }}">Don't have an account? Register</a>--}}
@@ -45,14 +44,5 @@
 
         </div>
     </div>
-    <script>
-        $(document).ready(function () {
-//            history.pushState(null, document.title,null);
-//            window.addEventListener('popstate', function () {
-//                history.pushState(null, document.title,null);
-//            });
-        });
-
-    </script>
     </body>
 @endsection
