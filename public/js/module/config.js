@@ -1,14 +1,19 @@
 function configRoute($stateProvider, $urlRouterProvider) {
     $urlRouterProvider.otherwise('/');    
     $stateProvider.
+            state('main', {
+                url: '/',
+                template: '<document-content></document-content>',
+                controller: 'DocumentController',
+            }).
             state('document', {
                 url: '/document',
-                template: '<list-document></list-document>',
+                template: '<document-content></document-content>',
                 controller: 'DocumentController',
             }).
             state('manage', {
                 url: '/manage',
-                template: 'Manage Document Page',
+                template: '<manage-document></manage-document>',
                 controller: 'ManageController',
             }).
             state('event', {
@@ -24,6 +29,7 @@ function configRoute($stateProvider, $urlRouterProvider) {
                 url: '/add',
                 template: '<add-event></add-event>'
             });
+
 }
 
 angular.module('ithuseApp')

@@ -46,6 +46,18 @@ class EventController extends Controller
                 'title' => 'some title',
                 'description' => 'some description',
                 'date' => 'some date'
+            ],
+            [
+                'id' => '3',
+                'title' => 'some title',
+                'description' => 'some description',
+                'date' => 'some date'
+            ],
+            [
+                'id' => '4',
+                'title' => 'some title',
+                'description' => 'some description',
+                'date' => 'some date'
             ]
         ];
 

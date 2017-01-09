@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <body class="gray-bg" ng-app="ithuse">
+    <body class="gray-bg">
 
     <div ng-controller="DocumentController"  ng-init="valueGet()" class="middle-box text-center loginscreen  animated fadeInDown " style="margin-top: -350px !important;">
         <div>

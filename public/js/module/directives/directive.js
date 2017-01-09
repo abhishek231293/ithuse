@@ -56,8 +56,21 @@
                 restrict: 'E',
                 scope: false,
                 replace: true,
-                controller : DocumentController,
                 templateUrl: 'js/module/directives/templates/get-filter.html'
+            };
+        }])
+
+        .directive('documentContent', [function() {
+            return {
+                restrict: 'E',
+                scope: false,
+                replace: true,
+                templateUrl: 'js/module/directives/templates/document-content.html',
+                compile: function(){
+                    return function($scope){
+                        $scope.showMsg = true;
+                    }
+                }
             };
         }])
 
@@ -66,7 +79,6 @@
                 restrict: 'E',
                 scope: false,
                 replace: true,
-                controller : DocumentController,
                 templateUrl: 'js/module/directives/templates/loader.html'
             };
         }])
@@ -76,8 +88,8 @@
                 restrict: 'E',
                 scope: false,
                 replace: true,
-                controller : DocumentController,
-                templateUrl: 'js/module/directives/templates/get-document-list.html'
+                templateUrl: 'js/module/directives/templates/get-document-list.html',
+
             };
         }])
 
@@ -86,9 +98,41 @@
                 restrict: 'E',
                 scope: false,
                 replace: true,
-                controller : DocumentController,
+
                 templateUrl: 'js/module/directives/templates/get-login-button.html'
             };
         }])
 
-}(angular.module('ithuse')));
+        .directive('addEvent', [function() {
+            return {
+                restrict: 'E',
+                scope: false,
+                replace: true,
+
+                templateUrl: 'js/module/directives/templates/add-event.html'
+            };
+        }])
+        .directive('listEvent', [function() {
+            return {
+                restrict: 'E',
+                scope: false,
+                replace: true,
+                templateUrl: 'js/module/directives/templates/list-event.html',
+                compile: function(){
+                    return function($scope){
+                        $scope.getEvent();
+                    }
+                }
+            };
+        }])
+
+        .directive('manageDocument', [function() {
+            return {
+                restrict: 'E',
+                scope: false,
+                replace: true,
+                templateUrl: 'js/module/directives/templates/manage-document.html',
+            };
+        }])
+
+}(angular.module('ithuseApp')));

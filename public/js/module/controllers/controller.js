@@ -5,6 +5,8 @@ function DocumentController($scope, $rootScope, requestHandler, $timeout, $http)
     $scope.loader = false;
     $scope.searchFields = {};
     $scope.login = false;
+    $scope.addTitleFilter = false;
+    $scope.filterFor = 'documentList';
 
     $scope.setLoginText = function (value) {
         if($scope.login){
@@ -16,11 +18,6 @@ function DocumentController($scope, $rootScope, requestHandler, $timeout, $http)
 
     }
 
-    $scope.activeMe = function(id){
-        $( ".nav-label" ).parent().parent().removeClass( "active" );
-        $('#'+id).addClass("active");
-    };
-
     $scope.getFilters = function(){
 
         requestHandler.preparePostRequest({
@@ -30,7 +27,6 @@ function DocumentController($scope, $rootScope, requestHandler, $timeout, $http)
         }).then(function (response) {
 
             $scope.filterData = response;
-
         }).catch(function () {
 
         })
@@ -69,6 +65,14 @@ function DocumentController($scope, $rootScope, requestHandler, $timeout, $http)
         })
     }
 
+    $scope.resetFilters = function(filterParentId) {
+
+        $scope.searchFields.category_name = '';
+        $scope.searchFields.subcategory_name = '';
+        $scope.getDocuments();
+
+    }
+
 }
 
 function EventController($scope, $rootScope, $state, $timeout, requestHandler) {
@@ -76,6 +80,8 @@ function EventController($scope, $rootScope, $state, $timeout, requestHandler) {
     $scope.event = {};
     $scope.filter = {};
     $scope.eventRowset = {};
+    $scope.loader = false;
+
     $scope.addEvent = function(){
         requestHandler.preparePostRequest({
             url: '/addEvent',
@@ -101,21 +107,24 @@ function EventController($scope, $rootScope, $state, $timeout, requestHandler) {
     }
 
     $scope.getEvent = function(){
+        $scope.loader = true;
         requestHandler.preparePostRequest({
            url: '/getEvent',
            data: {}
         }).then(function (response) {
-            $scope.loader = false;
+            $timeout(function(){$scope.loader = false;}, 2000);
             $scope.eventRowset = response;
         })
     }
 
-    $scope.getEvent();
+
 }
 
 
 function ManageController($scope, $rootScope, $state, $timeout, requestHandler){
     $rootScope.currentTab = "manage";
+    $scope.addTitleFilter = true;
+    $scope.filterFor = 'documentManage';
 }
 
 angular.module('ithuseApp')
