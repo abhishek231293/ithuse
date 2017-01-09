@@ -1,0 +1,75 @@
+<div>
+<div class="row">
+	<div class="col-lg-12">
+		<a ui-sref="event.add"><button class="btn btn-primary pull-right"><i class="fa fa-plus"></i> Add Event</button></a>
+	</div>
+</div>
+<br>
+<div class="row">
+    <div class="col-lg-12">
+        <div class="ibox">
+		  <div class="ibox-content">
+
+                <div class="row">
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label class="control-label" for="product_name">Event Title</label>
+                            <input type="text" id="product_name" name="product_name" value="" placeholder="Event Title" class="form-control">
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <label class="control-label" for="price">Event Time</label>
+                            <input type="text" id="price" name="price" value="" placeholder="Time" class="form-control">
+                        </div>
+                    </div>
+                   
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <label class="control-label" for="status">Status</label>
+                            <select name="status" id="status" class="form-control">
+                            	<option value="all" selected="">All</option>
+                                <option value="1">Completed</option>
+                                <option value="0">Pending</option>
+                            </select>
+                        </div>
+                    </div>
+                     <div class="col-sm-2">
+                     	<div class="form-group">
+                     		<br/>
+                     		<button class="btn btn-primary"><i class="fa fa-filter"></i> Filter</button>
+                            <button class="btn btn-primary"><i class="fa fa-refresh"></i> Reset</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                    	<tr>
+                    		<th class="col-sm-1">#</th>
+                    		<th class="col-sm-2">Title</th>
+                    		<th class="col-sm-3">Description</th>
+                    		<th class="col-sm-2">Event Status</th>
+                    		<th class="col-sm-2">Action</th>
+                    	</tr>	
+                        <tbody>
+                            <tr ng-repeat="eventRow in eventRowset">
+                                <td>{{eventRow.id}}</td>
+                                <td>{{eventRow.title}}</td>
+                                <td>{{eventRow.description}}</td>
+                                <td><span class="badge badge-success col-sm-6"><i class="fa fa-check-square-o"></i> Completed</span></td>
+                                <td>
+                                	<a href="#"><button class="btn btn-xs btn-primary"><i class="fa fa-edit"></i> Edit</button></a>
+                                	<a href="#"><button class="btn btn-xs btn-danger"><i class="fa fa-times"></i> Delete</button></a>
+                                	<a href="#"><button class="btn btn-xs btn-danger"><i class="fa fa-plus"></i> Copy</button></a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+</div>

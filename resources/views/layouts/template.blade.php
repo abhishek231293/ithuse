@@ -1,5 +1,5 @@
 @section('template')
-    <body ng-app="ithuse">
+   
     <div id="wrapper" ng-controller="DocumentController">
         <nav class="navbar-default navbar-static-side" role="navigation">
             <div class="sidebar-collapse">
@@ -31,15 +31,15 @@
             </div>
             </li>
 
-            <li class="active" id="tabDocumentList" ng-click="activeMe('tabDocumentList')">
-                <a ng-click="">
+            <li ng-class="{true:'active',false:''}[currentTab == 'document']">
+                <a ui-sref="document">
                     <i class="fa fa-book"></i>
                     <span class="nav-label">Documents List</span>
                 </a>
             </li>
 
-            <li ng-init="showProfile()" id="tabAddDocument" ng-click="activeMe('tabAddDocument')">
-                <a ng-click="">
+            <li ng-class="{true:'active',false:''}[currentTab == 'manage']">
+                <a ui-sref="manage">
                     <i class="fa fa-user"></i>
                     <span class="nav-label">Manage Documents</span>
                 </a>
@@ -47,8 +47,8 @@
 
 
 
-            <li ng-init="showProfile()" id="tabEvents" ng-click="activeMe('tabEvents')">
-                <a ng-click="">
+            <li ng-class="{true:'active',false:''}[currentTab == 'event']">
+                <a ui-sref="event.list">
                     <i class="fa fa-user"></i>
                     <span class="nav-label">Manage Events </span>
                 </a>
@@ -79,7 +79,7 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="row">
-                            @yield('documentList')
+                            <div ui-view></div>
                         </div>
                     </div>
                 </div>
@@ -92,5 +92,5 @@
             </div>
         </div>
     </div>
-    </body>
+   
 @endsection

@@ -21,6 +21,9 @@ Route::post('/getFilter', 'HomeController@getFilter');
 
 Route::post('/getDocumentLists', 'HomeController@getDocumentLists');
 
+Route::post('/addEvent', 'EventController@add');
+Route::post('/getEvent', 'EventController@get');
+
 
 /*---------------------- Auth Controller ----------------------*/
 

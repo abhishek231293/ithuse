@@ -2,7 +2,7 @@
 /* App Module */
 //var myFilterss = angular.module('filters', []);
 
-angular.module('ithuse')
+angular.module('ithuseApp')
     .filter('reverse', function(Data) {
         return function(text) {
             return text.split("").reverse().join("") + Data.message;

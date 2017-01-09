@@ -359,4 +359,4 @@
         }]);
 
 
-}(angular.module('ithuse')));
+}(angular.module('ithuseApp')));

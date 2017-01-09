@@ -1,7 +1,7 @@
 'use strict';
 
 function DocumentController($scope, $rootScope, requestHandler, $timeout, $http) {
-
+    $rootScope.currentTab = "document";
     $scope.loader = false;
     $scope.searchFields = {};
     $scope.login = false;
@@ -71,5 +71,55 @@ function DocumentController($scope, $rootScope, requestHandler, $timeout, $http)
 
 }
 
-angular.module('ithuse')
-    .controller('DocumentController', ['$scope', '$rootScope', 'requestHandler', '$timeout', '$http', DocumentController]);
+function EventController($scope, $rootScope, $state, $timeout, requestHandler) {
+    $rootScope.currentTab = "event";
+    $scope.event = {};
+    $scope.filter = {};
+    $scope.eventRowset = {};
+    $scope.addEvent = function(){
+        requestHandler.preparePostRequest({
+            url: '/addEvent',
+            data: $scope.event
+        }).then(function (response) {
+            $scope.loader = false;
+            $state.go('event.list');
+        })
+    }
+
+    $scope.reset = function(){
+        $scope.filter = {};
+    }
+
+    $scope.filter = function(){
+        requestHandler.preparePostRequest({
+           url: '/getEvent',
+            data: $scope.filter
+        }).then(function (response) {
+            $scope.loader = false;
+            $scope.eventRowset = response;
+        })
+    }
+
+    $scope.getEvent = function(){
+        requestHandler.preparePostRequest({
+           url: '/getEvent',
+           data: {}
+        }).then(function (response) {
+            $scope.loader = false;
+            $scope.eventRowset = response;
+        })
+    }
+
+    $scope.getEvent();
+}
+
+
+function ManageController($scope, $rootScope, $state, $timeout, requestHandler){
+    $rootScope.currentTab = "manage";
+}
+
+angular.module('ithuseApp')
+    .controller('DocumentController', ['$scope', '$rootScope', 'requestHandler', '$timeout', '$http', DocumentController])
+    .controller('EventController', ['$scope', '$rootScope', '$state', '$timeout', 'requestHandler',   EventController])
+    .controller('ManageController', ['$scope', '$rootScope', '$state', '$timeout', 'requestHandler',   ManageController]);
+

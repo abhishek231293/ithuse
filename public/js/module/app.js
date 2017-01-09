@@ -1,10 +1,7 @@
-'use strict';
-/* App Module */
 
-(function () {
-        angular.module('ithuse', [
-                'ui.router',                    // Routing
-                'ui.calendar',                  // Calendar
+        angular.module('ithuseApp', [
+                'ui.router'                    // Routing
+                /*'ui.calendar',                  // Calendar
                 'ui.bootstrap',                 // Bootstrap
                 'ui.checkbox',                  // Custom checkbox
                 'ui.knob',                      // Knob input
@@ -20,6 +17,5 @@
                 'ngRoute',
                 'ngResource',
                 'angular-szn-autocomplete',
-                'ngCookies'
+                'ngCookies'*/
         ])
-})();

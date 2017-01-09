@@ -1,6 +1,6 @@
 'use strict';
 /* App Module */
-angular.module('4cApp')
+angular.module('ithuseApp')
     .constant('AUTH_EVENTS', {
       notAuthenticated: 'auth-not-authenticated',
       notAuthorized: 'auth-not-authorized'
@@ -39,4 +39,4 @@ angular.module('4cApp')
             'HIGHCHART_EXPORT_URL'  :'https://export.highcharts.com/'
         }
     })
-());
+

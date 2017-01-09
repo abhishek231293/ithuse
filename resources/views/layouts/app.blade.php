@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" ng-app="ithuse">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -44,6 +44,7 @@
 
     {{--Angular Script--}}
     <script src="{{ asset('js/angular/angular.js') }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.3.2/angular-ui-router.js"></script>
     <script src="{{ asset('js/module/app.js') }}" type='text/javascript'></script>
     <script src="{{ asset('js/module/config.js') }}" type='text/javascript'></script>
     <script src="{{ asset('js/angular/underscore-min.js') }}"></script>
