@@ -4,9 +4,10 @@
         <div class="row">
             <div class="col-lg-12">
                         <div id="documentListFilters" class="row">
-                            <div ng-show="addTitleFilter" class="col-sm-3">
+
+                            <div ng-show="currentTab=='manage'" class="col-sm-3">
                                 <div class="form-group">
-                                    <input type="text" id="document_title" name="document_title" value="" placeholder="Document Title" class="form-control">
+                                    <input ng-model="searchFields.document_title" type="text" id="document_title" name="document_title" value="" placeholder="Document Title" class="form-control">
                                 </div>
                             </div>
 
@@ -20,7 +21,7 @@
                                     </select>
                                 </div>
                             </div>
-                            <div ng-if="subCategoryList" class="col-sm-4">
+                            <div  class="col-sm-3">
                                 <div class="form-group">
                                     <select  name="sub-category" id="sub-category" class="form-control" ng-model="searchFields.subcategory_name" >
                                         <option value="" selected="selected">Select Sub Category</option>
@@ -31,7 +32,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-sm-2">
+                            <div ng-show="currentTab=='document'" class="col-sm-3">
                                 <div class="form-group">
                                     <button ng-click="getDocuments()"  class="btn btn-primary">
                                         <i class="fa fa-filter"></i> Filter
@@ -41,6 +42,16 @@
                                     </button>
                                 </div>
                             </div>
+
+                            <div ng-show="currentTab=='manage'" class="col-sm-6">
+
+                                <add-pdf max="1"></add-pdf>
+
+                                <div class="form-inline">
+                                    <button ng-click = "uploadFile()" type="submit" class="btn btn-sm btn-primary" id="js-upload-submit">Upload files</button>
+                                </div>
+                            </div>
+
                         </div>
             </div>
         </div>

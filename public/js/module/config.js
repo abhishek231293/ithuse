@@ -36,6 +36,12 @@ angular.module('ithuseApp')
     .config(["$stateProvider", "$urlRouterProvider", configRoute])
     .run(['$rootScope', '$state', '$location', '$window', function($rootScope, $state, $location, $window, authService) {
         $rootScope.currentTab = '';
+        $rootScope.$on('$stateChangeStart',
+            function(event, toState, toParams, fromState, fromParams){
+                if(toState.url == "/event"){
+                    $location.path('/event/list');
+                }
+        });
     }]);
 
 

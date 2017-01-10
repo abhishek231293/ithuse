@@ -29,7 +29,7 @@
         .directive('myTimepicker', function ($parse) {
             return function (scope, element, attrs, controller) {
                 var ngModel = $parse(attrs.ngModel);
-                //console.log("here");
+
                 $(function(){
                     element.timepicker({
                         timeFormat: 'h:mm p',
@@ -41,8 +41,11 @@
                         dynamic: false,
                         dropdown: true,
                         scrollbar: true,
-                        onSelect:function (dateText, inst) {
+                        onChange:function (dateText, inst) {
+                            console.log("test here");
                             scope.$apply(function(scope){
+
+
                                 ngModel.assign(scope, dateText);
                             });
                         }
@@ -132,6 +135,59 @@
                 scope: false,
                 replace: true,
                 templateUrl: 'js/module/directives/templates/manage-document.html',
+            };
+        }])
+
+        .directive('addPdf', [function($rootScope) {
+            return {
+                restrict: 'E',
+                templateUrl: 'js/module/directives/templates/add-pdf.html',
+                scope: {
+                    max: '='
+                },
+                link: function(scope, element, attrs){
+
+                    scope.range = [];
+                    for(var i=0;i<scope.max;i++) {
+                        scope.range.push(i);
+                    }
+
+                    var imageFormData = new FormData();
+
+                    scope.validateImageFile = function(element){
+
+                        scope.$root.isFileExistCheck = true;
+
+                        var item = $(element).attr("item");
+
+                        if(!scope.$root.imageCheck){
+                            scope.$root.imageCheck = 1;
+                        }
+
+                        //console.log(scope.$root.imageCheck);
+                        imageFormData.append('pdf'+item, $(element)[0].files[0]);
+
+                        scope.$root.formData = imageFormData;
+
+                        var fileName = ($(element).val().replace(/^.*[\\\/]/, '')).split('.');
+
+                        var ext = fileName[1];
+
+                        if(ext){
+                            $("#pdf__name_"+item).html(fileName[0]+'.'+fileName[1]);
+                        }
+
+                        var isValidLogo = $.inArray( ext, ['pdf']);
+
+                        //console.log($isValidLogo);
+
+                        if(isValidLogo == '-1'){
+                            sweetAlert("Error..!", 'Please select valid file format', 'warning');
+                            scope.$root.imageCheck = 0;
+
+                        }
+                    }
+                }
             };
         }])
 

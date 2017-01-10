@@ -83,6 +83,8 @@ function EventController($scope, $rootScope, $state, $timeout, requestHandler) {
     $scope.loader = false;
 
     $scope.addEvent = function(){
+
+        console.log($scope.event);return;
         requestHandler.preparePostRequest({
             url: '/addEvent',
             data: $scope.event
@@ -123,8 +125,69 @@ function EventController($scope, $rootScope, $state, $timeout, requestHandler) {
 
 function ManageController($scope, $rootScope, $state, $timeout, requestHandler){
     $rootScope.currentTab = "manage";
-    $scope.addTitleFilter = true;
     $scope.filterFor = 'documentManage';
+
+    $rootScope.formData = {};
+    $rootScope.isFileExistCheck = false;
+    $scope.spinLoader = false;
+
+    $scope.addDocumentDetail = function() {
+
+
+        $scope.message = '';
+
+        var route = ($scope.isUpdate) ? 'updateDocument' : 'addDocument';
+
+
+        $scope.saveEvent(route);
+
+    }
+
+    $scope.saveEvent = function(route){
+
+        if($rootScope.imageCheck == 0){
+            sweetAlert('Error..', 'Please upload only pdf file...', 'error');
+            return;
+        }
+
+        $scope.spinLoader = true;
+        var userData = {};
+        //console.log($rootScope.isFileExistCheck);return;
+
+        if(!$scope.isFileExistCheck){
+            $scope.formData = new FormData();
+        }
+
+        angular.forEach($scope.searchFields, function(value, key) {
+            $scope.formData.append(key,value);
+        });
+
+        requestHandler.prepareAttachmentRequest({
+            url: route,
+            data: $scope.formData
+
+        }).then(function (response) {
+
+            sweetAlert('Done..', 'Congo..', 'success');
+
+            // $scope.result = response.result;
+            //
+            // $scope.myEventId = $scope.result.id;
+            // $scope.myEventName = $scope.result.event_name;
+            // console.log($scope.myEventId);
+            //$scope.message = response.message;
+
+
+            // if(!$scope.isUpdate){
+            //     $scope.resetFields();
+            //     $scope.resetUserFields();
+            // }
+
+        }).catch(function () {
+
+        })
+    };
+
 }
 
 angular.module('ithuseApp')

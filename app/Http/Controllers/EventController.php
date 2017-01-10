@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests;
 use Illuminate\Http\Request;
+use App\Event;
 
 class EventController extends Controller
 {
@@ -27,9 +28,12 @@ class EventController extends Controller
      * @return \Illuminate\Http\Response
      */
     
-    public function add()
+    public function add(Request $request)
     {
-        return "true";
+        $data = $request->all();
+        
+        $eventModel = new \App\Event();
+        $eventModel->addEvent($data);
     }
 
     public function get()

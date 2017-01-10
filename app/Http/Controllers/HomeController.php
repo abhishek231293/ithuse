@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Requests;
 use Illuminate\Http\Request;
 use App\Document;
+use Storage;
 
 class HomeController extends Controller
 {
@@ -52,6 +53,18 @@ class HomeController extends Controller
         $document = new \App\Document();
 
         $documentRowSets = $document->getDocumentLists($category,$subCategory);
+        die(json_encode($documentRowSets->toArray()));
+    }
+
+    public function addDocument(Request $request){
+        $data = $request->all();
+        $category = ($request->input('category_name'));
+        $subCategory = ($request->input('subcategory_name'));
+        $pdfpath = addPdf($category,$subCategory);
+        $title = ($request->input('document_title'));
+        $document = new \App\Document();
+        $documentRowSets = $document->UploadDocument($category,$subCategory,$pdfpath,$title);
+        dd($documentRowSets);
         die(json_encode($documentRowSets->toArray()));
     }
 }
