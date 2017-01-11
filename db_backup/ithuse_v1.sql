@@ -41,13 +41,32 @@ CREATE TABLE `document_lists` (
   `category_id` int(10) DEFAULT NULL,
   `sub_category_id` int(10) DEFAULT NULL,
   `updation_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `is_active` int(10) DEFAULT NULL,
+  `is_active` int(10) DEFAULT '1',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=latin1;
 
 /*Data for the table `document_lists` */
 
-insert  into `document_lists`(`id`,`title`,`category_id`,`sub_category_id`,`updation_date`,`is_active`) values (1,'Repost 1',1,1,'2017-01-06 17:19:48',1);
+insert  into `document_lists`(`id`,`title`,`category_id`,`sub_category_id`,`updation_date`,`is_active`) values (11,'Title 1',7,13,'2017-01-11 12:31:33',1),(12,'Service policy',5,9,'2017-01-11 12:31:49',1),(13,'Time Management',3,6,'2017-01-11 12:31:58',1),(14,'rrrrrrrrrrr',6,11,'2017-01-11 20:50:30',1);
+
+/*Table structure for table `events` */
+
+DROP TABLE IF EXISTS `events`;
+
+CREATE TABLE `events` (
+  `event_id` int(10) NOT NULL AUTO_INCREMENT,
+  `title` varchar(200) COLLATE utf8_bin DEFAULT NULL,
+  `description` text COLLATE utf8_bin,
+  `event_venue` varchar(225) COLLATE utf8_bin DEFAULT NULL,
+  `event_date` datetime DEFAULT NULL,
+  `status` enum('complete','pending') COLLATE utf8_bin DEFAULT 'pending',
+  `is_active` int(10) DEFAULT '1',
+  PRIMARY KEY (`event_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=35 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+/*Data for the table `events` */
+
+insert  into `events`(`event_id`,`title`,`description`,`event_venue`,`event_date`,`status`,`is_active`) values (24,'Team Meeting','Discussion about project.','Meeting Room','2017-01-16 06:15:00','pending',0),(25,'Team Meeting','Discussion about project.','','2017-01-16 06:15:00','pending',0),(26,'5e','etrgh','','2017-01-13 06:10:00','pending',0),(27,'raqewdf','qwef weaf weaf ew f ew rf fr  rwfe','qwef','2017-01-13 06:20:00','pending',0),(28,'Team party','NYE Party plddll lplspdlk retge getr gtre g.','xyz place','2017-01-11 06:20:00','pending',0),(29,'trefgv','rtfgvtrgv rtg rth  r gr   hyyhr hryhbgr','rtghb','2017-01-27 06:00:00','pending',1),(30,'ghnbgfnb','dib id v hruirui h uihuihuihuihurhuh buhriub','retbgv','2017-01-28 06:15:00','pending',0),(31,'redf','e e g rtgrtgrtgtgrggfgdfgdfgdfgdfgdfg','dfgdfg','2017-01-28 06:10:00','pending',1),(32,'ertgv e gteg etg','eg etgrbrbrggggvfgbfgbgbrgbrgb','erf','2017-01-28 06:15:00','pending',1),(33,'efrgvvc','eg etgrbrbrggggvfgbfgbgbrgbrgb','erfgefrvc','2017-01-28 06:25:00','pending',0),(34,'werdfvcrefvc','eg etgrbrbrggggvfgbfgbgbrgbrgb','erfgvrefvcrefvce','2017-01-28 06:15:00','pending',0);
 
 /*Table structure for table `login_histories` */
 
@@ -62,11 +81,11 @@ CREATE TABLE `login_histories` (
   `user_agent` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `is_active` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=83 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=95 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 /*Data for the table `login_histories` */
 
-insert  into `login_histories`(`id`,`login_user_id`,`login_time`,`logout_time`,`ip_address`,`user_agent`,`is_active`) values (76,1,'2017-01-06 13:27:03','2017-01-06 14:08:26','127.0.0.1','Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36',0),(77,1,'2017-01-06 13:29:19','2017-01-06 14:08:26','127.0.0.1','Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36',0),(78,1,'2017-01-06 13:47:09','2017-01-06 14:08:26','127.0.0.1','Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36',0),(79,1,'2017-01-06 13:47:28','2017-01-06 14:08:26','127.0.0.1','Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36',0),(80,1,'2017-01-06 13:48:52','2017-01-06 14:08:26','127.0.0.1','Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36',0),(81,1,'2017-01-06 14:12:45',NULL,'127.0.0.1','Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36',1),(82,1,'2017-01-06 16:20:35',NULL,'127.0.0.1','Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36',1);
+insert  into `login_histories`(`id`,`login_user_id`,`login_time`,`logout_time`,`ip_address`,`user_agent`,`is_active`) values (76,1,'2017-01-06 13:27:03','2017-01-10 19:13:26','127.0.0.1','Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36',0),(77,1,'2017-01-06 13:29:19','2017-01-10 19:13:26','127.0.0.1','Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36',0),(78,1,'2017-01-06 13:47:09','2017-01-10 19:13:26','127.0.0.1','Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36',0),(79,1,'2017-01-06 13:47:28','2017-01-10 19:13:26','127.0.0.1','Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36',0),(80,1,'2017-01-06 13:48:52','2017-01-10 19:13:26','127.0.0.1','Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36',0),(81,1,'2017-01-06 14:12:45','2017-01-10 19:13:26','127.0.0.1','Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36',0),(82,1,'2017-01-06 16:20:35','2017-01-10 19:13:26','127.0.0.1','Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36',0),(83,1,'2017-01-09 11:37:32','2017-01-10 19:13:26','127.0.0.1','Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36',0),(84,1,'2017-01-09 18:56:40','2017-01-10 19:13:26','127.0.0.1','Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36',0),(85,1,'2017-01-09 19:03:40','2017-01-10 19:13:26','127.0.0.1','Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36',0),(86,1,'2017-01-09 19:32:53','2017-01-10 19:13:26','127.0.0.1','Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36',0),(87,1,'2017-01-09 19:35:29','2017-01-10 19:13:26','127.0.0.1','Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36',0),(88,1,'2017-01-09 19:36:00','2017-01-10 19:13:26','127.0.0.1','Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36',0),(89,1,'2017-01-09 20:03:15','2017-01-10 19:13:26','127.0.0.1','Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36',0),(90,1,'2017-01-10 12:07:25','2017-01-10 19:13:26','127.0.0.1','Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36',0),(91,1,'2017-01-10 12:47:27','2017-01-10 19:13:26','127.0.0.1','Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36',0),(92,1,'2017-01-10 19:13:31',NULL,'127.0.0.1','Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36',1),(93,1,'2017-01-10 19:44:51',NULL,'127.0.0.1','Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36',1),(94,1,'2017-01-11 12:30:12',NULL,'127.0.0.1','Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36',1);
 
 /*Table structure for table `migrations` */
 
@@ -104,13 +123,13 @@ CREATE TABLE `pdf_reports` (
   `pdf_name` varchar(225) DEFAULT NULL,
   `uploading_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `document_id` int(10) DEFAULT NULL,
-  `is_active` int(10) DEFAULT NULL,
+  `is_active` int(10) DEFAULT '1',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
 
 /*Data for the table `pdf_reports` */
 
-insert  into `pdf_reports`(`id`,`pdf_name`,`uploading_date`,`document_id`,`is_active`) values (1,'cat1subcat1.pdf','2017-01-06 17:22:32',1,1);
+insert  into `pdf_reports`(`id`,`pdf_name`,`uploading_date`,`document_id`,`is_active`) values (2,'pdf_document/document.pdf','2017-01-10 19:04:09',11,1),(3,'pdf_document/document.pdf','2017-01-10 19:05:05',12,1),(4,'pdf_document/document.pdf','2017-01-10 19:06:53',13,1),(5,'pdf_document/document.pdf','2017-01-11 20:50:30',14,1);
 
 /*Table structure for table `sub_categorys` */
 
@@ -122,7 +141,7 @@ CREATE TABLE `sub_categorys` (
   `category_id` int(10) DEFAULT NULL,
   `is_active` int(10) DEFAULT '1',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=latin1;
 
 /*Data for the table `sub_categorys` */
 
@@ -148,7 +167,7 @@ CREATE TABLE `users` (
 
 /*Data for the table `users` */
 
-insert  into `users`(`id`,`name`,`email`,`password`,`remember_token`,`created_at`,`updated_at`,`last_login_time`,`is_active`) values (1,'Abhishek','abhishekgupta00143@gmail.com','$2y$10$0F4Us.bfO64bkodcdSBKlOBItJnA4g9BAp7VutxP0A7o78rDwhOHS','Q2RBDEmkxjtMvMPKsV7jcOgSEKKLsyV3gjkpW5hBt9jrVqClVGBhN99oQREP','2017-01-05 13:58:21','2017-01-06 16:20:35','2017-01-06 16:20:35',1);
+insert  into `users`(`id`,`name`,`email`,`password`,`remember_token`,`created_at`,`updated_at`,`last_login_time`,`is_active`) values (1,'Abhishek','abhishekgupta00143@gmail.com','$2y$10$0F4Us.bfO64bkodcdSBKlOBItJnA4g9BAp7VutxP0A7o78rDwhOHS','aJgw94xWOCXNEH4g8djOwaF9dNKQTpjvaRdwddlAoVbXs8NAB0tKi8w54aa4','2017-01-05 13:58:21','2017-01-11 12:30:12','2017-01-11 12:30:12',1);
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
