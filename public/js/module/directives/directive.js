@@ -2,6 +2,20 @@
 /* App Module */
 (function(module){
     module
+
+        .directive('preventRightClick',[
+            function(){
+                return {
+                    restrict : 'A',
+                    link : function($scope, $ele){
+                        $ele.bind('contextmenu', function(e){
+                            e.preventDefault();
+                        });
+                    }
+                };
+            }
+        ])
+
         .directive('myDatepicker', function ($parse) {
             return function (scope, element, attrs, controller) {
                 var ngModel = $parse(attrs.ngModel);
@@ -32,21 +46,19 @@
 
                 $(function(){
                     element.timepicker({
-                        timeFormat: 'h:mm p',
-                        interval: 15,
+                        timeFormat: 'H:mm',
+                        interval: 5,
                         minTime: '6',
-                        maxTime: '11:59pm',
+                        maxTime: '23:59:59',
                         //defaultTime: '11',
-                        startTime: '6:00',
+                        startTime: '6:00:00',
                         dynamic: false,
                         dropdown: true,
                         scrollbar: true,
-                        onChange:function (dateText, inst) {
-                            console.log("test here");
+                        change:function (dateText, inst) {
+                            var data = $(this).val();
                             scope.$apply(function(scope){
-
-
-                                ngModel.assign(scope, dateText);
+                                ngModel.assign(scope, data);
                             });
                         }
                     });
@@ -128,6 +140,14 @@
                 }
             };
         }])
+        .directive('editEvent', [function() {
+            return {
+                restrict: 'E',
+                scope: false,
+                replace: true,
+                templateUrl: 'js/module/directives/templates/edit-event.html'
+            };
+        }])
 
         .directive('manageDocument', [function() {
             return {
@@ -190,5 +210,6 @@
                 }
             };
         }])
+
 
 }(angular.module('ithuseApp')));

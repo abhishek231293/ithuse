@@ -33,38 +33,25 @@ class EventController extends Controller
         $data = $request->all();
         
         $eventModel = new \App\Event();
-        $eventModel->addEvent($data);
+        $returnValue = $eventModel->addEvent($data);
+
+        return $returnValue;
     }
 
-    public function get()
+    public function get(Request $request)
     {
-        $eventList = [
-            [
-                'id' => '1',
-                'title' => 'some title',
-                'description' => 'some description',
-                'date' => 'some date'
-            ],
-            [
-                'id' => '2',
-                'title' => 'some title',
-                'description' => 'some description',
-                'date' => 'some date'
-            ],
-            [
-                'id' => '3',
-                'title' => 'some title',
-                'description' => 'some description',
-                'date' => 'some date'
-            ],
-            [
-                'id' => '4',
-                'title' => 'some title',
-                'description' => 'some description',
-                'date' => 'some date'
-            ]
-        ];
+        $data = $request->all();
+        $eventModel = new \App\Event();
+        $returnValue = $eventModel->getEvent($data);
 
-        die(json_encode($eventList));
+        die(json_encode($returnValue));
+    }
+
+    public function delete(Request $request)
+    {
+        $data = $request->all();
+        $eventModel = new \App\Event();
+        $returnStatus = $eventModel->deleteEvent($data);
+        return $returnStatus;
     }
 }

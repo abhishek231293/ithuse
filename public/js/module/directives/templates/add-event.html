@@ -7,34 +7,80 @@
         
             <div class="ibox-content">
                 <form method="post" class="form-horizontal">
-                    <div class="form-group"><label class="col-sm-2 control-label">Title</label>
+                    <div class="form-group" >
 
-                        <div class="col-sm-10"><input type="text" class="form-control" ng-model="event.title"></div>
-                    </div>
-                    <div class="hr-line-dashed"></div>
-                    <div class="form-group"><label class="col-sm-2 control-label">Description</label>
-                        <div class="col-sm-10"><textarea class="form-control" ng-model="event.description"></textarea>
-                            <span class="help-block m-b-none">A short description about the event, its location etc.</span>
+                        <div class="col-sm-12">
+                            <label class="control-label">Title</label>
+                            <input placeholder="Eg. Team Meeting" type="text" class="form-control" ng-model="event.title">
+
+                            <div ng-show="errorMsgTitle" class="alert alert-warning col-sm-12 topMargin1">
+                                <a href="#" class="close" data-dismiss="alert">&times;</a>
+                                <strong>Warning! </strong> {{errorMsgTitle}}
+                            </div>
                         </div>
+
                     </div>
                     <div class="hr-line-dashed"></div>
                     <div class="form-group">
-                        <label class="col-sm-2 control-label">Date & Time</label>
-
-                            <div class="col-sm-3">
-                                <input type="text" placeholder="Select Date"  class="form-control" ng-model="event.date" my-datepicker/>
+                        <div class="col-sm-12">
+                            <label class="control-label">Description</label>
+                            <textarea placeholder="Eg. Discussion regarding xxx ..." class="form-control" ng-model="event.description"></textarea>
+                            <span class="help-block m-b-none">A short description about the event, its location etc.</span>
+                            <div ng-show="errorMsgDescription" class="alert alert-warning col-sm-12 topMargin1">
+                                <a href="#" class="close" data-dismiss="alert">&times;</a>
+                                <strong>Warning! </strong> {{errorMsgDescription}}
                             </div>
-                            <div class="col-sm-2">
-                                <input type="text" placeholder="Select Time"  class="form-control" ng-model="event.myTime" my-timepicker/>
+                        </div>
+
+                    </div>
+
+                    <div class="hr-line-dashed"></div>
+                    <div class="form-group">
+
+                        <div class="col-sm-12">
+                            <label class="control-label">Venue</label>
+                            <input type="text" placeholder="Eg. Pretoria, Cape Town, Bloemfontein, South Africa."  class="form-control" ng-model="event.place"/>
+                            <div ng-show="errorMsgPlace" class="alert alert-warning col-sm-12 topMargin1">
+                                <a href="#" class="close" data-dismiss="alert">&times;</a>
+                                <strong>Warning! </strong> {{errorMsgPlace}}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="hr-line-dashed"></div>
+                    <div class="form-group">
+
+                            <div class="col-sm-12">
+
+                                <div class="col-sm-4" style="padding: 0px !important;">
+                                    <label class="control-label">Date</label>
+                                    <input style="background-color: transparent; " readonly type="text" placeholder="Date"  class="form-control" ng-model="event.date" my-datepicker/>
+                                </div>
+                                <div class="col-sm-4">
+                                    <label class="control-label">Time</label>
+                                    <input readonly style="background-color: transparent;" type="text" placeholder="Time"  class="form-control" ng-model="event.myTime" my-timepicker/>
+                                </div>
+                                <div ng-show="errorMsgDateTime" class="alert alert-warning col-sm-12 topMargin1">
+                                    <a href="#" class="close" data-dismiss="alert">&times;</a>
+                                    <strong>Warning! </strong> {{errorMsgDateTime}}
+                                </div>
                             </div>
                     </div>
                     
                     <div class="hr-line-dashed"></div>
                     <div>
                         <div class="form-group">
-                            <div class="col-sm-10 col-sm-offset-2" align="right">
-                                <a ui-sref="event.list"><button class="btn btn-white" type="button">Cancel</button></a>
-                                <button class="btn btn-primary" type="button" ng-click="addEvent()">Add</button>
+                            <div class="col-sm-12" align="center">
+                                <a ui-sref="event.list">
+                                    <button class="btn btn-danger" type="button">
+                                        <i class="fa fa-times" aria-hidden="true"></i>
+                                        &nbsp; Cancel
+                                    </button>
+                                </a>
+                                <button class="btn btn-success" type="button" ng-click="addEvent()">
+                                    <i class="fa fa-plus" aria-hidden="true"></i>
+                                    &nbsp;Add
+                                </button>
                             </div>
                         </div>
                     </div>

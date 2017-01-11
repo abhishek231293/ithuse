@@ -10,7 +10,55 @@
                 </div>
                 <div class="ibox-content">
                     <form class="form-horizontal" role="form" method="POST" ng-submit="addDocumentDetail()">
-                        <get-filter></get-filter>
+
+                        <div class="form-group" >
+                            <div class="col-sm-12">
+
+                                    <input ng-model="searchFields.document_title" type="text" id="ss" name="document_title" value="" placeholder="Document Title" class="form-control">
+
+                            </div>
+                        </div>
+
+                        <div class="hr-line-dashed"></div>
+
+                        <div class="form-group">
+                            <div ng-init="getFilters()" class="col-sm-12">
+                                <select ng-change="getSubCategoryList()" ng-model="searchFields.category_name" name="category" id="category" class="form-control">
+                                    <option value="" selected="selected">Select Category</option>
+                                    <option ng-repeat="(category_name,subCategoryDetail) in filterData" value="{{category_name}}">
+                                        {{category_name}}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="hr-line-dashed"></div>
+
+                        <div class="form-group">
+                            <div class="col-sm-12">
+                                <select  name="sub-category" id="sub-category" class="form-control" ng-model="searchFields.subcategory_name" >
+                                    <option value="" selected="selected">Select Sub Category</option>
+                                    <option ng-repeat="(sub_category_name,subCategoryDetail) in subCategoryList" value="{{sub_category_name}}">
+                                        {{sub_category_name}}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="hr-line-dashed"></div>
+
+                        <div class="form-group">
+                            <add-pdf max="1"></add-pdf>
+                        </div>
+
+                        <div class="hr-line-dashed"></div>
+
+                        <div class="form-group">
+                            <button ng-click = "uploadFile()" type="submit" class="btn btn-sm btn-success" id="js-upload-submit">
+                                <i class="fa fa-upload" aria-hidden="true"></i>&nbsp;Upload
+                            </button>
+                        </div>
+
                     </form>
                 </div>
             </div>

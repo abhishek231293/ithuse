@@ -1,58 +1,40 @@
+<div ng-init="getFilters()">
+    <div class="row">
+        <div class="col-lg-12">
+                    <div id="documentListFilters" class="row">
 
-    <div ng-init="getFilters()">
-
-        <div class="row">
-            <div class="col-lg-12">
-                        <div id="documentListFilters" class="row">
-
-                            <div ng-show="currentTab=='manage'" class="col-sm-3">
-                                <div class="form-group">
-                                    <input ng-model="searchFields.document_title" type="text" id="document_title" name="document_title" value="" placeholder="Document Title" class="form-control">
-                                </div>
+                        <div class="col-sm-3">
+                            <div class="form-group">
+                                <select ng-change="getSubCategoryList()" ng-model="searchFields.category_name" name="category" id="category" class="form-control">
+                                    <option value="" selected="selected">Select Category</option>
+                                    <option ng-repeat="(category_name,subCategoryDetail) in filterData" value="{{category_name}}">
+                                        {{category_name}}
+                                    </option>
+                                </select>
                             </div>
-
-                            <div class="col-sm-3">
-                                <div class="form-group">
-                                    <select ng-change="getSubCategoryList()" ng-model="searchFields.category_name" name="category" id="category" class="form-control">
-                                        <option value="" selected="selected">Select Category</option>
-                                        <option ng-repeat="(category_name,subCategoryDetail) in filterData" value="{{category_name}}">
-                                            {{category_name}}
-                                        </option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div  class="col-sm-3">
-                                <div class="form-group">
-                                    <select  name="sub-category" id="sub-category" class="form-control" ng-model="searchFields.subcategory_name" >
-                                        <option value="" selected="selected">Select Sub Category</option>
-                                        <option ng-repeat="(sub_category_name,subCategoryDetail) in subCategoryList" value="{{sub_category_name}}">
-                                            {{sub_category_name}}
-                                        </option>
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div ng-show="currentTab=='document'" class="col-sm-3">
-                                <div class="form-group">
-                                    <button ng-click="getDocuments()"  class="btn btn-primary">
-                                        <i class="fa fa-filter"></i> Filter
-                                    </button>
-                                    <button ng-click="resetFilters('documentListFilters')" class="btn btn-primary " type="button">
-                                        <i class="fa fa-refresh"></i>&nbsp;Reset
-                                    </button>
-                                </div>
-                            </div>
-
-                            <div ng-show="currentTab=='manage'" class="col-sm-6">
-
-                                <add-pdf max="1"></add-pdf>
-
-                                <div class="form-inline">
-                                    <button ng-click = "uploadFile()" type="submit" class="btn btn-sm btn-primary" id="js-upload-submit">Upload files</button>
-                                </div>
-                            </div>
-
                         </div>
-            </div>
+                        <div  class="col-sm-3">
+                            <div class="form-group">
+                                <select  name="sub-category" id="sub-category" class="form-control" ng-model="searchFields.subcategory_name" >
+                                    <option value="" selected="selected">Select Sub Category</option>
+                                    <option ng-repeat="(sub_category_name,subCategoryDetail) in subCategoryList" value="{{sub_category_name}}">
+                                        {{sub_category_name}}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div ng-show="currentTab=='document'" class="col-sm-3">
+                            <div class="form-group">
+                                <button ng-click="getDocuments()"  class="btn btn-success">
+                                    <i class="fa fa-search"></i> &nbsp;Go
+                                </button>
+                                <button ng-click="resetFilters('documentListFilters')" class="btn btn-danger" type="button">
+                                    <i class="fa fa-refresh"></i> &nbsp;Reset
+                                </button>
+                            </div>
+                        </div>
+                    </div>
         </div>
     </div>
+</div>

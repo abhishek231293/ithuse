@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" ng-app="ithuseApp">
+<html prevent-right-click lang="en" ng-app="ithuseApp">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">

@@ -25,7 +25,6 @@ function DocumentController($scope, $rootScope, requestHandler, $timeout, $http)
             url: '/getFilter'
 
         }).then(function (response) {
-
             $scope.filterData = response;
         }).catch(function () {
 
@@ -76,22 +75,170 @@ function DocumentController($scope, $rootScope, requestHandler, $timeout, $http)
 }
 
 function EventController($scope, $rootScope, $state, $timeout, requestHandler) {
+
     $rootScope.currentTab = "event";
     $scope.event = {};
     $scope.filter = {};
     $scope.eventRowset = {};
     $scope.loader = false;
+    $scope.error = false;
+    $scope.errorMsgDate = '';
+    $scope.errorMsgTime = '';
+    $scope.errorMsgTitle = '';
+    $scope.errorMsgDescription = '';
+    $scope.errorMsgPlace = '';
+    $scope.searchFields = {};
+
+    $scope.getEvent = function(){
+
+        $scope.loader = true;
+        requestHandler.preparePostRequest({
+            url: '/getEvent',
+            data :{
+                title :$scope.searchFields.event_title,
+                time:$scope.searchFields.event_time,
+                status:$scope.searchFields.event_status
+            }
+        }).then(function (response) {
+            $timeout(function(){$scope.loader = false;}, 2000);
+            $scope.eventRowset = response;
+        })
+    }
 
     $scope.addEvent = function(){
 
-        console.log($scope.event);return;
+        $scope.validateEvent($scope.event);
+        if($scope.error){
+            swal({
+                title: 'Opps Something went wrong!',
+                text: 'All field are compulsory!',
+                timer: 2000
+            }).then(
+                function () {},
+                function (dismiss) {
+                    if (dismiss === 'timer') {
+                     return false;
+                    }
+                }
+            )
+        }else{
+            requestHandler.preparePostRequest({
+                url: '/addEvent',
+                data: $scope.event
+            }).then(function (response) {
+                if(response){
+                    $scope.loader = false;
+                    $state.go('event.list');
+
+                }
+
+            })
+        }
+
+    }
+
+    $scope.deleteEvent = function(eventId){
         requestHandler.preparePostRequest({
-            url: '/addEvent',
-            data: $scope.event
+            url: '/deleteEvent',
+            data: {
+             event_id:   eventId
+            }
         }).then(function (response) {
-            $scope.loader = false;
-            $state.go('event.list');
+            if(response){
+                $scope.loader = false;
+                $scope.getEvent();
+
+            }
+
         })
+    }
+
+    $scope.getEventDetailById = function(eventId){
+        requestHandler.preparePostRequest({
+            url: '/getEvent',
+            data: {
+                event_id:   $rootScope.eventId
+            }
+        }).then(function (response) {
+            if(response){
+
+                $scope.eventEditDetail = response;
+                console.log($scope.eventEditDetail);
+            }
+
+        })
+    }
+
+
+    $scope.validateEvent = function(eventValue){
+
+        $scope.error = false;
+
+        if ("date" in eventValue){
+
+            if(eventValue['date'] != ''){
+                if ("myTime" in eventValue) {
+                    if(eventValue['myTime'] != ''){
+                        $scope.errorMsgDateTime = '';
+                    }else{
+                        $scope.errorMsgDateTime = 'Please select event Date & Time.';
+                        $scope.error = true;
+                    }
+                }else{
+                    $scope.errorMsgDateTime = 'Please select event Date & Time.';
+                    $scope.error = true;
+                }
+            }else{
+                $scope.errorMsgDateTime = 'Please select event Date & Time.';
+                $scope.error = true;
+            }
+
+        }else{
+            $scope.errorMsgDateTime = 'Please select event Date & Time.';
+            $scope.error = true;
+        }
+
+        if ("place" in eventValue){
+            if(eventValue['place'] != ''){
+                $scope.errorMsgPlace = '';
+            }else{
+                $scope.errorMsgPlace = 'Please select event venue.';
+                $scope.error = true;
+            }
+        }else{
+            $scope.errorMsgPlace = 'Please enter event venue.';
+            $scope.error = true;
+        }
+
+        if ("title" in eventValue){
+            if(eventValue['title'] != ''){
+                $scope.errorMsgTitle = '';
+            }else{
+                $scope.errorMsgTitle = 'Please enter event title.';
+                $scope.error = true;
+            }
+        }else{
+            $scope.errorMsgTitle = 'Please enter event title.';
+            $scope.error = true;
+        }
+
+        if ("description" in eventValue){
+            if(eventValue['description'] != ''){
+                if(eventValue['description'].length < 30){
+                    $scope.errorMsgDescription = 'Please enter detailed description (Must be more than 30 letters).';
+                    $scope.error = true;
+                }else{
+                    $scope.errorMsgDescription = '';
+                }
+            }else{
+                $scope.errorMsgDescription = 'Please enter event description.';
+                $scope.error = true;
+            }
+        }else{
+            $scope.errorMsgDescription = 'Please enter event description.';
+            $scope.error = true;
+        }
+        return $scope.error;
     }
 
     $scope.reset = function(){
@@ -108,18 +255,6 @@ function EventController($scope, $rootScope, $state, $timeout, requestHandler) {
         })
     }
 
-    $scope.getEvent = function(){
-        $scope.loader = true;
-        requestHandler.preparePostRequest({
-           url: '/getEvent',
-           data: {}
-        }).then(function (response) {
-            $timeout(function(){$scope.loader = false;}, 2000);
-            $scope.eventRowset = response;
-        })
-    }
-
-
 }
 
 
@@ -133,17 +268,15 @@ function ManageController($scope, $rootScope, $state, $timeout, requestHandler){
 
     $scope.addDocumentDetail = function() {
 
-
         $scope.message = '';
 
         var route = ($scope.isUpdate) ? 'updateDocument' : 'addDocument';
 
-
-        $scope.saveEvent(route);
+        $scope.saveDocument(route);
 
     }
 
-    $scope.saveEvent = function(route){
+    $scope.saveDocument = function(route){
 
         if($rootScope.imageCheck == 0){
             sweetAlert('Error..', 'Please upload only pdf file...', 'error');
@@ -168,20 +301,8 @@ function ManageController($scope, $rootScope, $state, $timeout, requestHandler){
 
         }).then(function (response) {
 
-            sweetAlert('Done..', 'Congo..', 'success');
-
-            // $scope.result = response.result;
-            //
-            // $scope.myEventId = $scope.result.id;
-            // $scope.myEventName = $scope.result.event_name;
-            // console.log($scope.myEventId);
-            //$scope.message = response.message;
-
-
-            // if(!$scope.isUpdate){
-            //     $scope.resetFields();
-            //     $scope.resetUserFields();
-            // }
+            sweetAlert('Congratulation.', 'Document added successfully', 'success');
+            $state.go('document');
 
         }).catch(function () {
 

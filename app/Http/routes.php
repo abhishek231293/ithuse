@@ -23,6 +23,7 @@ Route::post('/getDocumentLists', 'HomeController@getDocumentLists');
 
 Route::post('/addEvent', 'EventController@add');
 Route::post('/getEvent', 'EventController@get');
+Route::post('/deleteEvent', 'EventController@delete');
 
 
 /*---------------------- Auth Controller ----------------------*/
