@@ -13,7 +13,7 @@ class Event extends Authenticatable
      */
 
     protected $fillable = [
-        'event_id', 'title', 'description', 'event_venue','event_date', 'status', 'is_active'
+        'event_id', 'title', 'description', 'event_venue','event_date','event_time', 'status', 'is_active'
     ];
     protected $table = 'events';
     public $timestamps = false;
@@ -26,10 +26,23 @@ class Event extends Authenticatable
         $this->title = $data['title'];
         $this->description = $data['description'];
         $this->event_venue = $data['place'];
-        $this->event_date = date('Y-m-d H:i:00', strtotime($date." ". $data['myTime']));
+        $this->event_date = date('Y-m-d', strtotime($date));
+        $this->event_time = $data['myTime'];
         $this->save();
         return $this->id;
 
+    }
+
+    public function editEvent($data){
+        $title = $data['title'];
+        $description = $data['description'];
+        $event_venue = $data['event_venue'];
+        $date = $data['event_date'];
+        $time = $data['event_time'];
+
+        $event = $this->where('event_id', $data['event_id']);
+        $returnStatus = $event->update(['title' =>$title,'description'=>$description,'event_venue'=>$event_venue,'event_date'=>$date,'event_time'=>$time]);
+        return $returnStatus;
     }
 
     public function getEvent($data){
@@ -37,12 +50,12 @@ class Event extends Authenticatable
         $event = $this->query();
 
         if(isset($data['title']) && $data['title']){
-            $event->where('title','like', '%'.$data['title'].'%');
+            $event->whereRaw('LCASE(title) like "%'.strtolower($data['title']).'%"');
         }
         if(isset($data['time']) && $data['time']){
             $date = explode('/', $data['time']);
             $date = $date[2] . "-" . $date[1] . "-" . $date[0];
-            $event->whereRaw('Date(event_date)','=', date('Y-m-d', strtotime($date) ));
+            $event->whereRaw("Date(event_date) = '".date('Y-m-d', strtotime($date))."'" );
         }
         if(isset($data['status']) && $data['status']){
             $event->where('status','=', $data['status']);
@@ -50,9 +63,11 @@ class Event extends Authenticatable
         if(isset($data['event_id']) && $data['event_id']){
             $event->where('event_id','=', $data['event_id']);
         }
-        $event->where('is_active','=', 1);
-
+        $event->whereRaw('is_active = 1');
+        $event->orderby('event_date','desc');
+        $event->orderby('event_time','desc');
         $eventRowset = $event->get();
+//        dd($eventRowset);
         return $eventRowset;
 
     }

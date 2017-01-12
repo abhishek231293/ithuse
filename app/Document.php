@@ -21,7 +21,7 @@ class Document extends Authenticatable
     /**
      * @return array
      */
-    public function getDocumentLists($categoryFilter,$subCategoryFilter)
+    public function getDocumentLists($categoryFilter,$subCategoryFilter,$categoriesId = false,$subCategoriesId=false)
     {
         $category = \App\Document::query();
 
@@ -37,7 +37,16 @@ class Document extends Authenticatable
                 $category->where('sub_categorys.sub_category_name','=', $subCategoryFilter);
             }
         }
-        
+
+        if($categoriesId){
+
+            $category->where('document_lists.category_id','=', $categoriesId);
+
+            if($subCategoriesId){
+                $category->where('document_lists.sub_category_id','=', $subCategoriesId);
+            }
+        }
+
         $category->where('document_lists.is_active','=', 1);
         $category->where('pdf_reports.is_active','=', 1);
         $data = $category->orderby('document_lists.category_id','DESC')->get();
@@ -55,7 +64,7 @@ class Document extends Authenticatable
         $alreadyExist = $existingCategory->toArray() ? true : false;
 
         if($alreadyExist){
-
+            return 'Already Exist';
         }else{
 
             $categoryIds = \App\Category::query();
@@ -77,13 +86,9 @@ class Document extends Authenticatable
             $pdfTable->uploading_date = date('Y-m-d H:i:s');
             $pdfTable->document_id = $categoryObj->id;
             $pdfTable->save();
-
-            return 'Uploading Successful';
-
-
+            return 'Success';
         }
 
-        return $alreadyExist;
 
     }
 

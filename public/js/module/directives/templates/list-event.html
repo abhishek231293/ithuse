@@ -68,7 +68,7 @@
                                 <td>{{eventRow.title}}</td>
                                 <td>{{eventRow.description}}</td>
                                 <td>{{eventRow.event_venue}}</td>
-                                <td>{{eventRow.event_date}}</td>
+                                <td>{{eventRow.event_date | date:'dd-MM-yyyy'}} {{ eventRow.event_time}}</td>
                                 <td>
 
                                     <span ng-show="eventRow.status == 'pending'" class="badge badge-success col-sm-6">
@@ -79,8 +79,17 @@
                                     </span>
                                 </td>
                                 <td style="text-align: center">
-                                    <a ui-sref="event.edit({event_id : eventRow.event_id})"><button class="btn btn-xs btn-primary"><i class="fa fa-edit"></i> Edit</button></a>
-                                	<button ng-model="deleteEventId" ng-click="deleteEvent(eventRow.event_id)" class="btn btn-xs btn-danger"><i class="fa fa-times"></i> Delete</button>
+                                    <span ng-if="eventRow.status == 'pending'">
+                                        <a ui-sref="event.edit({event_id : eventRow.event_id})">
+                                            <button  class="btn btn-xs btn-primary"><i class="fa fa-edit"></i> Edit</button>
+                                        </a>
+                                        <button ng-model="deleteEventId" ng-click="deleteEvent(eventRow.event_id)" class="btn btn-xs btn-danger"><i class="fa fa-times"></i> Delete</button>
+                                    </span>
+                                    <span ng-if="eventRow.status == 'complete'">
+                                        <button disabled  class="btn btn-xs btn-primary"><i class="fa fa-edit"></i> Edit</button>
+                                        <button disabled ng-model="deleteEventId" ng-click="deleteEvent(eventRow.event_id)" class="btn btn-xs btn-danger"><i class="fa fa-times"></i> Delete</button>
+                                    </span>
+
                                 </td>
                             </tr>
                         </tbody>

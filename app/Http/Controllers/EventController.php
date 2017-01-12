@@ -38,6 +38,16 @@ class EventController extends Controller
         return $returnValue;
     }
 
+    public function edit(Request $request)
+    {
+        $data = $request->all();
+
+        $eventModel = new \App\Event();
+        $returnValue = $eventModel->editEvent($data);
+
+        return $returnValue;
+    }
+
     public function get(Request $request)
     {
         $data = $request->all();

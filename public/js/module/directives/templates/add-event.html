@@ -71,12 +71,12 @@
                     <div>
                         <div class="form-group">
                             <div class="col-sm-12" align="center">
-                                <a ui-sref="event.list">
-                                    <button class="btn btn-danger" type="button">
-                                        <i class="fa fa-times" aria-hidden="true"></i>
-                                        &nbsp; Cancel
-                                    </button>
-                                </a>
+
+                                <button ng-click="cancelEvent('Are you sure you don\'t want to add this event!')" class="btn btn-danger" type="button">
+                                    <i class="fa fa-times" aria-hidden="true"></i>
+                                    &nbsp; Cancel
+                                </button>
+
                                 <button class="btn btn-success" type="button" ng-click="addEvent()">
                                     <i class="fa fa-plus" aria-hidden="true"></i>
                                     &nbsp;Add

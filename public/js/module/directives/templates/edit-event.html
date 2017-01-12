@@ -7,7 +7,7 @@
 
             <div class="ibox-content">
                 <form ng-init="getEventDetailById()"  method="post" class="form-horizontal">
-                    {{event.event_id}}
+
                     <div ng-repeat="event in eventEditDetail">
 
                         <div class="form-group" >
@@ -16,9 +16,9 @@
                                 <label class="control-label">Title</label>
                                 <input  placeholder="Eg. Team Meeting" type="text" class="form-control" ng-model="event.title">
 
-                                <div ng-show="errorMsgTitle" class="alert alert-warning col-sm-12 topMargin1">
+                                <div ng-show="errorMsgEventTitle" class="alert alert-warning col-sm-12 topMargin1">
                                     <a href="#" class="close" data-dismiss="alert">&times;</a>
-                                    <strong>Warning! </strong> {{errorMsgTitle}}
+                                    <strong>Warning! </strong> {{errorMsgEventTitle}}
                                 </div>
                             </div>
 
@@ -29,9 +29,9 @@
                                 <label class="control-label">Description</label>
                                 <textarea placeholder="Eg. Discussion regarding xxx ..." class="form-control" ng-model="event.description"></textarea>
                                 <span class="help-block m-b-none">A short description about the event, its location etc.</span>
-                                <div ng-show="errorMsgDescription" class="alert alert-warning col-sm-12 topMargin1">
+                                <div ng-show="errorMsgEventDescription" class="alert alert-warning col-sm-12 topMargin1">
                                     <a href="#" class="close" data-dismiss="alert">&times;</a>
-                                    <strong>Warning! </strong> {{errorMsgDescription}}
+                                    <strong>Warning! </strong> {{errorMsgEventDescription}}
                                 </div>
                             </div>
 
@@ -43,9 +43,9 @@
                             <div class="col-sm-12">
                                 <label class="control-label">Venue</label>
                                 <input type="text" placeholder="Eg. Pretoria, Cape Town, Bloemfontein, South Africa."  class="form-control" ng-model="event.event_venue"/>
-                                <div ng-show="errorMsgPlace" class="alert alert-warning col-sm-12 topMargin1">
+                                <div ng-show="errorMsgEventPlace" class="alert alert-warning col-sm-12 topMargin1">
                                     <a href="#" class="close" data-dismiss="alert">&times;</a>
-                                    <strong>Warning! </strong> {{errorMsgPlace}}
+                                    <strong>Warning! </strong> {{errorMsgEventPlace}}
                                 </div>
                             </div>
                         </div>
@@ -61,11 +61,11 @@
                                 </div>
                                 <div class="col-sm-4">
                                     <label class="control-label">Time</label>
-                                    <input readonly style="background-color: transparent;" type="text" placeholder="Time"  class="form-control" ng-model="event.event_date" my-timepicker/>
+                                    <input readonly style="background-color: transparent;" type="text" placeholder="Time"  class="form-control" ng-model="event.event_time" my-timepicker/>
                                 </div>
-                                <div ng-show="errorMsgDateTime" class="alert alert-warning col-sm-12 topMargin1">
+                                <div ng-show="errorMsgEventDateTime" class="alert alert-warning col-sm-12 topMargin1">
                                     <a href="#" class="close" data-dismiss="alert">&times;</a>
-                                    <strong>Warning! </strong> {{errorMsgDateTime}}
+                                    <strong>Warning! </strong> {{errorMsgEventDateTime}}
                                 </div>
                             </div>
                         </div>
@@ -74,13 +74,11 @@
                         <div>
                             <div class="form-group">
                                 <div class="col-sm-12" align="center">
-                                    <a ui-sref="event.list">
-                                        <button class="btn btn-danger" type="button">
-                                            <i class="fa fa-times" aria-hidden="true"></i>
-                                            &nbsp; Cancel
-                                        </button>
-                                    </a>
-                                    <button class="btn btn-success" type="button" ng-click="addEvent()">
+                                    <button ng-click="cancelEvent('You don\'t want to edit this event!')" class="btn btn-danger" type="button">
+                                        <i class="fa fa-times" aria-hidden="true"></i>
+                                        &nbsp; Cancel
+                                    </button>
+                                    <button class="btn btn-success" type="button" ng-click="editEvent(event)">
                                         <i class="fa fa-pencil" aria-hidden="true"></i>
                                         &nbsp;Edit
                                     </button>

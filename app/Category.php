@@ -33,4 +33,13 @@ class Category extends Authenticatable
         return $data;
     }
 
+    public function categoryExist($id){
+        $category = \App\Category::query();
+        $category->where('categorys.id','=', $id);
+        $category->where('categorys.is_active','=', 1);
+        $data = $category->orderby('categorys.id')->get();
+
+        return $data->toArray();
+    }
+
 }

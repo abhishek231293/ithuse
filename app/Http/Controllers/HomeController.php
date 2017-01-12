@@ -63,8 +63,8 @@ class HomeController extends Controller
         $pdfpath = addPdf($category,$subCategory);
         $title = ($request->input('document_title'));
         $document = new \App\Document();
+
         $documentRowSets = $document->UploadDocument($category,$subCategory,$pdfpath,$title);
-        dd($documentRowSets);
-        die(json_encode($documentRowSets->toArray()));
+        return $documentRowSets;
     }
 }
