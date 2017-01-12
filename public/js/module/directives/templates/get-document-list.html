@@ -19,8 +19,14 @@
                     <td>{{details.sub_category_name}}</td>
                     <td>{{details.uploading_date}}</td>
                     <td>
-                        <button class="btn btn-success btn-sm btn-circle" type="button"><i class="fa fa-upload"></i></button>
-                        <button class="btn btn-info btn-sm btn-circle" type="button"><i class="fa fa-paste"></i> </button>
+                        <a target="_blank" href="{{URL + details.pdf_name}}">
+                            <button class="btn btn-primary btn-sm" type="button">
+                                <i class="fa fa-file-pdf-o" aria-hidden="true"></i>&nbsp;Pdf
+                            </button>
+                        </a>
+                        <button ng-click="deleteDocument(details.document_id)" class="btn btn-danger btn-sm" type="button">
+                            <i class="fa fa-trash" aria-hidden="true"></i> &nbsp; Delete
+                        </button>
                     </td>
                 </tr>
                 <tr ng-show="!documentData.length">

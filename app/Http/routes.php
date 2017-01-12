@@ -20,6 +20,7 @@ Route::get('/', 'HomeController@index');
 Route::post('/getFilter', 'HomeController@getFilter');
 Route::post('/getDocumentLists', 'HomeController@getDocumentLists');
 Route::post('addDocument', 'HomeController@addDocument');
+Route::post('deleteDocument', 'HomeController@deleteDocument');
 
 /*---------------------- Event Controller ----------------------*/
 

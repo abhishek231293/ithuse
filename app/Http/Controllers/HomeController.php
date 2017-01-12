@@ -64,7 +64,14 @@ class HomeController extends Controller
         $title = ($request->input('document_title'));
         $document = new \App\Document();
 
-        $documentRowSets = $document->UploadDocument($category,$subCategory,$pdfpath,$title);
-        return $documentRowSets;
+        $status = $document->UploadDocument($category,$subCategory,$pdfpath,$title);
+        return $status;
+    }
+
+    public function deleteDocument(Request $request){
+        $data = $request->all();
+        $document = new \App\Document();
+        $status = $document->deleteDocument($data);
+        return $status;
     }
 }

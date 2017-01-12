@@ -18,6 +18,46 @@ function DocumentController($scope, $rootScope, requestHandler, $timeout, $http)
 
     }
 
+    $scope.deleteDocument = function(documentId){
+        swal({
+            title: 'Are you sure?',
+            text: "You don't want to delete this event!",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes',
+            cancelButtonText: 'No',
+            confirmButtonClass: 'btn btn-success',
+            cancelButtonClass: 'btn btn-danger',
+            buttonsStyling: true
+        }).then(function(dismiss) {
+            if(dismiss == true){
+                requestHandler.preparePostRequest({
+                    url: '/deleteDocument',
+                    data: {
+                        documentId:   documentId
+                    }
+                }).then(function (response) {
+                    if(response){
+                        swal(
+                            'Good job!',
+                            'Document Deleted Successfully!',
+                            'success'
+                        )
+                        $scope.loader = false;
+                        $scope.getDocuments();
+                    }
+
+                })
+            }else{
+
+            }
+
+
+        });
+    }
+
     $scope.getFilters = function(){
 
         requestHandler.preparePostRequest({
@@ -68,6 +108,7 @@ function DocumentController($scope, $rootScope, requestHandler, $timeout, $http)
 
         $scope.searchFields.category_name = '';
         $scope.searchFields.subcategory_name = '';
+        $scope.subCategoryList = {};
         $scope.getDocuments();
 
     }
@@ -419,30 +460,24 @@ function EventController($scope, $rootScope, $state, $timeout, requestHandler) {
 
 
 function ManageController($scope, $rootScope, $state, $timeout, requestHandler){
+
     $rootScope.currentTab = "manage";
     $scope.filterFor = 'documentManage';
-
     $rootScope.formData = {};
     $rootScope.isFileExistCheck = false;
     $scope.spinLoader = false;
 
     $scope.addDocumentDetail = function() {
-
         $scope.message = '';
-
         var route = ($scope.isUpdate) ? 'updateDocument' : 'addDocument';
-
         $scope.saveDocument(route);
-
     }
 
     $scope.saveDocument = function(route){
-
         if($rootScope.imageCheck == 0){
             sweetAlert('Error..', 'Please upload only pdf file...', 'error');
             return;
         }
-
         $scope.spinLoader = true;
         var userData = {};
         //console.log($rootScope.isFileExistCheck);return;
@@ -450,25 +485,25 @@ function ManageController($scope, $rootScope, $state, $timeout, requestHandler){
         if(!$scope.isFileExistCheck){
             $scope.formData = new FormData();
         }
-
         angular.forEach($scope.searchFields, function(value, key) {
             $scope.formData.append(key,value);
         });
-
         requestHandler.prepareAttachmentRequest({
             url: route,
             data: $scope.formData
-
         }).then(function (response) {
-            alert(response);
+
             if(response == 'Success'){
                 sweetAlert('Congratulation.', 'Document added successfully', 'success');
+                $scope.searchFields = {};
+                $scope.searchFields.document_title = '';
                 $state.go('document');
             }else{
                 sweetAlert('Opppppssss', 'Document already Exist', 'error');
+                $scope.searchFields = {};
+                $scope.searchFields.document_title = '';
+                $state.go('document');
             }
-
-
         }).catch(function () {
 
         })
