@@ -168,10 +168,11 @@
                 link: function(scope, element, attrs){
 
                     scope.range = [];
+                    scope.$root.pdfFile = false;
+                    scope.$root.imageCheck = 0;
                     for(var i=0;i<scope.max;i++) {
                         scope.range.push(i);
                     }
-
                     var imageFormData = new FormData();
 
                     scope.validateImageFile = function(element){
@@ -181,10 +182,9 @@
                         var item = $(element).attr("item");
 
                         if(!scope.$root.imageCheck){
-                            scope.$root.imageCheck = 1;
+                            scope.$root.imageCheck = -1;
                         }
 
-                        //console.log(scope.$root.imageCheck);
                         imageFormData.append('pdf'+item, $(element)[0].files[0]);
 
                         scope.$root.formData = imageFormData;
@@ -204,7 +204,8 @@
                         if(isValidLogo == '-1'){
                             sweetAlert("Error..!", 'Please select valid file format', 'warning');
                             scope.$root.imageCheck = 0;
-
+                        }else{
+                            scope.$root.imageCheck = 1;
                         }
                     }
                 }

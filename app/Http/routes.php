@@ -21,6 +21,7 @@ Route::post('/getFilter', 'HomeController@getFilter');
 Route::post('/getDocumentLists', 'HomeController@getDocumentLists');
 Route::post('addDocument', 'HomeController@addDocument');
 Route::post('deleteDocument', 'HomeController@deleteDocument');
+Route::post('/fileExistance', 'HomeController@getDocumentLists');
 
 /*---------------------- Event Controller ----------------------*/
 

@@ -51,7 +51,6 @@ class Document extends Authenticatable
         $category->where('pdf_reports.is_active','=', 1);
         $category->orderby('categorys.category_name');
         $data = $category->orderby('sub_categorys.sub_category_name')->get();
-
         return $data;
     }
 
@@ -85,6 +84,7 @@ class Document extends Authenticatable
             $pdfTable->document_id = $documentId[0]['id'];
             $pdfTable->save();
 
+            return 'Success';
         }else{
 
             $categoryIds = \App\Category::query();

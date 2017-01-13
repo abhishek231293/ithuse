@@ -15,7 +15,6 @@ function DocumentController($scope, $rootScope, requestHandler, $timeout, $http)
             $scope.login = true;
             $scope.loadValue = value;
         }
-
     }
 
     $scope.deleteDocument = function(documentId){
@@ -53,8 +52,6 @@ function DocumentController($scope, $rootScope, requestHandler, $timeout, $http)
             }else{
 
             }
-
-
         });
     }
 
@@ -294,8 +291,6 @@ function EventController($scope, $rootScope, $state, $timeout, requestHandler) {
             }else{
 
             }
-
-
         });
     }
 
@@ -317,7 +312,7 @@ function EventController($scope, $rootScope, $state, $timeout, requestHandler) {
 
 
     $scope.validateEvent = function(eventValue,eventFor){
-        console.log(eventValue);
+
         $scope.error = false;
         $scope.errorEdit = false;
 
@@ -466,48 +461,131 @@ function ManageController($scope, $rootScope, $state, $timeout, requestHandler){
     $rootScope.formData = {};
     $rootScope.isFileExistCheck = false;
     $scope.spinLoader = false;
+    $scope.error  =false;
+    $scope.filter = {};
 
     $scope.addDocumentDetail = function() {
-        $scope.message = '';
-        var route = ($scope.isUpdate) ? 'updateDocument' : 'addDocument';
-        $scope.saveDocument(route);
+
+        $scope.validateForm($scope.searchFields);
+
+        if($scope.error){
+            swal({
+                title: 'Opps Something went wrong!',
+                text: 'All field are compulsory!',
+                timer: 2000
+            }).then(
+                function () {},
+                function (dismiss) {
+                    if (dismiss === 'timer') {
+                        return false;
+                    }
+                }
+            )
+        }else{
+            $scope.message = '';
+            var route = ($scope.isUpdate) ? 'updateDocument' : 'addDocument';
+            requestHandler.preparePostRequest({
+                url: '/fileExistance',
+                data:  $scope.searchFields
+            }).then(function (response) {
+                if(response.length){
+                    alert('Exisit')
+                }else{
+                    $scope.saveDocument(route);
+                }
+            })
+        }
+
     }
 
     $scope.saveDocument = function(route){
+
         if($rootScope.imageCheck == 0){
-            sweetAlert('Error..', 'Please upload only pdf file...', 'error');
+            sweetAlert('Error..', 'Please upload a pdf file', 'error');
             return;
         }
+
+        if($rootScope.imageCheck == undefined){
+            sweetAlert('Error..', 'Please select a file', 'error');
+            return;
+        }
+
         $scope.spinLoader = true;
         var userData = {};
-        //console.log($rootScope.isFileExistCheck);return;
-
         if(!$scope.isFileExistCheck){
             $scope.formData = new FormData();
         }
+
         angular.forEach($scope.searchFields, function(value, key) {
             $scope.formData.append(key,value);
         });
+
         requestHandler.prepareAttachmentRequest({
+
             url: route,
             data: $scope.formData
+
         }).then(function (response) {
 
-            if(response == 'Success'){
+            if(response == 'Success') {
                 sweetAlert('Congratulation.', 'Document added successfully', 'success');
                 $scope.searchFields = {};
                 $scope.searchFields.document_title = '';
                 $state.go('document');
-            }else{
+            } else{
                 sweetAlert('Opppppssss', 'Document already Exist', 'error');
                 $scope.searchFields = {};
                 $scope.searchFields.document_title = '';
                 $state.go('document');
             }
+
         }).catch(function () {
 
         })
     };
+
+    $scope.validateForm = function(formData){
+
+        $scope.error = false;
+        if ("category_name" in formData){
+            if(formData['category_name'] != '' && formData['category_name'] != null){
+                $scope.errorCategoryName = '';
+            }else{
+                $scope.errorCategoryName = 'Please select category name';
+                $scope.error = true;
+            }
+        }else{
+            $scope.errorCategoryName = 'Please select category name';
+            $scope.error = true;
+        }
+
+        if ("subcategory_name" in formData){
+            if(formData['subcategory_name'] != '' && formData['subcategory_name'] != null){
+                $scope.errorSubCategoryName = '';
+            }else{
+                $scope.errorSubCategoryName = 'Please select sub category name';
+                $scope.error = true;
+            }
+        }else{
+            $scope.errorSubCategoryName = 'Please select sub category name';
+            $scope.error = true;
+        }
+
+         if ("document_title" in formData){
+            if(formData['document_title'] != '' && formData['document_title'] != null){
+                $scope.errorDocumentTitle = '';
+            }else{
+                $scope.errorDocumentTitle = 'Please enter document title';
+                $scope.error = true;
+            }
+
+        }else{
+            $scope.errorDocumentTitle = 'Please enter document title';
+            $scope.error = true;
+        }
+
+        return $scope.error;
+    }
 
 }
 

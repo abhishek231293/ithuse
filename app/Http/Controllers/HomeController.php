@@ -47,8 +47,18 @@ class HomeController extends Controller
 
     public function getDocumentLists(Request $request){
         $data = $request->all();
-        $category = ($request->input('category'));
-        $subCategory = ($request->input('subCategory'));
+
+        if(isset($data['category_name'])){
+            $category = ($request->input('category_name'));
+        }else{
+            $category = ($request->input('category'));
+        }
+
+        if(isset($data['category_name'])){
+            $subCategory = ($request->input('subcategory_name'));
+        }else{
+            $subCategory = ($request->input('subCategory'));
+        }
 
         $document = new \App\Document();
 
