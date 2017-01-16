@@ -27,7 +27,7 @@
             </ul>
             </div>
             <div class="logo-element">
-                ithuse
+                iTHUSE
             </div>
             </li>
 
