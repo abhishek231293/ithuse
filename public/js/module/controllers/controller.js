@@ -91,7 +91,7 @@ function DocumentController($scope, $rootScope, requestHandler, $timeout, $http)
             }
         }).then(function (response) {
 
-            $timeout(function(){$scope.loader = false;}, 1000);
+            $scope.loader = false;
             $scope.documentData = response;
             console.log($scope.documentData);
 
@@ -137,7 +137,7 @@ function EventController($scope, $rootScope, $state, $timeout, requestHandler) {
                 status:$scope.searchFields.event_status
             }
         }).then(function (response) {
-            $timeout(function(){$scope.loader = false;}, 1000);
+            $scope.loader = false;
             $scope.eventRowset = response;
         })
     }
