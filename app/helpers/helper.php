@@ -44,3 +44,7 @@ function addPdf($category,$subCategory)
     return $response;
 
 }
+
+function deletePdf(){
+    
+}

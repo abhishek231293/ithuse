@@ -22,7 +22,7 @@
 		  <div class="ibox-content">
 
                 <div class="row">
-                    <div class="col-sm-4">
+                    <div class="col-sm-3">
                         <div class="form-group">
                             <input type="text" ng-model="searchFields.event_title" id="event_title" name="event_title" value="" placeholder="Event Title" class="form-control">
                         </div>
@@ -43,10 +43,10 @@
                             </select>
                         </div>
                     </div>
-                     <div class="col-sm-2">
+                     <div class="col-sm-3">
                      	<div class="form-group">
                      		<button ng-click="getEvent()" class="btn btn-success"><i class="fa fa-search"></i> &nbsp;Go</button>
-                            <button class="btn btn-danger"><i class="fa fa-refresh"></i> &nbsp;Reset</button>
+                            <button ng-click="resetFilter()" class="btn btn-danger"><i class="fa fa-refresh"></i> &nbsp;Reset</button>
                         </div>
                     </div>
                 </div>
@@ -64,7 +64,8 @@
                     		<th style="text-align: center" class="col-sm-2">Action</th>
                     	</tr>	
                         <tbody>
-                            <tr ng-repeat="eventRow in eventRowset">
+
+                            <tr ng-if="eventRowset.length" ng-repeat="eventRow in eventRowset">
                                 <td>{{eventRow.title}}</td>
                                 <td>{{eventRow.description}}</td>
                                 <td>{{eventRow.event_venue}}</td>
@@ -90,6 +91,11 @@
                                         <button disabled ng-model="deleteEventId" ng-click="deleteEvent(eventRow.event_id)" class="btn btn-xs btn-danger"><i class="fa fa-times"></i> Delete</button>
                                     </span>
 
+                                </td>
+                            </tr>
+                            <tr>
+                                <td ng-if="!eventRowset.length" colspan="6" align="center">
+                                    <label style="padding: 6px; " class="label-danger">No Records Found</label>
                                 </td>
                             </tr>
                         </tbody>

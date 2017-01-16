@@ -91,7 +91,7 @@ function DocumentController($scope, $rootScope, requestHandler, $timeout, $http)
             }
         }).then(function (response) {
 
-            $timeout(function(){$scope.loader = false;}, 2000);
+            $timeout(function(){$scope.loader = false;}, 1000);
             $scope.documentData = response;
             console.log($scope.documentData);
 
@@ -137,7 +137,7 @@ function EventController($scope, $rootScope, $state, $timeout, requestHandler) {
                 status:$scope.searchFields.event_status
             }
         }).then(function (response) {
-            $timeout(function(){$scope.loader = false;}, 2000);
+            $timeout(function(){$scope.loader = false;}, 1000);
             $scope.eventRowset = response;
         })
     }
@@ -436,8 +436,13 @@ function EventController($scope, $rootScope, $state, $timeout, requestHandler) {
 
     }
 
-    $scope.reset = function(){
-        $scope.filter = {};
+    $scope.resetFilter = function(){
+        $scope.searchFields = {
+            event_title : '',
+            event_time : '',
+            event_status : ''
+        };
+        $scope.getEvent();
     }
 
     $scope.filter = function(){

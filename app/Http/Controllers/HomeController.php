@@ -54,7 +54,7 @@ class HomeController extends Controller
             $category = ($request->input('category'));
         }
 
-        if(isset($data['category_name'])){
+        if(isset($data['subcategory_name'])){
             $subCategory = ($request->input('subcategory_name'));
         }else{
             $subCategory = ($request->input('subCategory'));
@@ -70,7 +70,8 @@ class HomeController extends Controller
             $finalDocumentList[$detail['category_name']][$detail['sub_category_name']] = $detail;
         });
 
-        return $finalDocumentList;
+        die(json_encode($finalDocumentList));
+
     }
 
     public function addDocument(Request $request){

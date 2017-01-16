@@ -1,19 +1,18 @@
 
 <div class="row">
     <div class="col-lg-12" ng-init="getDocuments()">
-        <div ng-init="count=0" ng-if="!loader" class="panel-group" id="accordion">
+        <div  ng-init="count=0" ng-if="!loader" class="panel-group" id="accordion">
 
-            <div ng-repeat="(category_name,categoryDetail) in documentData" class="panel panel-default">
+            <div ng-if="documentData.length != 0" ng-repeat="(category_name,categoryDetail) in documentData" class="panel panel-default">
                 <a data-toggle="collapse" data-parent="#accordion" href="#collapse{{count}}">
                 <div style="background-color: #ececec;" ng-init="count = $index" class="panel-heading">
                     <h4 class="panel-title">
-
-                            {{category_name}}
-
+                        {{category_name}}
                     </h4>
                 </div>
                 </a>
-                <div  id="collapse{{count}}" class="panel-collapse collapse">
+
+                <div id="collapse{{count}}" class="panel-collapse collapse">
                     <div style="color: #2A6CB6;" class="gray-bg panel-body">
                         <div class="col-md-3"><strong>Sub Category Name</strong></div>
                         <div class="col-md-3"><strong>Document Title</strong></div>
@@ -35,6 +34,10 @@
                     </div>
                 </div>
             </div>
+            <div style="height: 300px;" ng-if="documentData.length == 0" align="center">
+                <label style="padding: 10px; margin-top: 10%;" class="label-danger">No Records Found</label>
+            </div>
         </div>
+
     </div>
 </div>
