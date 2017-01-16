@@ -315,12 +315,44 @@ function EventController($scope, $rootScope, $state, $timeout, requestHandler) {
         $scope.error = false;
         $scope.errorEdit = false;
 
+        var date = new Date();
+
+        var currentDate = date.getDate() + "/" + date.getMonth()+1+ "/"+date.getFullYear();
+        var currentHour = date.getHours();
+        var currentMinute = date.getMinutes();
+
         if ("date" in eventValue){
 
             if(eventValue['date'] != '' && eventValue['date'] != null){
                 if ("myTime" in eventValue) {
                     if(eventValue['myTime'] != '' && eventValue['myTime'] != null){
-                        $scope.errorMsgDateTime = '';
+
+                        if(currentDate == eventValue['date']){
+
+                            var eventTime  = eventValue['myTime'].split(':');
+
+                            console.log(eventTime);
+                            console.log(currentHour + " " + currentMinute);
+
+                            if(currentHour <= eventTime[0]){
+
+                                if(currentHour == eventTime[0]){
+                                    if(currentMinute >= eventTime[1]){
+                                        $scope.errorMsgDateTime = "You can't create event for past Date & Time.";
+                                        $scope.error = true;
+                                    }else{
+                                        $scope.errorMsgDateTime = '';
+                                    }
+                                }else{
+                                    $scope.errorMsgDateTime = '';
+                                }
+
+                            }else{
+                                $scope.errorMsgDateTime = "You can't create event for past Date & Time.";
+                                $scope.error = true;
+                            }
+                        }
+
                     }else{
                         $scope.errorMsgDateTime = 'Please select event Date & Time.';
                         $scope.error = true;

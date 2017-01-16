@@ -32,8 +32,6 @@
                 <div class="form-group">
                     <login-button></login-button>
 
-
-
                     {{--<a class="btn btn-link" href="{{ url('/activation/reset-password') }}">Forgot Password? </a>--}}
                     {{--<a class="btn btn-link" href="{{ url('/register') }}">Don't have an account? Register</a>--}}
 
