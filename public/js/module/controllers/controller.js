@@ -10,7 +10,7 @@ function DocumentController($scope, $rootScope, requestHandler, $timeout, $http)
 
     $scope.setLoginText = function (value) {
         if($scope.login){
-            $scope.loadValue = value;
+            $scope.loadValue = "<i class='fa fa-upload' aria-hidden='true'></i>&nbsp;"+value;
         }else {
             $scope.login = true;
             $scope.loadValue = value;
@@ -499,6 +499,19 @@ function ManageController($scope, $rootScope, $state, $timeout, requestHandler){
     $scope.spinLoader = false;
     $scope.error  =false;
     $scope.filter = {};
+    $scope.upload = false;
+    $scope.uploadClass = "";
+
+    $scope.setUploadName = function(value){
+        if($scope.upload){
+            $scope.uploadClass = "fa fa-spinner";
+            $scope.uploadValue = value;
+        }else {
+            $scope.uploadClass = "fa fa-upload";
+            $scope.upload = true;
+            $scope.uploadValue = value;
+        }
+    }
 
     $scope.addDocumentDetail = function() {
 
@@ -518,6 +531,7 @@ function ManageController($scope, $rootScope, $state, $timeout, requestHandler){
                 }
             )
         }else{
+
             $scope.message = '';
             var route = ($scope.isUpdate) ? 'updateDocument' : 'addDocument';
             requestHandler.preparePostRequest({
@@ -573,7 +587,7 @@ function ManageController($scope, $rootScope, $state, $timeout, requestHandler){
         angular.forEach($scope.searchFields, function(value, key) {
             $scope.formData.append(key,value);
         });
-
+        $scope.setUploadName('Uploading...');
         requestHandler.prepareAttachmentRequest({
 
             url: route,
@@ -592,7 +606,7 @@ function ManageController($scope, $rootScope, $state, $timeout, requestHandler){
                 $scope.searchFields.document_title = '';
                 $state.go('document');
             }
-
+            $scope.setUploadName('Upload');
         }).catch(function () {
 
         })
