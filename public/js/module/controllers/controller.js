@@ -58,9 +58,7 @@ function DocumentController($scope, $rootScope, requestHandler, $timeout, $http)
     $scope.getFilters = function(){
 
         requestHandler.preparePostRequest({
-
             url: '/getFilter'
-
         }).then(function (response) {
             $scope.filterData = response;
         }).catch(function () {
@@ -84,9 +82,7 @@ function DocumentController($scope, $rootScope, requestHandler, $timeout, $http)
     };
     
     $scope.getDocuments = function () {
-
         $scope.loader = true;
-
         requestHandler.preparePostRequest({
             url: '/getDocumentLists',
             data :{
@@ -94,8 +90,11 @@ function DocumentController($scope, $rootScope, requestHandler, $timeout, $http)
                 subCategory:$scope.searchFields.subcategory_name
             }
         }).then(function (response) {
+
             $timeout(function(){$scope.loader = false;}, 2000);
             $scope.documentData = response;
+            console.log($scope.documentData);
+
         }).catch(function () {
 
         })
@@ -488,8 +487,26 @@ function ManageController($scope, $rootScope, $state, $timeout, requestHandler){
                 url: '/fileExistance',
                 data:  $scope.searchFields
             }).then(function (response) {
-                if(response.length){
-                    alert('Exisit')
+                if(response.length == undefined){
+                    swal({
+                        title: 'Document already uploaded!',
+                        text: "You want to overwrite the previous document for selected category and sub category",
+                        type: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'Yes',
+                        cancelButtonText: 'No',
+                        confirmButtonClass: 'btn btn-success',
+                        cancelButtonClass: 'btn btn-danger',
+                        buttonsStyling: true
+                    }).then(function(dismiss) {
+                        if(dismiss == true){
+                            $scope.saveDocument(route);
+                        }else{
+
+                        }
+                    });
                 }else{
                     $scope.saveDocument(route);
                 }
