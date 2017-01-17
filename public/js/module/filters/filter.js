@@ -199,7 +199,6 @@ angular.module('ithuseApp')
 
     .filter('getDateFormat', function(){
         return function(date){
-            console.log(date);
             if(!date){
                 return '';
             }
