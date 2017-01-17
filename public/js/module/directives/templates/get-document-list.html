@@ -22,7 +22,7 @@
                     <div ng-repeat="(subcategory_name,subcategoryDetail) in categoryDetail" class="panel-body">
                        <div class="col-md-3"><strong>{{subcategory_name}}</strong></div>
                        <div class="col-md-3">{{subcategoryDetail.title}}</div>
-                       <div class="col-md-3">{{subcategoryDetail.uploading_date}}</div>
+                       <div class="col-md-3">{{subcategoryDetail.uploading_date | getDateFormat}}</div>
                        <div class="col-md-3">
                            <a target="_blank" href="{{URL+subcategoryDetail.pdf_name}}">
                                <button class="btn btn-xs btn-success">

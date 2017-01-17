@@ -199,7 +199,7 @@ angular.module('ithuseApp')
 
     .filter('getDateFormat', function(){
         return function(date){
-
+            console.log(date);
             if(!date){
                 return '';
             }
@@ -208,6 +208,8 @@ angular.module('ithuseApp')
                 return date ;
             }
 
+            var time = date.split(' ');
+            time = time[1]?time[1]:'';
             var dateOut = new Date(date);
 
             var dd = dateOut.getDate();
@@ -220,9 +222,9 @@ angular.module('ithuseApp')
                 mm = '0'+ mm;
             }
 
-            var formatedDate =  dd + "/" +
-                mm + "/" +
-                dateOut.getFullYear() ;
+            var formatedDate =  dd + "-" +
+                mm + "-" +
+                dateOut.getFullYear() + " " + time ;
 
 
             return formatedDate;
