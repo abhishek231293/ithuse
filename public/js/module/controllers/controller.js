@@ -17,6 +17,32 @@ function DocumentController($scope, $rootScope, requestHandler, $timeout, $http)
         }
     }
 
+    $scope.confirmLogout = function () {
+        swal({
+            title: 'Are you sure?',
+            text: "You want to logout!",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes',
+            cancelButtonText: 'No',
+            confirmButtonClass: 'btn btn-success',
+            cancelButtonClass: 'btn btn-danger',
+            buttonsStyling: true
+        }).then(function(dismiss) {
+            if(dismiss == true){
+                requestHandler.prepareGetRequest({
+                    url: '/logout'
+                }).then(function (response) {
+                    location.reload();
+                })
+            }else{
+
+            }
+        });
+    }
+
     $scope.deleteDocument = function(documentId){
         swal({
             title: 'Are you sure?',

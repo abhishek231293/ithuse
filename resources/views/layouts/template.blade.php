@@ -68,7 +68,7 @@
                             <span class="m-r-sm text-muted welcome-message">Welcome {{$currentUser->name}}</span>
                         </li>
                         <li>
-                            <a href="{{ url('/logout') }}">
+                            <a ng-click="confirmLogout()">
                                 <i class="fa fa-sign-out"></i> Logout
                             </a>
                         </li>
