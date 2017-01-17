@@ -10,7 +10,7 @@ function DocumentController($scope, $rootScope, requestHandler, $timeout, $http)
 
     $scope.setLoginText = function (value) {
         if($scope.login){
-            $scope.loadValue = "<i class='fa fa-upload' aria-hidden='true'></i>&nbsp;"+value;
+            $scope.loadValue = value;
         }else {
             $scope.login = true;
             $scope.loadValue = value;
