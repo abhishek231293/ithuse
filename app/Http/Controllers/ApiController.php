@@ -64,7 +64,7 @@ class ApiController extends Controller
                                     $mobileTable = new \App\MobileDetail();
                                     $mobileTable->insertMobileDetail($dataRequest,$documentDetail[0]['id']);
                                     $response['status'] = 'success';
-                                    $response['data'][] = urlencode($documentDetail[0]['pdf_name']);
+                                    $response['data'][] = urlencode(asset($documentDetail[0]['pdf_name']));
 //                                    $response['data'][] = urlencode('http://www.adobe.com/devnet/acrobat/pdfs/pdf_open_parameters.pdf');
                                     die(json_encode($response));
                                 }else{
