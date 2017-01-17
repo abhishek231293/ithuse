@@ -202,7 +202,7 @@
                         //console.log($isValidLogo);
 
                         if(isValidLogo == '-1'){
-                            sweetAlert("Error..!", 'Please select valid file format', 'warning');
+                            sweetAlert("Error..!", 'Please select a pdf file', 'warning');
                             scope.$root.imageCheck = 0;
                         }else{
                             scope.$root.imageCheck = 1;

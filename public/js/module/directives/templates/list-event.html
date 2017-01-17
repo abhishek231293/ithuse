@@ -11,6 +11,10 @@
             <div class="ibox-title">
                 <h5>Event Details</h5>
                 <div class="ibox-tools">
+
+                    <button style="margin-top: -3%; margin-left: 10px;" type="button" class="btn btn-danger pull-right">Completed <span class="badge"> {{complete}}</span></button>
+
+                    <button style="margin-top: -3%; color: #fff; background-color:#286090; " type="button" class="btn  pull-right ">Pending <span class="badge"> {{pending}}</span></button>
                     <!--<a class="collapse-link">-->
                         <!--<i class="fa fa-chevron-up"></i>-->
                     <!--</a>-->
@@ -18,6 +22,9 @@
                         <!--<i class="fa fa-times"></i>-->
                     <!--</a>-->
                 </div>
+
+
+
             </div>
 		  <div class="ibox-content">
 
@@ -29,7 +36,13 @@
                     </div>
                     <div class="col-sm-3">
                         <div class="form-group">
-                            <input style="background-color: transparent; " readonly type="text" placeholder="Date"  class="form-control" ng-model="searchFields.event_time" my-datepicker/>
+                            <input style="background-color: transparent; " readonly type="text" placeholder="Start Date"  class="form-control" ng-model="searchFields.event_time" my-datepicker/>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <input style="background-color: transparent; " readonly type="text" placeholder="End Date"  class="form-control" ng-model="searchFields.event_end_time" my-datepicker/>
                         </div>
                     </div>
                    
@@ -43,8 +56,8 @@
                             </select>
                         </div>
                     </div>
-                     <div class="col-sm-3">
-                     	<div class="form-group">
+                     <div class="col-sm-12">
+                     	<div class="pull-right form-group">
                      		<button ng-click="getEvent()" class="btn btn-success"><i class="fa fa-search"></i> &nbsp;Go</button>
                             <button ng-click="resetFilter()" class="btn btn-danger"><i class="fa fa-refresh"></i> &nbsp;Reset</button>
                         </div>

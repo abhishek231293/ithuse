@@ -53,8 +53,22 @@ class EventController extends Controller
         $data = $request->all();
         $eventModel = new \App\Event();
         $returnValue = $eventModel->getEvent($data);
+        $returnValue = $returnValue->toArray();
+        $finalCategoryList = array();
+        $finalCategoryList['pending'] = 0;
+        $finalCategoryList['complete'] = 0;
+        array_walk($returnValue, function($detail) use( &$finalCategoryList ) {
 
-        die(json_encode($returnValue));
+            if($detail['status'] == 'pending'){
+                $finalCategoryList['pending'] = $finalCategoryList['pending']+1;
+            }else{
+                $finalCategoryList['complete'] = $finalCategoryList['complete'] + 1;
+            }
+            $finalCategoryList['detail'][] = $detail;
+
+        });
+
+        die(json_encode($finalCategoryList));
     }
 
     public function delete(Request $request)

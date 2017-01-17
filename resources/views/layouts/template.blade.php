@@ -34,7 +34,7 @@
             <li ng-class="{true:'active',false:''}[currentTab == 'document']">
                 <a ui-sref="document">
                     <i class="fa fa-list-ul" aria-hidden="true"></i>
-                    <span class="nav-label">Documents List</span>
+                    <span class="nav-label">Departments</span>
                 </a>
             </li>
 

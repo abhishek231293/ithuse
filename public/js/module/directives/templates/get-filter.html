@@ -6,7 +6,7 @@
                         <div class="col-sm-3">
                             <div class="form-group">
                                 <select ng-change="getSubCategoryList()" ng-model="searchFields.category_name" name="category" id="category" class="form-control">
-                                    <option value="" selected="selected">Select Category</option>
+                                    <option value="" selected="selected">Select Department</option>
                                     <option ng-repeat="(category_name,subCategoryDetail) in filterData" value="{{category_name}}">
                                         {{category_name}}
                                     </option>
@@ -16,7 +16,7 @@
                         <div  class="col-sm-3">
                             <div class="form-group">
                                 <select  name="sub-category" id="sub-category" class="form-control" ng-model="searchFields.subcategory_name" >
-                                    <option value="" selected="selected">Select Sub Category</option>
+                                    <option value="" selected="selected">Select a Document</option>
                                     <option ng-repeat="(sub_category_name,subCategoryDetail) in subCategoryList" value="{{sub_category_name}}">
                                         {{sub_category_name}}
                                     </option>

@@ -55,8 +55,15 @@ class Event extends Authenticatable
         if(isset($data['time']) && $data['time']){
             $date = explode('/', $data['time']);
             $date = $date[2] . "-" . $date[1] . "-" . $date[0];
-            $event->whereRaw("Date(event_date) = '".date('Y-m-d', strtotime($date))."'" );
+            $event->whereRaw("Date(event_date) >= '".date('Y-m-d', strtotime($date))."'" );
         }
+
+        if(isset($data['end_time']) && $data['end_time']){
+            $date = explode('/', $data['end_time']);
+            $date = $date[2] . "-" . $date[1] . "-" . $date[0];
+            $event->whereRaw("Date(event_date) <= '".date('Y-m-d', strtotime($date))."'" );
+        }
+
         if(isset($data['status']) && $data['status']){
             $event->where('status','=', $data['status']);
         }

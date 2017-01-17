@@ -20,7 +20,7 @@ function DocumentController($scope, $rootScope, requestHandler, $timeout, $http)
     $scope.deleteDocument = function(documentId){
         swal({
             title: 'Are you sure?',
-            text: "You don't want to delete this event!",
+            text: "You want to delete this document!",
             type: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
@@ -134,11 +134,15 @@ function EventController($scope, $rootScope, $state, $timeout, requestHandler) {
             data :{
                 title :$scope.searchFields.event_title,
                 time:$scope.searchFields.event_time,
+                end_time:$scope.searchFields.event_end_time,
                 status:$scope.searchFields.event_status
             }
         }).then(function (response) {
+            console.log(response);
             $scope.loader = false;
-            $scope.eventRowset = response;
+            $scope.eventRowset = response['detail'];
+            $scope.pending = response['pending'];
+            $scope.complete = response['complete'];
         })
     }
 
@@ -258,7 +262,7 @@ function EventController($scope, $rootScope, $state, $timeout, requestHandler) {
     $scope.deleteEvent = function(eventId){
         swal({
             title: 'Are you sure?',
-            text: "You don't want to delete this event!",
+            text: "You want to delete this event!",
             type: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
@@ -472,7 +476,8 @@ function EventController($scope, $rootScope, $state, $timeout, requestHandler) {
         $scope.searchFields = {
             event_title : '',
             event_time : '',
-            event_status : ''
+            event_status : '',
+            event_end_time : ''
         };
         $scope.getEvent();
     }
@@ -620,11 +625,11 @@ function ManageController($scope, $rootScope, $state, $timeout, requestHandler){
             if(formData['category_name'] != '' && formData['category_name'] != null){
                 $scope.errorCategoryName = '';
             }else{
-                $scope.errorCategoryName = 'Please select category name';
+                $scope.errorCategoryName = 'Please select department';
                 $scope.error = true;
             }
         }else{
-            $scope.errorCategoryName = 'Please select category name';
+            $scope.errorCategoryName = 'Please select department';
             $scope.error = true;
         }
 
@@ -632,11 +637,11 @@ function ManageController($scope, $rootScope, $state, $timeout, requestHandler){
             if(formData['subcategory_name'] != '' && formData['subcategory_name'] != null){
                 $scope.errorSubCategoryName = '';
             }else{
-                $scope.errorSubCategoryName = 'Please select sub category name';
+                $scope.errorSubCategoryName = 'Please select document';
                 $scope.error = true;
             }
         }else{
-            $scope.errorSubCategoryName = 'Please select sub category name';
+            $scope.errorSubCategoryName = 'Please select document';
             $scope.error = true;
         }
 
