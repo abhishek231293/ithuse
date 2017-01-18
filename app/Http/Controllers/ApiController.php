@@ -25,6 +25,7 @@ class ApiController extends Controller
             switch ($apiRequestFor){
 
                 case 'getPdfLink' : $this->getPdfLink($dataRequest);
+                case 'getCalenderEvent' : $this->getCalenderEvent($dataRequest);
 
                 default :   $response['status'] = 'error';
                             $response['message'] = 'Invalid API Request!';
@@ -95,6 +96,29 @@ class ApiController extends Controller
                 die(json_encode($response));
             }
 
+        }else{
+            $response['status'] = 'error';
+            $response['message'] = 'Please provide category id!';
+            die(json_encode($response));
+        }
+
+    }
+
+    public function getCalenderEvent($dataRequest){
+
+        $subCategory = new \App\Event();
+        $eventRowsets = $subCategory->getEvent(null,'ASC');
+        $eventRowsets = $eventRowsets->toArray();
+
+        array_walk($eventRowsets, function($detail) use( &$finalCategoryList ) {
+
+            $finalCategoryList[date('M Y',strtotime($detail['event_date']))][] = $detail;
+        });
+
+        if($finalCategoryList){
+            $response['status'] = 'success';
+            $response['data'] = $finalCategoryList;
+            die(json_encode($response));
         }else{
             $response['status'] = 'error';
             $response['message'] = 'Please provide category id!';

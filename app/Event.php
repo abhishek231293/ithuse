@@ -45,7 +45,7 @@ class Event extends Authenticatable
         return $returnStatus;
     }
 
-    public function getEvent($data){
+    public function getEvent($data,$order = 'DESC'){
 
         $event = $this->query();
 
@@ -71,8 +71,8 @@ class Event extends Authenticatable
             $event->where('event_id','=', $data['event_id']);
         }
         $event->whereRaw('is_active = 1');
-        $event->orderby('event_date','desc');
-        $event->orderby('event_time','desc');
+        $event->orderby('event_date',$order);
+        $event->orderby('event_time',$order);
         $eventRowset = $event->get();
 //        dd($eventRowset);
         return $eventRowset;
