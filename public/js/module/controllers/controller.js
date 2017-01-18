@@ -331,8 +331,7 @@ function EventController($scope, $rootScope, $state, $timeout, requestHandler) {
             }
         }).then(function (response) {
             if(response){
-
-                $scope.eventEditDetail = response;
+                $scope.eventEditDetail = response['detail'];
                 console.log($scope.eventEditDetail);
             }
 
