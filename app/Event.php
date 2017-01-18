@@ -28,6 +28,7 @@ class Event extends Authenticatable
         $this->event_venue = $data['place'];
         $this->event_date = date('Y-m-d', strtotime($date));
         $this->event_time = $data['myTime'];
+        $this->creation_date = date('Y-m-d H:i:s');
         $this->save();
         return $this->id;
 
@@ -41,7 +42,7 @@ class Event extends Authenticatable
         $time = $data['event_time'];
 
         $event = $this->where('event_id', $data['event_id']);
-        $returnStatus = $event->update(['title' =>$title,'description'=>$description,'event_venue'=>$event_venue,'event_date'=>$date,'event_time'=>$time]);
+        $returnStatus = $event->update(['title' =>$title,'description'=>$description,'event_venue'=>$event_venue,'event_date'=>$date,'event_time'=>$time,'updation_date'=>date('Y-m-d H:i:s')]);
         return $returnStatus;
     }
 

@@ -425,7 +425,13 @@ function EventController($scope, $rootScope, $state, $timeout, requestHandler) {
 
         if ("place" in eventValue){
             if(eventValue['place'] != '' && eventValue['place'] != null){
-                $scope.errorMsgPlace = '';
+                if(eventValue['place'].length < 10){
+                    $scope.errorMsgPlace = 'Please provide detailed venue(Must be more than 10 alphabets.)';
+                    $scope.error = true;
+                }else{
+                    $scope.errorMsgPlace = '';
+                }
+
             }else{
                 $scope.errorMsgPlace = 'Please select event venue.';
                 $scope.error = true;
@@ -449,8 +455,15 @@ function EventController($scope, $rootScope, $state, $timeout, requestHandler) {
 
         if ("title" in eventValue){
             if(eventValue['title'] != '' && eventValue['title'] != null){
-                $scope.errorMsgTitle = '';
-                $scope.errorMsgEventTitle = '';
+                if(eventValue['title'].length < 10){
+                    $scope.errorMsgTitle = 'Title must be more than 10 alphabets.';
+                    $scope.errorMsgEventTitle = 'Title must be more than 10 alphabets.';
+                    $scope.error = true;
+                    $scope.errorEdit = true;
+                }else{
+                    $scope.errorMsgTitle = '';
+                    $scope.errorMsgEventTitle = '';
+                }
 
             }else{
                 $scope.errorMsgTitle = 'Please enter event title.';
@@ -468,8 +481,8 @@ function EventController($scope, $rootScope, $state, $timeout, requestHandler) {
         if ("description" in eventValue){
             if(eventValue['description'] != '' && eventValue['description'] != null){
                 if(eventValue['description'].length < 30){
-                    $scope.errorMsgDescription = 'Please enter detailed description (Must be more than 30 letters).';
-                    $scope.errorMsgEventDescription = 'Please enter detailed description (Must be more than 30 letters).';
+                    $scope.errorMsgDescription = 'Please enter detailed description (Must be more than 30 alphabets).';
+                    $scope.errorMsgEventDescription = 'Please enter detailed description (Must be more than 30 alphabets).';
                     $scope.error = true;
                     $scope.errorEdit = true;
                 }else{
