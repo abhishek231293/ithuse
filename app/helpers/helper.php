@@ -21,7 +21,7 @@ function addPdf($category,$subCategory)
 
             $targetPath = $_SERVER['DOCUMENT_ROOT'] . $targetFolder;
             $imagePath = 'pdf_document/'.$category."/".$subCategory;
-            $file_name = 'document';
+            $file_name = 'document'.date('dmYHis');
 
             $targetFile = rtrim($targetPath, '/') . '/' . $file_name;
             $fileParts = pathinfo($param['name']);

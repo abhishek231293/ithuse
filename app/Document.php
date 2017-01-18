@@ -68,25 +68,47 @@ class Document extends Authenticatable
 
         $documentId = $existingCategory->toArray();
 
-
         if($documentId){
-            $document = $this->whereRaw('id = '.$documentId[0]['id'] );
-            $document->update(['title' =>$title,'updation_date'=>date("Y-m-d H:i:s")]);
+            $documentId = $documentId[0]['id'];
+            $documentIdExist = true;
+        }else{
+            $documentIdExist = false;
+        }
+
+        if(!$documentIdExist){
+
+            $categoryIds = \App\Category::query();
+            $categoryIds->select( array('categorys.id as categoryId','sub_categorys.id as subCategoryId'));
+            $categoryIds->leftJoin('sub_categorys','sub_categorys.category_id','=','categorys.id' );
+            $categoryIds->where('categorys.category_name','=', $categoryFilter);
+            $categoryIds = $categoryIds->where('sub_categorys.sub_category_name','=', $subCategoryFilter)->get();
+            $id = $categoryIds->toArray();
+
+            $documentObj = new Document();
+            $documentObj->category_id = $id[0]['categoryId'];
+            $documentObj->sub_category_id = $id[0]['subCategoryId'];
+            $documentObj->updation_date = date('Y-m-d H:i:s');
+            $docId = $documentObj->save();
+            $documentId = $documentObj->id;
+            $documentIdExist = true;
+        }
+
+        if($documentIdExist){
+            $document = $this->whereRaw('id = '.$documentId );
+            $document->update(['updation_date'=>date("Y-m-d H:i:s")]);
 
             $pdfTable = new PdfReport();
 
-            $pdf = $pdfTable->whereRaw('document_id = '.$documentId[0]['id'] );
-            $pdf->whereRaw('is_active = 1');
-            $pdf->update(['is_active' =>0]);
-
+            $pdfTable->title = $title;
             $pdfTable->pdf_name = $pdfpath['pdf0'];
             $pdfTable->uploading_date = date('Y-m-d H:i:s');
-            $pdfTable->document_id = $documentId[0]['id'];
+            $pdfTable->document_id = $documentId;
             $pdfTable->save();
 
             return 'Success';
-        }else{
 
+        }else{
+            /*
             $categoryIds = \App\Category::query();
             $categoryIds->select( array('categorys.id as categoryId','sub_categorys.id as subCategoryId'));
             $categoryIds->leftJoin('sub_categorys','sub_categorys.category_id','=','categorys.id' );
@@ -107,18 +129,15 @@ class Document extends Authenticatable
             $pdfTable->document_id = $documentObj->id;
             $pdfTable->save();
             return 'Success';
+            */
         }
-
 
     }
 
     public function deleteDocument($docId){
 
-        $document = $this->whereRaw('id = '.$docId['documentId']);
-        $document->update(['is_active' => 0]);
-
         $pdfTable = new PdfReport();
-        $pdfRecord = $pdfTable->whereRaw('document_id = '.$docId['documentId']);
+        $pdfRecord = $pdfTable->whereRaw('pdf_id = '.$docId['documentId']);
         $pdfRecord->update(['is_active' => 0]);
         return 'success';
 

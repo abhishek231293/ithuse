@@ -109,6 +109,7 @@ function DocumentController($scope, $rootScope, requestHandler, $timeout, $http)
     
     $scope.getDocuments = function () {
         $scope.loader = true;
+
         requestHandler.preparePostRequest({
             url: '/getDocumentLists',
             data :{
@@ -119,7 +120,6 @@ function DocumentController($scope, $rootScope, requestHandler, $timeout, $http)
 
             $scope.loader = false;
             $scope.documentData = response;
-            console.log($scope.documentData);
 
         }).catch(function () {
 
@@ -175,9 +175,10 @@ function EventController($scope, $rootScope, $state, $timeout, requestHandler) {
     $scope.addEvent = function(){
 
         $scope.validateEvent($scope.event,'add');
+
         if($scope.error){
             swal({
-                title: 'Opps Something went wrong!',
+                title: 'Oops Something went wrong!',
                 text: 'All field are compulsory!',
                 timer: 2000
             }).then(
@@ -208,9 +209,7 @@ function EventController($scope, $rootScope, $state, $timeout, requestHandler) {
                             $state.go('event.list');
                         }
                     )
-
                 }
-
             })
         }
 
@@ -246,7 +245,7 @@ function EventController($scope, $rootScope, $state, $timeout, requestHandler) {
         $scope.validateEvent(event_detail,'edit');
         if($scope.errorEdit){
             swal({
-                title: 'Opps Something went wrong!',
+                title: 'Oops Something went wrong!',
                 text: 'All field are compulsory!',
                 timer: 2000
             }).then(
@@ -565,34 +564,39 @@ function ManageController($scope, $rootScope, $state, $timeout, requestHandler){
 
             $scope.message = '';
             var route = ($scope.isUpdate) ? 'updateDocument' : 'addDocument';
-            requestHandler.preparePostRequest({
-                url: '/fileExistance',
-                data:  $scope.searchFields
-            }).then(function (response) {
-                if(response.length == undefined){
-                    swal({
-                        title: 'Document already uploaded!',
-                        text: "You want to overwrite the previous document for selected category and sub category",
-                        type: 'warning',
-                        showCancelButton: true,
-                        confirmButtonColor: '#3085d6',
-                        cancelButtonColor: '#d33',
-                        confirmButtonText: 'Yes',
-                        cancelButtonText: 'No',
-                        confirmButtonClass: 'btn btn-success',
-                        cancelButtonClass: 'btn btn-danger',
-                        buttonsStyling: true
-                    }).then(function(dismiss) {
-                        if(dismiss == true){
-                            $scope.saveDocument(route);
-                        }else{
 
-                        }
-                    });
-                }else{
-                    $scope.saveDocument(route);
-                }
-            })
+            /*
+                requestHandler.preparePostRequest({
+                    url: '/fileExistance',
+                    data:  $scope.searchFields
+                }).then(function (response) {
+                    if(response.length == undefined){
+                        swal({
+                            title: 'Document already uploaded!',
+                            text: "You want to overwrite the previous document for selected category and sub category",
+                            type: 'warning',
+                            showCancelButton: true,
+                            confirmButtonColor: '#3085d6',
+                            cancelButtonColor: '#d33',
+                            confirmButtonText: 'Yes',
+                            cancelButtonText: 'No',
+                            confirmButtonClass: 'btn btn-success',
+                            cancelButtonClass: 'btn btn-danger',
+                            buttonsStyling: true
+                        }).then(function(dismiss) {
+                            if(dismiss == true){
+                                $scope.saveDocument(route);
+                            }else{
+
+                            }
+                        });
+                    }else{
+                        $scope.saveDocument(route);
+                    }
+                })
+            */
+
+            $scope.saveDocument(route);
         }
 
     }
@@ -618,7 +622,9 @@ function ManageController($scope, $rootScope, $state, $timeout, requestHandler){
         angular.forEach($scope.searchFields, function(value, key) {
             $scope.formData.append(key,value);
         });
+
         $scope.setUploadName('Uploading...');
+
         requestHandler.prepareAttachmentRequest({
 
             url: route,
@@ -627,17 +633,38 @@ function ManageController($scope, $rootScope, $state, $timeout, requestHandler){
         }).then(function (response) {
 
             if(response == 'Success') {
-                sweetAlert('Congratulation.', 'Document added successfully', 'success');
-                $scope.searchFields = {};
-                $scope.searchFields.document_title = '';
-                $state.go('document');
+
+                swal({
+                    title: 'Document added successfully',
+                    text: "You want to add new document?",
+                    type: 'success',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes',
+                    cancelButtonText: 'No',
+                    confirmButtonClass: 'btn btn-success',
+                    cancelButtonClass: 'btn btn-danger',
+                    buttonsStyling: true
+                }).then(function(dismiss) {
+                    if(dismiss == true){
+                        location.reload();
+                    }else{
+                        $scope.searchFields = {};
+                        $scope.searchFields.document_title = '';
+                        $state.go('document');
+                    }
+                });
+
+
             } else{
-                sweetAlert('Opppppssss', 'Document already Exist', 'error');
+                sweetAlert('Oops', 'Something went wrong try again', 'error');
                 $scope.searchFields = {};
                 $scope.searchFields.document_title = '';
-                $state.go('document');
             }
+
             $scope.setUploadName('Upload');
+
         }).catch(function () {
 
         })

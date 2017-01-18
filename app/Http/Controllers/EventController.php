@@ -16,7 +16,6 @@ class EventController extends Controller
      */
     public function __construct()
     {
-        
         $this->middleware('auth');
         $this->currentUser = Auth::User();
         view()->share([ 'currentUser' => $this->currentUser ]);
@@ -31,7 +30,6 @@ class EventController extends Controller
     public function add(Request $request)
     {
         $data = $request->all();
-        
         $eventModel = new \App\Event();
         $returnValue = $eventModel->addEvent($data);
 
@@ -41,7 +39,6 @@ class EventController extends Controller
     public function edit(Request $request)
     {
         $data = $request->all();
-
         $eventModel = new \App\Event();
         $returnValue = $eventModel->editEvent($data);
 
@@ -57,6 +54,7 @@ class EventController extends Controller
         $finalCategoryList = array();
         $finalCategoryList['pending'] = 0;
         $finalCategoryList['complete'] = 0;
+
         array_walk($returnValue, function($detail) use( &$finalCategoryList ) {
 
             if($detail['status'] == 'pending'){
@@ -64,8 +62,8 @@ class EventController extends Controller
             }else{
                 $finalCategoryList['complete'] = $finalCategoryList['complete'] + 1;
             }
-            $finalCategoryList['detail'][] = $detail;
 
+            $finalCategoryList['detail'][] = $detail;
         });
 
         die(json_encode($finalCategoryList));

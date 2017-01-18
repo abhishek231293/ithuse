@@ -38,14 +38,12 @@
                 </a>
             </li>
 
-            <li ng-init="getDocuments()" ng-class="{true:'active',false:''}[currentTab == 'manage']">
+            <li  ng-class="{true:'active',false:''}[currentTab == 'manage']">
                 <a ui-sref="manage">
                     <i class="fa fa-upload" aria-hidden="true"></i>
                     <span class="nav-label">Manage Documents</span>
                 </a>
             </li>
-
-
 
             <li ng-class="{true:'active',false:''}[currentTab == 'event']">
                 <a ui-sref="event.list">

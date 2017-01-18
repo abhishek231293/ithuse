@@ -101,7 +101,6 @@ class ApiController extends Controller
             $response['message'] = 'Please provide category id!';
             die(json_encode($response));
         }
-
     }
 
     public function getCalenderEvent($dataRequest){

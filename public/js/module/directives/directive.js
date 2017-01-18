@@ -103,8 +103,14 @@
                 restrict: 'E',
                 scope: false,
                 replace: true,
+                //templateUrl: 'js/module/directives/templates/get-document-accodian.html',
                 templateUrl: 'js/module/directives/templates/get-document-list.html',
+                compile:function () {
+                    return function ($scope) {
+                        $scope.getDocuments();
+                    }
 
+                }
             };
         }])
 

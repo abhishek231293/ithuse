@@ -68,14 +68,16 @@
 
                 <div ng-if="!loader"  class="table-responsive">
                     <table class="table table-striped">
-                    	<tr>
-                    		<th class="col-sm-2">Title</th>
-                    		<th class="col-sm-2">Description</th>
-                            <th class="col-sm-2">Place</th>
-                            <th class="col-sm-2">Date & Time</th>
-                    		<th class="col-sm-2">Event Status</th>
-                    		<th style="text-align: center" class="col-sm-2">Action</th>
-                    	</tr>	
+                        <thead>
+                            <tr>
+                                <td class="col-sm-2">Title</td>
+                                <td class="col-sm-2">Description</td>
+                                <td class="col-sm-2">Place</td>
+                                <td class="col-sm-2">Date & Time</td>
+                                <td class="col-sm-2">Event Status</td>
+                                <td style="text-align: center" class="col-sm-2">Action</td>
+                            </tr>
+                        </thead>
                         <tbody>
 
                             <tr ng-if="eventRowset.length" ng-repeat="eventRow in eventRowset">
