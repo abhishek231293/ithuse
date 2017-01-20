@@ -35,10 +35,13 @@ class Event extends Authenticatable
     }
 
     public function editEvent($data){
+        $date = explode('/',$data['event_date']);
+        $date = $date[2]."-".$date[1]."-".$date[0];
+
         $title = $data['title'];
         $description = $data['description'];
         $event_venue = $data['event_venue'];
-        $date = $data['event_date'];
+        $date = date('Y-m-d', strtotime($date));;
         $time = $data['event_time'];
 
         $event = $this->where('event_id', $data['event_id']);
