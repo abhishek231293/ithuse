@@ -19,9 +19,9 @@ class ApiController extends Controller
         $response = array();
         $dataRequest = $request->all();
         $apiRequestFor = isset($dataRequest['requestFor']) ? $dataRequest['requestFor'] : null;
-
-        if($apiRequestFor){
-
+        echo "requestFor : " . trim($apiRequestFor);
+        if(trim($apiRequestFor)){
+            echo "requestFor : " . trim($apiRequestFor);
             switch (trim($apiRequestFor)){
 
                 case 'getPdfLink' : $this->getPdfLink($dataRequest);
