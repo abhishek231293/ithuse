@@ -7,7 +7,9 @@
                     <li class="nav-header">
                         <div class="dropdown profile-element" style="text-align: center">
               <span>
-                  <img alt="image" class="" src="{{ asset('img/ithuse.png') }}" style="width: 30%;" />
+                  <a ui-sref="document">
+                      <img alt="image" class="" src="{{ asset('img/ithuse.png') }}" style="width: 30%;" />
+                  </a>
               </span>
 
             <!--<a data-toggle="dropdown" class="dropdown-toggle" href="#">

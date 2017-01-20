@@ -24,8 +24,8 @@ class ApiController extends Controller
 
             switch ($apiRequestFor){
 
-                case 'getPdfLink' : $this->getPdfLink($dataRequest);
-                case 'getCalenderEvent' : $this->getCalenderEvent($dataRequest);
+                case 'getPdfLink' : trim($this->getPdfLink($dataRequest));
+                case 'getCalenderEvent' : trim($this->getCalenderEvent($dataRequest));
 
                 default :   $response['status'] = 'error';
                             $response['message'] = 'Invalid API Request!';
