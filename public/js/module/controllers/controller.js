@@ -550,6 +550,7 @@ function ManageController($scope, $rootScope, $state, $timeout, requestHandler){
         if($scope.upload){
             $scope.uploadClass = "fa fa-spinner";
             $scope.uploadValue = value;
+            $scope.upload = false;
         }else {
             $scope.uploadClass = "fa fa-upload";
             $scope.upload = true;
