@@ -542,10 +542,11 @@ function ManageController($scope, $rootScope, $state, $timeout, requestHandler){
     $scope.error  =false;
     $scope.filter = {};
     $scope.upload = false;
-    $scope.uploadClass = "";
+    $scope.uploadClass = "fa fa-upload";
     $scope.searchFields.document_title = '';
     
     $scope.setUploadName = function(value){
+
         if($scope.upload){
             $scope.uploadClass = "fa fa-spinner";
             $scope.uploadValue = value;
