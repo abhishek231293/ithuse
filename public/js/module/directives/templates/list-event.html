@@ -66,56 +66,64 @@
 
                 <loader></loader>
 
-                <div ng-if="!loader"  class="table-responsive">
-                    <table class="table table-striped">
-                        <thead>
-                            <tr>
-                                <td class="col-sm-2">Title</td>
-                                <td class="col-sm-2">Description</td>
-                                <td class="col-sm-2">Place</td>
-                                <td class="col-sm-2">Date & Time</td>
-                                <td class="col-sm-2">Event Status</td>
-                                <td style="text-align: center" class="col-sm-2">Action</td>
-                            </tr>
-                        </thead>
-                        <tbody>
+              <div class="row">
+                  <div class="col-md-12">
+                      <div class="panel-group">
+                          <div class="panel panel-default">
+                        <div ng-if="!loader"  class="table-responsive">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th class="col-sm-2">Title</th>
+                                        <th class="col-sm-2">Description</th>
+                                        <th class="col-sm-2">Place</th>
+                                        <th class="col-sm-2">Date & Time</th>
+                                        <th class="col-sm-2">Event Status</th>
+                                        <th style="text-align: center" class="col-sm-2">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
 
-                            <tr ng-if="eventRowset.length" ng-repeat="eventRow in eventRowset">
-                                <td>{{eventRow.title}}</td>
-                                <td>{{eventRow.description}}</td>
-                                <td>{{eventRow.event_venue}}</td>
-                                <td>{{eventRow.event_date | date:'dd-MM-yyyy'}} {{ eventRow.event_time}}</td>
-                                <td>
+                                    <tr ng-if="eventRowset.length" ng-repeat="eventRow in eventRowset">
+                                        <td>{{eventRow.title}}</td>
+                                        <td>{{eventRow.description}}</td>
+                                        <td>{{eventRow.event_venue}}</td>
+                                        <td>{{eventRow.event_date | date:'dd-MM-yyyy'}} {{ eventRow.event_time}}</td>
+                                        <td>
 
-                                    <span ng-show="eventRow.status == 'pending'" class="badge badge-success col-sm-6">
-                                        Pending
-                                    </span>
-                                    <span ng-show="eventRow.status == 'complete'" class="badge badge-danger col-sm-6">
-                                        Completed
-                                    </span>
-                                </td>
-                                <td style="text-align: center">
-                                    <span ng-if="eventRow.status == 'pending'">
-                                        <a ui-sref="event.edit({event_id : eventRow.event_id})">
-                                            <button  class="btn btn-xs btn-primary"><i class="fa fa-edit"></i> Edit</button>
-                                        </a>
-                                        <button ng-model="deleteEventId" ng-click="deleteEvent(eventRow.event_id)" class="btn btn-xs btn-danger"><i class="fa fa-times"></i> Delete</button>
-                                    </span>
-                                    <span ng-if="eventRow.status == 'complete'">
-                                        <button disabled  class="btn btn-xs btn-primary"><i class="fa fa-edit"></i> Edit</button>
-                                        <button disabled ng-model="deleteEventId" ng-click="deleteEvent(eventRow.event_id)" class="btn btn-xs btn-danger"><i class="fa fa-times"></i> Delete</button>
-                                    </span>
+                                            <span ng-show="eventRow.status == 'pending'" class="badge badge-success col-sm-6">
+                                                Pending
+                                            </span>
+                                            <span ng-show="eventRow.status == 'complete'" class="badge badge-danger col-sm-6">
+                                                Completed
+                                            </span>
+                                        </td>
+                                        <td style="text-align: center">
+                                            <span ng-if="eventRow.status == 'pending'">
+                                                <a ui-sref="event.edit({event_id : eventRow.event_id})">
+                                                    <button  class="btn btn-xs btn-primary"><i class="fa fa-edit"></i> Edit</button>
+                                                </a>
+                                                <button ng-model="deleteEventId" ng-click="deleteEvent(eventRow.event_id)" class="btn btn-xs btn-danger"><i class="fa fa-times"></i> Delete</button>
+                                            </span>
+                                            <span ng-if="eventRow.status == 'complete'">
+                                                <button disabled  class="btn btn-xs btn-primary"><i class="fa fa-edit"></i> Edit</button>
+                                                <button disabled ng-model="deleteEventId" ng-click="deleteEvent(eventRow.event_id)" class="btn btn-xs btn-danger"><i class="fa fa-times"></i> Delete</button>
+                                            </span>
 
-                                </td>
-                            </tr>
-                            <tr>
-                                <td ng-if="!eventRowset.length" colspan="6" align="center">
-                                    <label style="padding: 6px; " class="label-danger">No Records Found</label>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td ng-if="!eventRowset.length" colspan="6" align="center">
+                                            <label style="padding: 6px; " class="label-danger">No Records Found</label>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                              </div>
+                      </div>
+                      </div>
+              </div>
 
             </div>
         </div>
