@@ -19,9 +19,9 @@ class ApiController extends Controller
         $response = array();
         $dataRequest = $request->all();
         $apiRequestFor = isset($dataRequest['requestFor']) ? $dataRequest['requestFor'] : null;
-        echo "requestFor : " . trim($apiRequestFor);
+
         if(trim($apiRequestFor)){
-            echo "requestFor : " . trim($apiRequestFor);
+
             switch (trim($apiRequestFor)){
 
                 case 'getPdfLink' : $this->getPdfLink($dataRequest);
@@ -110,7 +110,6 @@ class ApiController extends Controller
         $eventRowsets = $eventRowsets->toArray();
 
         array_walk($eventRowsets, function($detail) use( &$finalCategoryList ) {
-
             $finalCategoryList[date('M Y',strtotime($detail['event_date']))][] = $detail;
         });
 
