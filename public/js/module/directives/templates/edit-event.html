@@ -57,7 +57,7 @@
 
                                 <div class="col-sm-4" style="padding: 0px !important;">
                                     <label class="control-label">Date</label>
-                                    <input style="background-color: transparent; " readonly type="text" placeholder="Date"  class="form-control" ng-model="event.event_date" my-datepicker/>
+                                    <input style="background-color: transparent; " readonly type="text" placeholder="Date"  class="form-control" ng-model="event.event_date | date:'dd/MM/yyyy'" my-datepicker/>
                                 </div>
                                 <div class="col-sm-4">
                                     <label class="control-label">Time</label>
