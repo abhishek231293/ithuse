@@ -35,7 +35,7 @@ class Event extends Authenticatable
     }
 
     public function editEvent($data){
-        $date = explode('/',$data['event_date']);
+        $date = explode('-',$data['event_date']);
         $date = $date[2]."-".$date[1]."-".$date[0];
 
         $title = $data['title'];
