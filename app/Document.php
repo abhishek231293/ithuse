@@ -57,7 +57,7 @@ class Document extends Authenticatable
     public function getPdfList($categoryFilter,$subCategoryFilter,$categoriesId = false,$subCategoriesId=false){
 
         $category = \App\Document::query();
-        $category->select( array('pdf_reports.pdf_id','pdf_reports.title'));
+        $category->select( array('pdf_reports.pdf_id','pdf_reports.title','sub_categorys.sub_category_name'));
         $category->join('pdf_reports', 'pdf_reports.document_id', '=', 'document_lists.id');
         $category->join('categorys', 'categorys.id', '=', 'document_lists.category_id');
         $category->join('sub_categorys', 'sub_categorys.id', '=', 'document_lists.sub_category_id');

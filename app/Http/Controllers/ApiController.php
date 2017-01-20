@@ -61,13 +61,12 @@ class ApiController extends Controller
                             $document = new \App\Document();
                             $pdfDetail = $document->getPdfList(null,null,$dataRequest['categoriesId'],$dataRequest['subCategoriesId']);
                             $documentDetail = $pdfDetail->toArray();
-
                             if($documentDetail){
                                 $mobileTable = new \App\MobileDetail();
                                 $mobileTable->insertMobileDetail($dataRequest,$documentDetail[0]['pdf_id']);
                                 $response['status'] = 'success';
+                                $response['sub_category_name'] = $documentDetail[0]['sub_category_name'];
                                 $response['data'] = $documentDetail;
-//                                    $response['data'][] = urlencode('http://www.adobe.com/devnet/acrobat/pdfs/pdf_open_parameters.pdf');
                                 die(json_encode($response));
                             }else{
                                 $response['status'] = 'error';
