@@ -13,7 +13,7 @@ class Document extends Authenticatable
      */
 
     protected $fillable = [
-        'id', 'title', 'category_id','sub_category_id', 'updation_date', 'is_active'
+        'id', 'category_id','sub_category_id', 'updation_date', 'is_active'
     ];
     protected $table = 'document_lists';
     public $timestamps = false;
@@ -25,6 +25,39 @@ class Document extends Authenticatable
     {
         $category = \App\Document::query();
 
+        $category->join('pdf_reports', 'pdf_reports.document_id', '=', 'document_lists.id');
+        $category->join('categorys', 'categorys.id', '=', 'document_lists.category_id');
+        $category->join('sub_categorys', 'sub_categorys.id', '=', 'document_lists.sub_category_id');
+
+        if($categoryFilter){
+
+            $category->where('categorys.category_name','=', $categoryFilter);
+
+            if($subCategoryFilter){
+                $category->where('sub_categorys.sub_category_name','=', $subCategoryFilter);
+            }
+        }
+
+        if($categoriesId){
+
+            $category->where('document_lists.category_id','=', $categoriesId);
+
+            if($subCategoriesId){
+                $category->where('document_lists.sub_category_id','=', $subCategoriesId);
+            }
+        }
+
+        $category->where('document_lists.is_active','=', 1);
+        $category->where('pdf_reports.is_active','=', 1);
+        $category->orderby('categorys.category_name');
+        $data = $category->orderby('sub_categorys.sub_category_name')->get();
+        return $data;
+    }
+
+    public function getPdfList($categoryFilter,$subCategoryFilter,$categoriesId = false,$subCategoriesId=false){
+
+        $category = \App\Document::query();
+        $category->select( array('pdf_reports.pdf_id','pdf_reports.title'));
         $category->join('pdf_reports', 'pdf_reports.document_id', '=', 'document_lists.id');
         $category->join('categorys', 'categorys.id', '=', 'document_lists.category_id');
         $category->join('sub_categorys', 'sub_categorys.id', '=', 'document_lists.sub_category_id');

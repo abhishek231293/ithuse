@@ -24,12 +24,13 @@ class ApiController extends Controller
 
             switch (trim($apiRequestFor)){
 
-                case 'getPdfLink' : $this->getPdfLink($dataRequest);
+                case 'getPdfList'       : $this->getPdfList($dataRequest);
+                case 'getPdfLink'       : $this->getPdfLink($dataRequest);
                 case 'getCalenderEvent' : $this->getCalenderEvent($dataRequest);
 
                 default :   $response['status'] = 'error';
-                            $response['message'] = 'Invalid API Request!';
-                            die(json_encode($response));
+                    $response['message'] = 'Invalid API Request!';
+                    die(json_encode($response));
             }
 
         }else{
@@ -40,7 +41,7 @@ class ApiController extends Controller
 
     }
 
-    public function getPdfLink($dataRequest){
+    public function getPdfList($dataRequest){
 
         if(isset($dataRequest['categoriesId']) && $dataRequest['categoriesId'] != '' && $dataRequest['categoriesId'] != null){
 
@@ -49,46 +50,46 @@ class ApiController extends Controller
                 $category = new \App\Category();
                 $categoryData = $category->categoryExist($dataRequest['categoriesId']);
 
-                    if($categoryData){
-                        $subCategory = new \App\SubCategory();
-                        $subCategoryData = $subCategory->subCategoryExist($dataRequest['categoriesId']);
+                if($categoryData){
+                    $subCategory = new \App\SubCategory();
+                    $subCategoryData = $subCategory->subCategoryExist($dataRequest['categoriesId']);
 
-                        if($subCategoryData){
+                    if($subCategoryData){
 
-                            if($dataRequest['imei']){
+                        if($dataRequest['imei']){
 
-                                $document = new \App\Document();
-                                $pdfDetail = $document->getDocumentLists(null,null,$dataRequest['categoriesId'],$dataRequest['subCategoriesId']);
-                                $documentDetail = $pdfDetail->toArray();
+                            $document = new \App\Document();
+                            $pdfDetail = $document->getPdfList(null,null,$dataRequest['categoriesId'],$dataRequest['subCategoriesId']);
+                            $documentDetail = $pdfDetail->toArray();
 
-                                if($documentDetail){
-                                    $mobileTable = new \App\MobileDetail();
-                                    $mobileTable->insertMobileDetail($dataRequest,$documentDetail[0]['id']);
-                                    $response['status'] = 'success';
-                                    $response['data'][] = urlencode(asset($documentDetail[0]['pdf_name']));
+                            if($documentDetail){
+                                $mobileTable = new \App\MobileDetail();
+                                $mobileTable->insertMobileDetail($dataRequest,$documentDetail[0]['pdf_id']);
+                                $response['status'] = 'success';
+                                $response['data'] = $documentDetail;
 //                                    $response['data'][] = urlencode('http://www.adobe.com/devnet/acrobat/pdfs/pdf_open_parameters.pdf');
-                                    die(json_encode($response));
-                                }else{
-                                    $response['status'] = 'error';
-                                    $response['message'] = 'No pdf Found.';
-                                    die(json_encode($response));
-                                }
-
+                                die(json_encode($response));
                             }else{
                                 $response['status'] = 'error';
-                                $response['message'] = 'Please provide IMEI number';
+                                $response['message'] = 'No pdf Found.';
                                 die(json_encode($response));
                             }
-                        }else{
-                                $response['status'] = 'error';
-                                $response['message'] = 'Invalid subcategory selected!';
-                                die(json_encode($response));
-                            }
+
                         }else{
                             $response['status'] = 'error';
-                            $response['message'] = 'Invalid category selected!';
+                            $response['message'] = 'Please provide IMEI number';
                             die(json_encode($response));
                         }
+                    }else{
+                        $response['status'] = 'error';
+                        $response['message'] = 'Invalid subcategory selected!';
+                        die(json_encode($response));
+                    }
+                }else{
+                    $response['status'] = 'error';
+                    $response['message'] = 'Invalid category selected!';
+                    die(json_encode($response));
+                }
 
             }else{
                 $response['status'] = 'error';
@@ -101,6 +102,27 @@ class ApiController extends Controller
             $response['message'] = 'Please provide category id!';
             die(json_encode($response));
         }
+    }
+
+    public function getPdfLink($dataRequest){
+
+        if(isset($dataRequest['pdf_id']) && $dataRequest['pdf_id'] != '' && $dataRequest['pdf_id'] != null){
+
+            $pdfModel = new \App\PdfReport();
+            $pdfRowset = $pdfModel->getPdfLinks($dataRequest);
+            $response['status'] = 'success';
+
+            foreach($pdfRowset as $data){
+                $response['data'] = urlencode(asset($data['pdf_name']));
+            }
+
+            die(json_encode($response));
+        }else{
+            $response['status'] = 'error';
+            $response['message'] = 'Invalid pdf report request!';
+            die(json_encode($response));
+        }
+
     }
 
     public function getCalenderEvent($dataRequest){
