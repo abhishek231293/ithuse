@@ -209,6 +209,10 @@ angular.module('ithuseApp')
 
             var time = date.split(' ');
             time = time[1]?time[1]:'';
+            var newTime = time.split(':');
+
+            time = newTime[0] ? (newTime[0]+":"+newTime[1]) : '';
+
             var dateOut = new Date(date);
 
             var dd = dateOut.getDate();
@@ -231,9 +235,9 @@ angular.module('ithuseApp')
     })
 
     .filter('getTimeSection', function(){
-        return function(dateValue){
-            var formatedDate = dateValue.split(" ");
-            return formatedDate[1];
+        return function(timeValue){
+            var time = timeValue.split(":");
+            return (time[0]+":"+time[1]);
         };
     })
 

@@ -92,5 +92,8 @@
             </div>
         </div>
     </div>
+
+    <event-read-more-detail></event-read-more-detail>
+
    
 @endsection

@@ -151,6 +151,8 @@ function EventController($scope, $rootScope, $state, $timeout, requestHandler) {
     $scope.errorMsgDescription = '';
     $scope.errorMsgPlace = '';
     $scope.searchFields = {};
+    $rootScope.eventReadMoreTitle = '';
+    $rootScope.eventReadMoreDescription = '';
 
     $scope.getEvent = function(){
 
@@ -529,6 +531,15 @@ function EventController($scope, $rootScope, $state, $timeout, requestHandler) {
         })
     }
 
+    $scope.openModal = function(details){
+        console.log(details);
+        $rootScope.eventReadMoreTitle = details['title'];
+        $rootScope.eventReadMoreDescription = details['description'];
+        $rootScope.eventReadMoreVenue = details['event_venue'];
+        $rootScope.eventReadMoreDate = details['event_date'];
+        $rootScope.eventReadMoreTime = details['event_time'];
+    }
+
 }
 
 
@@ -704,11 +715,11 @@ function ManageController($scope, $rootScope, $state, $timeout, requestHandler){
             if(formData['subcategory_name'] != '' && formData['subcategory_name'] != null){
                 $scope.errorSubCategoryName = '';
             }else{
-                $scope.errorSubCategoryName = 'Please select document';
+                $scope.errorSubCategoryName = 'Please select category';
                 $scope.error = true;
             }
         }else{
-            $scope.errorSubCategoryName = 'Please select document';
+            $scope.errorSubCategoryName = 'Please select category';
             $scope.error = true;
         }
 

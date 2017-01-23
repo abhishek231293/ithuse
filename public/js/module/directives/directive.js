@@ -119,7 +119,6 @@
                 restrict: 'E',
                 scope: false,
                 replace: true,
-
                 templateUrl: 'js/module/directives/templates/get-login-button.html'
             };
         }])
@@ -164,7 +163,16 @@
             };
         }])
 
-        .directive('addPdf', [function($rootScope) {
+        .directive('eventReadMoreDetail',[function() {
+            return {
+                restrict: 'E',
+                scope: false,
+                replace: true,
+                templateUrl: 'js/module/directives/templates/event-read-more-popup.html'
+            };
+        }])
+
+    .directive('addPdf', [function($rootScope) {
             return {
                 restrict: 'E',
                 templateUrl: 'js/module/directives/templates/add-pdf.html',

@@ -50,7 +50,7 @@ class Document extends Authenticatable
         $category->where('document_lists.is_active','=', 1);
         $category->where('pdf_reports.is_active','=', 1);
         $category->orderby('categorys.category_name');
-        $data = $category->orderby('sub_categorys.sub_category_name')->get();
+        $data = $category->orderby('pdf_reports.uploading_date','DESC')->get();
         return $data;
     }
 
