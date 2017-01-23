@@ -86,7 +86,7 @@
 
                                     <tr ng-if="eventRowset.length" ng-repeat="eventRow in eventRowset">
                                         <td>{{eventRow.title}}</td>
-                                        <td>{{eventRow.description | limitTo: 50}}
+                                        <td>{{eventRow.description | limitTo: 50}} ...
                                             <br/>
                                             <a data-toggle="modal" data-target="#eventReadMoreDetail" ng-click="openModal(eventRow)">
                                                 {{eventRow.length < 50 ? '' : 'Read more'}}
