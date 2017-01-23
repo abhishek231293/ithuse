@@ -85,15 +85,15 @@
                                 <tbody>
 
                                     <tr ng-if="eventRowset.length" ng-repeat="eventRow in eventRowset">
-                                        <td>{{eventRow.title}}</td>
+                                        <td style="text-transform: capitalize">{{eventRow.title}}</td>
                                         <td>{{eventRow.description | limitTo: 50}} ...
                                             <br/>
                                             <a data-toggle="modal" data-target="#eventReadMoreDetail" ng-click="openModal(eventRow)">
                                                 {{eventRow.length < 50 ? '' : 'Read more'}}
                                             </a>
                                         </td>
-                                        <td>{{eventRow.event_venue}}</td>
-                                        <td>{{eventRow.event_date | date:'dd-MM-yyyy'}} {{ eventRow.event_time | getTimeSection}}</td>
+                                        <td style="text-transform: capitalize">{{eventRow.event_venue}}</td>
+                                        <td>{{eventRow.event_date | date:'dd MMM yyyy'}} {{ eventRow.event_time | getTimeSection}}</td>
                                         <td>
 
                                             <span ng-show="eventRow.status == 'pending'" class="badge badge-success col-sm-6">

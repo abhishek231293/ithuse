@@ -209,9 +209,21 @@ angular.module('ithuseApp')
 
             var time = date.split(' ');
             time = time[1]?time[1]:'';
-            var newTime = time.split(':');
 
-            time = newTime[0] ? (newTime[0]+":"+newTime[1]) : '';
+            var newTime = time.split(":");
+            var day;
+            if(newTime[0] <= 11){
+                newTime[0] = newTime[0];
+                day = 'AM';
+            }else if(newTime[0] == 12){
+                newTime[0] = 12;
+                day = 'PM';
+            }else{
+                newTime[0] = newTime[0] - 12;
+                day = 'PM';
+            }
+
+            time = newTime[0] ? (newTime[0]+":"+newTime[1]+" " + day) : '';
 
             var dateOut = new Date(date);
 
@@ -219,14 +231,13 @@ angular.module('ithuseApp')
             if (dd < 10) {
                 dd = '0'+ dd;
             }
+            var monthList = {0:'Jan',1:'Feb',2:'Mar',3:'Apr',4:'May',5:'June',6:'July',7:'Aug',8:'Sept',9:'Oct',10:'Nov',11:'Dec'};
+            
             var mm = dateOut.getMonth();
-            mm = mm+1;
-            if (mm < 10) {
-                mm = '0'+ mm;
-            }
+            mm = monthList[mm];
 
-            var formatedDate =  dd + "-" +
-                mm + "-" +
+            var formatedDate =  dd + " " +
+                mm + " " +
                 dateOut.getFullYear() + " " + time ;
 
 
@@ -236,8 +247,24 @@ angular.module('ithuseApp')
 
     .filter('getTimeSection', function(){
         return function(timeValue){
-            var time = timeValue.split(":");
-            return (time[0]+":"+time[1]);
+            if(timeValue != undefined) {
+                var time = timeValue.split(":");
+                var day;
+                if (time[0] <= 11) {
+                    time[0] = time[0];
+                    day = 'AM';
+                } else if (time[0] == 12) {
+                    time[0] = 12;
+                    day = 'PM';
+                } else {
+                    time[0] = time[0] - 12;
+                    day = 'PM';
+                }
+
+                return (time[0] + ":" + time[1] + " " + day);
+            }else{
+                return timeValue;
+            }
         };
     })
 
