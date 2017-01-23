@@ -14,7 +14,7 @@
                             <input placeholder="Eg. Team Meeting" type="text" class="form-control" ng-model="event.title">
 
                             <div ng-show="errorMsgTitle" class="alert alert-warning col-sm-12 topMargin1">
-                                <a href="#" class="close" data-dismiss="alert">&times;</a>
+
                                 <strong>Warning! </strong> {{errorMsgTitle}}
                             </div>
                         </div>
@@ -27,7 +27,7 @@
                             <textarea rows="10" placeholder="Eg. Discussion regarding xxx ..." class="form-control" ng-model="event.description"></textarea>
                             <span class="help-block m-b-none">A short description about the event, its location etc.</span>
                             <div ng-show="errorMsgDescription" class="alert alert-warning col-sm-12 topMargin1">
-                                <a href="#" class="close" data-dismiss="alert">&times;</a>
+
                                 <strong>Warning! </strong> {{errorMsgDescription}}
                             </div>
                         </div>
@@ -41,7 +41,7 @@
                             <label class="control-label">Venue</label>
                             <input type="text" placeholder="Eg. Pretoria, Cape Town, Bloemfontein, South Africa."  class="form-control" ng-model="event.place"/>
                             <div ng-show="errorMsgPlace" class="alert alert-warning col-sm-12 topMargin1">
-                                <a href="#" class="close" data-dismiss="alert">&times;</a>
+
                                 <strong>Warning! </strong> {{errorMsgPlace}}
                             </div>
                         </div>
@@ -61,7 +61,6 @@
                                     <input readonly style="background-color: transparent;" type="text" placeholder="Time"  class="form-control" ng-model="event.myTime" my-timepicker/>
                                 </div>
                                 <div ng-show="errorMsgDateTime" class="alert alert-warning col-sm-12 topMargin1">
-                                    <a href="#" class="close" data-dismiss="alert">&times;</a>
                                     <strong>Warning! </strong> {{errorMsgDateTime}}
                                 </div>
                             </div>
