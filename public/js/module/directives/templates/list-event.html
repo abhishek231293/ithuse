@@ -1,30 +1,15 @@
 <div>
 <div class="row">
-	<div class="col-lg-12">
-		<a ui-sref="event.add"><button class="btn btn-primary pull-right"><i class="fa fa-plus"></i> Add Event</button></a>
-	</div>
-</div>
-<br>
-<div class="row">
     <div class="col-lg-12">
         <div class="ibox">
             <div class="ibox-title">
                 <h5>Event Details</h5>
                 <div class="ibox-tools">
+                        <a ui-sref="event.add">
+                            <button style="margin-top:-7%;" class="btn btn-primary pull-right"><i class="fa fa-plus"></i> Add Event</button>
+                        </a>
 
-                    <button style="margin-top: -3%; margin-left: 10px;" type="button" class="btn btn-danger pull-right">Completed <span class="badge"> {{complete}}</span></button>
-
-                    <button style="margin-top: -3%; color: #fff; background-color:#286090; " type="button" class="btn  pull-right ">Pending <span class="badge"> {{pending}}</span></button>
-                    <!--<a class="collapse-link">-->
-                        <!--<i class="fa fa-chevron-up"></i>-->
-                    <!--</a>-->
-                    <!--<a class="close-link">-->
-                        <!--<i class="fa fa-times"></i>-->
-                    <!--</a>-->
                 </div>
-
-
-
             </div>
 		  <div class="ibox-content">
 
@@ -57,6 +42,10 @@
                         </div>
                     </div>
                      <div class="col-sm-12">
+                         <div class="pull-left">
+                             <button style="margin-top: -3%; margin-left: 10px;" type="button" class="btn btn-danger pull-right">Completed <span class="badge"> {{complete}}</span></button>
+                             <button style="margin-top: -3%; color: #fff; background-color:#286090; " type="button" class="btn  pull-right ">Pending <span class="badge"> {{pending}}</span></button>
+                         </div>
                      	<div class="pull-right form-group">
                      		<button ng-click="getEvent()" class="btn btn-success"><i class="fa fa-search"></i> &nbsp;Go</button>
                             <button ng-click="resetFilter()" class="btn btn-danger"><i class="fa fa-refresh"></i> &nbsp;Reset</button>

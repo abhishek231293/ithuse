@@ -63,15 +63,8 @@ class HomeController extends Controller
         $document = new \App\Document();
 
         $documentRowSets = $document->getDocumentLists($category,$subCategory);
-        $documentRowSets = $documentRowSets->toArray();
 
-//        $finalDocumentList = array();
-//
-//        array_walk($documentRowSets, function($detail) use( &$finalDocumentList ) {
-//            $finalDocumentList[$detail['category_name']][$detail['sub_category_name']] = $detail;
-//        });
-
-        die(json_encode($documentRowSets));
+        die($documentRowSets);
 
     }
 

@@ -50,8 +50,24 @@ class Document extends Authenticatable
         $category->where('document_lists.is_active','=', 1);
         $category->where('pdf_reports.is_active','=', 1);
         $category->orderby('categorys.category_name');
-        $data = $category->orderby('pdf_reports.uploading_date','DESC')->get();
-        return $data;
+        $data = $category->orderby('pdf_reports.uploading_date','DESC');
+        $response = new \stdClass();
+
+        if(isset($requestData['page'])){
+            $page = $requestData['page'];
+
+            $limit = 10*($page-1);
+
+            $response->result = $category->skip($limit)->take(10)->get();
+
+            $response->paginate = $category->paginate(10);
+
+            die(json_encode($response));
+
+        }
+        
+        $response->paginate = $category->paginate(10);
+        die(json_encode($response));
     }
 
     public function getPdfList($categoryFilter,$subCategoryFilter,$categoriesId = false,$subCategoriesId=false){

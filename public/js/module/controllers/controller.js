@@ -109,6 +109,7 @@ function DocumentController($scope, $rootScope, requestHandler, $timeout, $http)
     
     $scope.getDocuments = function () {
         $scope.loader = true;
+        $scope.route = 'getDocumentLists';
 
         requestHandler.preparePostRequest({
             url: '/getDocumentLists',
@@ -119,11 +120,28 @@ function DocumentController($scope, $rootScope, requestHandler, $timeout, $http)
         }).then(function (response) {
 
             $scope.loader = false;
-            $scope.documentData = response;
+            $scope.documentData = response.paginate.data;
+            $scope.paginate = response.paginate;
+            $scope.total = response.paginate.total;
+
+            $scope.currentPage = response.paginate.current_page;
+            $scope.getPages($scope.paginate.last_page);
+
 
         }).catch(function () {
 
         })
+    }
+
+    $scope.getPages = function(n){
+
+        var data = new Array();
+
+        for (var i = 1; i <= n; i++) {
+            data[i-1] = i;
+        }
+        $scope.pages = data;
+
     }
 
     $scope.resetFilters = function(filterParentId) {
@@ -133,6 +151,57 @@ function DocumentController($scope, $rootScope, requestHandler, $timeout, $http)
         $scope.subCategoryList = {};
         $scope.getDocuments();
 
+    }
+
+    $scope.previousPage = function(){
+        if($scope.currentPage == 1){
+            return;
+        }
+
+        $scope.currentPage = $scope.currentPage -1;
+        $scope.getPageRequest();
+
+    }
+
+    $scope.changePage = function(){
+
+        $scope.currentPage = $scope.currentPage;
+        //console.log($scope.currentPage);return;
+        $scope.getPageRequest();
+
+    }
+
+    $scope.nextPage = function() {
+
+        if ($scope.paginate.last_page-1 < $scope.currentPage) {
+            return;
+        }
+
+        $scope.currentPage ++;
+        //console.log($scope.currentPage);return;
+        $scope.getPageRequest();
+    }
+
+    $scope.getPageRequest = function(){
+
+        $scope.loader = true;
+        console.log($scope);
+        requestHandler.preparePostRequest({
+
+            url: '/'+$scope.route,
+            data : {
+                page :$scope.currentPage
+            }
+        }).then(function (response) {
+
+            $scope.loader = false;
+            $scope.documentData = response.paginate.data;
+            $scope.paginate = response.paginate;
+            $scope.getPages($scope.paginate.last_page);
+
+        }).catch(function () {
+
+        })
     }
 
 }
@@ -532,7 +601,6 @@ function EventController($scope, $rootScope, $state, $timeout, requestHandler) {
     }
 
     $scope.openModal = function(details){
-        console.log(details);
         $rootScope.eventReadMoreTitle = details['title'];
         $rootScope.eventReadMoreDescription = details['description'];
         $rootScope.eventReadMoreVenue = details['event_venue'];
