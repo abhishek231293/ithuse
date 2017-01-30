@@ -88,17 +88,17 @@ class Event extends Authenticatable
 
             $page = $_REQUEST['page'];
 
-            $limit = 10*($page-1);
+            $limit = 1*($page-1);
 
-            $response->result = $event->skip($limit)->take(10)->get();
+            $response->result = $event->skip($limit)->take(1)->get();
 
-            $response->paginate = $event->paginate(10);
+            $response->paginate = $event->paginate(1);
 
             die(json_encode($response));
 
         }
 
-        $response->paginate = $event->paginate(10);
+        $response->paginate = $event->paginate(1);
 
         die(json_encode($response));
 
