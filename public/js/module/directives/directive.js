@@ -25,6 +25,15 @@
             };
         }])
 
+        .directive('paginationEvent', [function() {
+            return {
+                restrict: 'E',
+                scope: false,
+                replace: true,
+                templateUrl: 'js/module/directives/templates/pagination-event.html'
+            };
+        }])
+
         .directive('myDatepicker', function ($parse) {
             return function (scope, element, attrs, controller) {
                 var ngModel = $parse(attrs.ngModel);

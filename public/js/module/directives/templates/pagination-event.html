@@ -1,0 +1,30 @@
+<div ng-controller="EventController" class="pull-right" style="padding-right: 1.5%;padding-bottom: 1%;">
+
+    <table ng-hide="paginate.last_page == 1 || paginate.last_page == 0" class="">
+        <colgroup>
+            <col style="width: 45%;">
+        </colgroup>
+        <tbody>
+        <tr>
+            <td>
+                <a class="" ng-click="previousPage()" ng-model="currentPage"
+                   ng-style="{cursor: paginate.current_page == 1 ? 'not-allowed' : 'allowed',color : paginate.current_page == 1 ? 'gray' : '#428bca'}">
+                    <i class="fa fa-backward" title="Previous"></i>
+                </a>
+
+                <span style="margin-left: 25% ! important;"></span>
+
+                <a ng-hide="" href="" class="">
+                    <i class="fa fa-forward" title="Next" ng-model="currentPage"
+                       ng-style="{cursor: paginate.current_page == paginate.last_page ? 'not-allowed' : 'allowed',color: paginate.current_page == paginate.last_page ? 'gray' : '#428bca'}"
+                       ng-click="nextPage()"></i>
+                </a>
+            </td>
+            <td>
+                <select class="form-control" ng-options="item for item in pages" ng-model="currentPage" ng-change="changePage()"></select>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+</div>

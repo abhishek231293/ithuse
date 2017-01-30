@@ -127,7 +127,6 @@ function DocumentController($scope, $rootScope, requestHandler, $timeout, $http)
             $scope.currentPage = response.paginate.current_page;
             $scope.getPages($scope.paginate.last_page);
 
-
         }).catch(function () {
 
         })
@@ -145,7 +144,6 @@ function DocumentController($scope, $rootScope, requestHandler, $timeout, $http)
     }
 
     $scope.resetFilters = function(filterParentId) {
-
         $scope.searchFields.category_name = '';
         $scope.searchFields.subcategory_name = '';
         $scope.subCategoryList = {};
@@ -211,7 +209,6 @@ function EventController($scope, $rootScope, $state, $timeout, requestHandler) {
     $rootScope.currentTab = "event";
     $scope.event = {};
     $scope.filter = {};
-    $scope.eventRowset = {};
     $scope.loader = false;
     $scope.error = false;
     $scope.errorMsgDate = '';
@@ -225,6 +222,7 @@ function EventController($scope, $rootScope, $state, $timeout, requestHandler) {
 
     $scope.getEvent = function(){
 
+        $scope.route = 'getEvent';
         $scope.loader = true;
         requestHandler.preparePostRequest({
             url: '/getEvent',
@@ -235,11 +233,83 @@ function EventController($scope, $rootScope, $state, $timeout, requestHandler) {
                 status:$scope.searchFields.event_status
             }
         }).then(function (response) {
-            console.log(response);
+            var pending = 0;
+            var complete = 0;
+
+            angular.forEach(response.allData, function(value, key){
+
+                if(value.status == "pending") {
+                    pending++;
+                } else {
+                    complete++;
+                }
+
+            });
             $scope.loader = false;
-            $scope.eventRowset = response['detail'];
-            $scope.pending = response['pending'];
-            $scope.complete = response['complete'];
+            $scope.eventRowset = response.paginate.data;
+            $scope.paginate = response.paginate;
+            $scope.total = response.paginate.total;
+
+            $scope.currentPage = response.paginate.current_page;
+            $scope.getPages($scope.paginate.last_page);
+
+            $scope.pending = pending;
+            $scope.complete = complete;
+        })
+    }
+
+    $scope.getPages = function(n){
+        var data = new Array();
+        for (var i = 1; i <= n; i++) {
+            data[i-1] = i;
+        }
+        $scope.pages = data;
+    }
+
+
+    $scope.previousPage = function(){
+
+        if($scope.currentPage == 1){
+            return;
+        }
+        $scope.currentPage = $scope.currentPage -1;
+        $scope.getPageRequest();
+    }
+
+    $scope.changePage = function(){
+        $scope.currentPage = $scope.currentPage;
+        $scope.getPageRequest();
+    }
+
+    $scope.nextPage = function() {
+
+        if ($scope.paginate.last_page-1 < $scope.currentPage) {
+            return;
+        }
+
+        $scope.currentPage ++;
+        //console.log($scope.currentPage);return;
+        $scope.getPageRequest();
+    }
+
+    $scope.getPageRequest = function(){
+
+        $scope.loader = true;
+        requestHandler.preparePostRequest({
+
+            url: '/'+$scope.route,
+            data : {
+                page :$scope.currentPage
+            }
+        }).then(function (response) {
+
+            $scope.loader = false;
+            $scope.eventRowset = response.paginate.data;
+            $scope.paginate = response.paginate;
+            $scope.getPages($scope.paginate.last_page);
+
+        }).catch(function () {
+
         })
     }
 

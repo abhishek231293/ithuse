@@ -77,9 +77,30 @@ class Event extends Authenticatable
         $event->whereRaw('is_active = 1');
         $event->orderby('event_date',$order);
         $event->orderby('event_time',$order);
-        $eventRowset = $event->get();
-//        dd($eventRowset);
-        return $eventRowset;
+
+        $response = new \stdClass();
+
+        if(!isset($_REQUEST['page'])){
+            $response->allData = $event->get();
+        }
+
+        if(isset($_REQUEST['page'])){
+
+            $page = $_REQUEST['page'];
+
+            $limit = 10*($page-1);
+
+            $response->result = $event->skip($limit)->take(10)->get();
+
+            $response->paginate = $event->paginate(10);
+
+            die(json_encode($response));
+
+        }
+
+        $response->paginate = $event->paginate(10);
+
+        die(json_encode($response));
 
     }
 
