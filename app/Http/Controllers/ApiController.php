@@ -28,7 +28,8 @@ class ApiController extends Controller
                 case 'getPdfList'           : $this->getPdfList($dataRequest);
                 case 'getPdfLink'           : $this->getPdfLink($dataRequest);
                 case 'getCalenderEvent'     : $this->getCalenderEvent($dataRequest);
-                case 'senEventNotification' : $this->eventNotification($dataRequest);
+                case 'eventNotificationAndroid' : $this->eventNotification($dataRequest);
+                case 'eventNotificationIOS' : $this->eventNotificationIOS($dataRequest);
 
                 default :   $response['status'] = 'error';
                     $response['message'] = 'Invalid API Request!';
@@ -162,7 +163,7 @@ class ApiController extends Controller
     public function getCalenderEvent($dataRequest){
 
         $subCategory = new \App\Event();
-        $eventRowsets = $subCategory->getEvent(null,'ASC');
+        $eventRowsets = $subCategory->getEvent(null,'ASC','app');
         $eventRowsets = $eventRowsets->toArray();
 
         array_walk($eventRowsets, function($detail) use( &$finalCategoryList ) {
@@ -174,11 +175,115 @@ class ApiController extends Controller
             $response['data'] = $finalCategoryList;
             die(json_encode($response));
         }else{
-            $response['status'] = 'error';
-            $response['message'] = 'Please provide category id!';
+            $response['status'] = 'success';
+            $response['message'] = 'No event found';
             die(json_encode($response));
         }
 
+    }
+
+    function eventNotificationIOS(){
+
+        $filterData['time'] = date('d/m/Y');
+        $filterData['end_time'] = date('d/m/Y');
+        $response        = new \stdClass();
+
+        $eventList = new \App\Event();
+        $eventRowsets = $eventList->getEvent($filterData,'ASC','api');
+
+        if($eventRowsets){
+            $eventList = $eventRowsets->toArray();
+        }else{
+            die('No Event Found');
+        }
+
+        $device = new \App\DeviceDetail();
+        $deviceRowSets = $device->deviceList('IOS');
+
+        $registrationIds = array();
+        if($deviceRowSets){
+            foreach($deviceRowSets as $data){
+                $registrationIds[] = $data['device_token'];
+            }
+        }else{
+            die('No IOS Device found');
+        }
+
+            // Put your private key's passphrase here:
+            $passphrase = 'test';
+
+        if(count($eventList) == 0){
+            die('No Event Found');
+        }else if(count($eventList) == 1){
+            foreach($eventList as $event){
+                $time = explode(':',$event['event_time']);
+                $day = '';
+
+                if($time[0] <= 11){
+                    $time[0] = $time[0];
+                    $day = 'AM';
+                }else if($time[0] == 12){
+                    $time[0] = 12;
+                    $day = 'PM';
+                }else{
+                    $time[0] = $time[0] - 12;
+                    $day = 'PM';
+                }
+
+                $timenew = $time[0] ? ($time[0].":".$time[1]." " . $day) : '';
+
+                $body['aps'] = array(
+                    'alert' => $event['title'] . ' at '.date('d/m/Y', strtotime($event['event_date'])) . " " . $timenew ." ."
+                );
+
+            }
+            // Create the payload body
+        }else{
+            // Create the payload body
+            $body['aps'] = array(
+                'alert' => 'You have ' . count($eventList).' events scheduled for today.'
+            );
+        }
+
+            // Encode the payload as JSON
+            $payload = json_encode($body);
+
+            $result = $this->sendIosNotification($registrationIds, $payload, $passphrase);
+
+            if($result){
+                    $response->message = 'Notification send successfully..';
+                    $response->messageType = 'success';
+                    $response->messageTitle = 'Sucess..!';
+                    die(json_encode($response));
+
+            }
+
+    }
+
+    function sendIosNotification($registrationToken, $payload, $passphrase){
+        foreach($registrationToken as $token){
+            if(!$token){
+                continue;
+            }
+            $ctx = stream_context_create();
+            stream_context_set_option($ctx, 'ssl', 'local_cert', 'TestProductionPush.pem');
+            stream_context_set_option($ctx, 'ssl', 'passphrase', $passphrase);
+
+            // Open a connection to the APNS server
+            $fp = stream_socket_client(
+                'ssl://gateway.push.apple.com:2195', $err,
+                $errstr, 60, STREAM_CLIENT_CONNECT|STREAM_CLIENT_PERSISTENT, $ctx);
+
+            if (!$fp)
+                exit("<br/>Failed to connect: $err $errstr" . PHP_EOL);
+
+            $msg = chr(0) . pack('n', 32) . pack('H*', $token) . pack('n', strlen($payload)) . $payload;
+
+            // Send it to the server
+            $pushResult = fwrite($fp, $msg, strlen($msg));
+            fclose($fp);
+            return $pushResult;
+        }
     }
 
     public function eventNotification($dataRequest){
@@ -188,43 +293,48 @@ class ApiController extends Controller
         $response        = new \stdClass();
 
         try{
-
             $eventList = new \App\Event();
             $eventRowsets = $eventList->getEvent($filterData,'ASC','api');
-            $eventList = $eventRowsets->toArray();
+
+            if($eventRowsets){
+                $eventList = $eventRowsets->toArray();
+            }else{
+                die('No Event Found');
+            }
 
             $device = new \App\DeviceDetail();
-            $deviceRowSets = $device->deviceList();
+            $deviceRowSets = $device->deviceList('Android');
 
             $registrationIds = array();
 
-            foreach($deviceRowSets as $data){
-                $registrationIds[] = $data['device_token'];
+            if($deviceRowSets){
+                foreach($deviceRowSets as $data){
+                    $registrationIds[] = $data['device_token'];
+                }
+            }else{
+                die('No IOS Device found');
             }
 
             if(count($eventList) == 1){
-
                 $pushMessage = array(
-                    'message'    => $filterData['question'],
-                    'title'      => $filterData['question'],
-                    //'tickerText' => $filterData['question'],
+                    'message'    => 'question',
+                    'title'      => 'question',
                     'vibrate'    => 1,
                     'sound'      => 1,
                 );
 
             }else{
                 $pushMessage = array(
-                    'message'    => $filterData['question'],
-                    'title'      => $filterData['question'],
-                    'tickerText' => $filterData['question'],
+                    'message'    =>'question',
+                    'title'      => 'question',
+                    'tickerText' => 'question',
                     'vibrate'    => 1,
                     'sound'      => 1,
                 );
             }
 
-
             if(count($registrationIds)) {
-                $result = $this->sendPushNotification($registrationIds, $pushMessage);
+                $result = $this->sendPushNotification(array('dZGEUq2r7fQ:APA91bHiC3cqzHCrd5YbuCR7Kj-G8RzuUn3ZALuvutK1mhAksrIbahso_wz_2w5qC7Dl5NZGXw66_GfX--DWUCEdRcMqFkaH4p-MGnurwqOessg5zcfh1nrpghnmTUEleOeh_hMnvgSI'), $pushMessage);
             }
 
             if($result){
@@ -269,6 +379,7 @@ class ApiController extends Controller
         curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($fields));
 
         $result = curl_exec($ch);
+
         if($result === false)
             die('Curl failed ' . curl_error());
 

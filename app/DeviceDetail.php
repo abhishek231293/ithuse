@@ -32,18 +32,26 @@ class DeviceDetail extends Authenticatable
         }else{
             $this->device_token = $dataRequest['device_token'];
             $this->imei = $dataRequest['imei'];
-            $this->device_type = $dataRequest['device_type'];
+            $this->device_type = trim($dataRequest['device_type']);
             $this->save();
             return $this->id;
         }
 
     }
 
-    public function deviceList(){
+    public function deviceList($deviceType){
+
         $device = $this->whereRaw('send_notification = 1');
+        $device = $device->where('device_type','=',$deviceType);
         $device = $device->groupby('imei');
         $deviceList = $device->get();
-        return $deviceList->toArray();
+
+        if($deviceList){
+            return $deviceList->toArray();
+        }else{
+            return $deviceType;
+        }
+
 
     }
 

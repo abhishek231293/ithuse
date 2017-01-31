@@ -88,6 +88,11 @@ class Event extends Authenticatable
             $event->where('event_id','=', $data['event_id']);
         }
         $event->whereRaw('is_active = 1');
+
+        if($for == 'api'){
+            $event->whereRaw('status = "pending"');
+        }
+
         $event->orderby('event_date',$order);
         $event->orderby('event_time',$order);
 
@@ -95,7 +100,7 @@ class Event extends Authenticatable
 
         if(!isset($_REQUEST['page'])){
             $response->allData = $event->get();
-            if($for == 'api'){
+            if($for == 'api' || $for == 'app'){
                 return $event->get();
             }
         }
