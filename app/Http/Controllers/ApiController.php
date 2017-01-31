@@ -29,6 +29,7 @@ class ApiController extends Controller
                 case 'getPdfLink'           : $this->getPdfLink($dataRequest);
                 case 'getCalenderEvent'     : $this->getCalenderEvent($dataRequest);
                 case 'senEventNotification' : $this->eventNotification($dataRequest);
+                case 'closeEvent'           : $this->closeEvent();
 
                 default :   $response['status'] = 'error';
                     $response['message'] = 'Invalid API Request!';
@@ -68,6 +69,15 @@ class ApiController extends Controller
             $response['message'] = 'new user device registered';
             die(json_encode($response));
         }
+    }
+
+    public function closeEvent(){
+
+        $event = new \App\Event();
+        $detailId = $event->closeEvent();
+        echo $detailId . " Event Completed";
+        exit;
+
     }
 
     public function getPdfList($dataRequest){

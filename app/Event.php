@@ -49,6 +49,17 @@ class Event extends Authenticatable
         return $returnStatus;
     }
 
+    public function closeEvent(){
+
+        $date = date('Y-m-d');
+        $time = date('H:i:s');
+
+        $this->whereRaw('event_date ="'.$date.'"');
+        $event = $this->whereRaw('event_time <= "'.$time.'"');
+        $returnStatus = $event->update(['status' =>'complete']);
+        return $returnStatus;
+    }
+
     public function getEvent($data,$order = 'DESC',$for = 'dashboard'){
 
         $event = $this->query();
