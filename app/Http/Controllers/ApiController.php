@@ -176,6 +176,7 @@ class ApiController extends Controller
             die(json_encode($response));
         }else{
             $response['status'] = 'success';
+            $response['data'] = array();
             $response['message'] = 'No event found';
             die(json_encode($response));
         }
