@@ -40,8 +40,8 @@ class DeviceDetail extends Authenticatable
     }
 
     public function deviceList(){
-
-        $device = $this->groupby('imei');
+        $device = $this->whereRaw('send_notification = 1');
+        $device = $device->groupby('imei');
         $deviceList = $device->get();
         return $deviceList->toArray();
 
