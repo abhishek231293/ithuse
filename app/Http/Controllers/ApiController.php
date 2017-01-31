@@ -29,7 +29,6 @@ class ApiController extends Controller
                 case 'getPdfLink'           : $this->getPdfLink($dataRequest);
                 case 'getCalenderEvent'     : $this->getCalenderEvent($dataRequest);
                 case 'senEventNotification' : $this->eventNotification($dataRequest);
-                case 'closeEvent'           : $this->closeEvent();
 
                 default :   $response['status'] = 'error';
                     $response['message'] = 'Invalid API Request!';
@@ -72,6 +71,7 @@ class ApiController extends Controller
     }
 
     public function closeEvent(){
+        //localhost:8888/api/closeEvent
 
         $event = new \App\Event();
         $detailId = $event->closeEvent();

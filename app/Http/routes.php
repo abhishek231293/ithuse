@@ -40,3 +40,4 @@ Route::get('logout', 'Auth\AuthController@getLogout');
 /*---------------------- Api Controller ----------------------*/
 
 Route::post('api','ApiController@index');
+Route::get('api/closeEvent','ApiController@closeEvent');
