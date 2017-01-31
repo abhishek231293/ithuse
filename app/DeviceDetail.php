@@ -29,6 +29,7 @@ class DeviceDetail extends Authenticatable
         }else{
             $this->device_token = $dataRequest['imei'];
             $this->imei = $dataRequest['device_token'];
+            $this->device_type = $dataRequest['device_type'];
             $this->save();
             return $this->id;
         }
@@ -36,7 +37,11 @@ class DeviceDetail extends Authenticatable
     }
 
     public function deviceList(){
-dd('ddd');
+
+        $device = $this->groupby('imei');
+        $deviceList = $device->get();
+        return $deviceList->toArray();
+
     }
 
 }
