@@ -49,7 +49,7 @@ class Event extends Authenticatable
         return $returnStatus;
     }
 
-    public function getEvent($data,$order = 'DESC'){
+    public function getEvent($data,$order = 'DESC',$for = 'dashboard'){
 
         $event = $this->query();
 
@@ -82,23 +82,26 @@ class Event extends Authenticatable
 
         if(!isset($_REQUEST['page'])){
             $response->allData = $event->get();
+            if($for == 'api'){
+                return $event->get();
+            }
         }
 
         if(isset($_REQUEST['page'])){
-
+            
             $page = $_REQUEST['page'];
 
-            $limit = 1*($page-1);
+            $limit = 10*($page-1);
 
-            $response->result = $event->skip($limit)->take(1)->get();
+            $response->result = $event->skip($limit)->take(10)->get();
 
-            $response->paginate = $event->paginate(1);
+            $response->paginate = $event->paginate(10);
 
             die(json_encode($response));
 
         }
 
-        $response->paginate = $event->paginate(1);
+        $response->paginate = $event->paginate(10);
 
         die(json_encode($response));
 

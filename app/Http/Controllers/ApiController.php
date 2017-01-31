@@ -24,9 +24,11 @@ class ApiController extends Controller
 
             switch (trim($apiRequestFor)){
 
-                case 'getPdfList'       : $this->getPdfList($dataRequest);
-                case 'getPdfLink'       : $this->getPdfLink($dataRequest);
-                case 'getCalenderEvent' : $this->getCalenderEvent($dataRequest);
+                case 'saveDeviceDetail'     : $this->saveDeviceDetail($dataRequest);
+                case 'getPdfList'           : $this->getPdfList($dataRequest);
+                case 'getPdfLink'           : $this->getPdfLink($dataRequest);
+                case 'getCalenderEvent'     : $this->getCalenderEvent($dataRequest);
+                case 'senEventNotification' : $this->eventNotification($dataRequest);
 
                 default :   $response['status'] = 'error';
                     $response['message'] = 'Invalid API Request!';
@@ -39,6 +41,33 @@ class ApiController extends Controller
             die(json_encode($response));
         }
 
+    }
+
+    public function saveDeviceDetail($dataRequest){
+//        die('Wait working....');
+        if(!isset($dataRequest['imei']) || $dataRequest['imei'] == '' || $dataRequest['imei'] == null){
+            $response['status'] = 'error';
+            $response['message'] = 'No IMEI found';
+            die(json_encode($response));
+        }
+        if(!isset($dataRequest['device_token']) || $dataRequest['device_token'] == '' || $dataRequest['device_token'] == null){
+            $response['status'] = 'error';
+            $response['message'] = 'No Device Token found';
+            die(json_encode($response));
+        }
+
+        $device = new \App\DeviceDetail();
+        $detailId = $device->saveDetails($dataRequest);
+
+        if($detailId == 'Already Exist'){
+            $response['status'] = 'success';
+            $response['message'] = 'Device detail alread exist';
+            die(json_encode($response));
+        }else{
+            $response['status'] = 'success';
+            $response['message'] = 'new user device registered';
+            die(json_encode($response));
+        }
     }
 
     public function getPdfList($dataRequest){
@@ -143,6 +172,86 @@ class ApiController extends Controller
             $response['message'] = 'Please provide category id!';
             die(json_encode($response));
         }
+
+    }
+
+    public function eventNotification($dataRequest){
+
+        $filterData['time'] = date('d/m/Y');
+        $filterData['end_time'] = date('d/m/Y');
+        $response        = new \stdClass();
+
+        try{
+
+            $eventList = new \App\Event();
+            $eventRowsets = $eventList->getEvent($filterData,'ASC','api');
+            $eventList = $eventRowsets->toArray();
+
+            $registrationIds = array();
+
+            foreach($eventList as $data){
+                $registrationIds[] = $data->device_token;
+            }
+
+            $pushMessage = array(
+                'message'    => $filterData['question'],
+                'title'      => $filterData['question'],
+                'tickerText' => $filterData['question'],
+                'vibrate'   => 1,
+                'sound'        => 1,
+            );
+
+            if(count($registrationIds)) {
+                $result = $this->sendPushNotification($registrationIds, $pushMessage);
+            }
+
+            if($result){
+
+                $response->message = 'Notification send successfully..';
+                $response->messageType = 'success';
+                $response->messageTitle = 'Sucess..!';
+
+                die(json_encode($response));
+            }
+
+
+            // }
+        }catch (Exception $e){
+            $response['message']        = $e->getMessage();
+            $response['messageType']    = 'warning';
+            $response['messageTitle']   = 'Error..!';
+        }
+    }
+
+    function sendPushNotification($registration_ids, $message) {
+
+        $url = 'https://android.googleapis.com/gcm/send';
+        $fields = array(
+            'registration_ids' => $registration_ids,
+            'data' => $message,
+        );
+
+        define('GOOGLE_API_KEY', 'AAAAPnhFlUI:APA91bEmz2OBD4NR2zr27A7V0FYwPYDz-81oO903zYvqMCikDKgSWNhucbsrjPVzyXxHisg5ClTKerc0fOUBn0gZDsSvG-9IYb29qsNd-pK9dIGSuNRCP6q8o8UtZag_epXOsrBnSi3j');
+
+        $headers = array(
+            'Authorization:key=' . GOOGLE_API_KEY,
+            'Content-Type: application/json'
+        );
+        //echo json_encode($fields);
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($fields));
+
+        $result = curl_exec($ch);
+        if($result === false)
+            die('Curl failed ' . curl_error());
+
+        curl_close($ch);
+        return $result;
 
     }
 }
