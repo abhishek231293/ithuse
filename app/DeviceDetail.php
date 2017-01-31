@@ -21,10 +21,9 @@ class DeviceDetail extends Authenticatable
 
     public function saveDetails($dataRequest){
 
-        $existingImei = $this->whereRaw('imei = '.$dataRequest['imei']);
+        $existingImei = $this->whereRaw('imei = "'.$dataRequest['imei'].'"');
         $imeiExisit = $existingImei->get();
         $imeiExisit = $imeiExisit->toArray();
-
         if($imeiExisit){
             return 'Already Exist';
         }else{
@@ -34,6 +33,10 @@ class DeviceDetail extends Authenticatable
             return $this->id;
         }
 
+    }
+
+    public function deviceList(){
+dd('ddd');
     }
 
 }
