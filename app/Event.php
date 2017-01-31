@@ -58,7 +58,7 @@ class Event extends Authenticatable
         $event = $event->whereRaw('event_time <= "'.$time.'"');
         $event = $event->whereRaw('status = "pending"');
         $event = $event->whereRaw('is_active = 1');
-        $returnStatus = $event->update(['status' =>'complete']);
+        $returnStatus = $event->update(['status' =>'complete','updation_date'=>date('Y-m-d h:i:s')]);
         return $returnStatus;
     }
 
