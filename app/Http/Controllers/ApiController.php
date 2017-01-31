@@ -44,7 +44,7 @@ class ApiController extends Controller
     }
 
     public function saveDeviceDetail($dataRequest){
-//        die('Wait working....');
+
         if(!isset($dataRequest['imei']) || $dataRequest['imei'] == '' || $dataRequest['imei'] == null){
             $response['status'] = 'error';
             $response['message'] = 'No IMEI found';
@@ -59,13 +59,9 @@ class ApiController extends Controller
         $device = new \App\DeviceDetail();
         $detailId = $device->saveDetails($dataRequest);
 
-        if($detailId == 'Already Exist'){
+        if($detailId){
             $response['status'] = 'success';
-            $response['message'] = 'Device detail alread exist';
-            die(json_encode($response));
-        }else{
-            $response['status'] = 'success';
-            $response['message'] = 'new user device registered';
+            $response['message'] = 'Device registered';
             die(json_encode($response));
         }
     }
@@ -197,19 +193,35 @@ class ApiController extends Controller
             $eventRowsets = $eventList->getEvent($filterData,'ASC','api');
             $eventList = $eventRowsets->toArray();
 
+            $device = new \App\DeviceDetail();
+            $deviceRowSets = $device->deviceList();
+
             $registrationIds = array();
 
-            foreach($eventList as $data){
-                $registrationIds[] = $data->device_token;
+            foreach($deviceRowSets as $data){
+                $registrationIds[] = $data['device_token'];
             }
 
-            $pushMessage = array(
-                'message'    => $filterData['question'],
-                'title'      => $filterData['question'],
-                'tickerText' => $filterData['question'],
-                'vibrate'   => 1,
-                'sound'        => 1,
-            );
+            if(count($eventList) == 1){
+
+                $pushMessage = array(
+                    'message'    => $filterData['question'],
+                    'title'      => $filterData['question'],
+                    //'tickerText' => $filterData['question'],
+                    'vibrate'    => 1,
+                    'sound'      => 1,
+                );
+
+            }else{
+                $pushMessage = array(
+                    'message'    => $filterData['question'],
+                    'title'      => $filterData['question'],
+                    'tickerText' => $filterData['question'],
+                    'vibrate'    => 1,
+                    'sound'      => 1,
+                );
+            }
+
 
             if(count($registrationIds)) {
                 $result = $this->sendPushNotification($registrationIds, $pushMessage);

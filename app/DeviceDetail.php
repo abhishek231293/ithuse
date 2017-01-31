@@ -24,11 +24,14 @@ class DeviceDetail extends Authenticatable
         $existingImei = $this->whereRaw('imei = "'.$dataRequest['imei'].'"');
         $imeiExisit = $existingImei->get();
         $imeiExisit = $imeiExisit->toArray();
+
         if($imeiExisit){
-            return 'Already Exist';
+            $device = $this->whereRaw('imei = "'.$dataRequest['imei'].'"');
+            $returnStatus = $device->update(['device_token' =>$dataRequest['device_token']]);
+            return $returnStatus;
         }else{
-            $this->device_token = $dataRequest['imei'];
-            $this->imei = $dataRequest['device_token'];
+            $this->device_token = $dataRequest['device_token'];
+            $this->imei = $dataRequest['imei'];
             $this->device_type = $dataRequest['device_type'];
             $this->save();
             return $this->id;
