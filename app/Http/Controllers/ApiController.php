@@ -188,62 +188,95 @@ class ApiController extends Controller
         $filterData['end_time'] = date('d/m/Y');
         $response        = new \stdClass();
 
-        $eventList = new \App\Event();
-        $eventRowsets = $eventList->getEvent($filterData,'ASC','api');
+        if(isset($dataRequest['detail'])){
 
-        if($eventRowsets){
-            $eventList = $eventRowsets->toArray();
-        }else{
-            die('No Event Found');
-        }
+            $device = new \App\DeviceDetail();
+            $deviceRowSets = $device->deviceList('IOS');
 
-        $device = new \App\DeviceDetail();
-        $deviceRowSets = $device->deviceList('IOS');
-
-        $registrationIds = array();
-        if($deviceRowSets){
-            foreach($deviceRowSets as $data){
-                $registrationIds[] = $data['device_token'];
+            $registrationIds = array();
+            if($deviceRowSets){
+                foreach($deviceRowSets as $data){
+                    $registrationIds[] = $data['device_token'];
+                }
+            }else{
+                die('No IOS Device found');
             }
-        }else{
-            die('No IOS Device found');
-        }
 
             // Put your private key's passphrase here:
             $passphrase = 'test';
 
-        if(count($eventList) == 0){
-            die('No Event Found');
-        }else if(count($eventList) == 1){
-            foreach($eventList as $event){
-                $time = explode(':',$event['event_time']);
-                $day = '';
-
-                if($time[0] <= 11){
-                    $time[0] = $time[0];
-                    $day = 'AM';
-                }else if($time[0] == 12){
-                    $time[0] = 12;
-                    $day = 'PM';
-                }else{
-                    $time[0] = $time[0] - 12;
-                    $day = 'PM';
-                }
-
-                $timenew = $time[0] ? ($time[0].":".$time[1]." " . $day) : '';
-
-                $body['aps'] = array(
-                    'alert' => $event['title'] . ' at '.date('d/m/Y', strtotime($event['event_date'])) . " " . $timenew ." ."
-                );
-
-            }
-            // Create the payload body
-        }else{
             // Create the payload body
             $body['aps'] = array(
-                'alert' => 'You have ' . count($eventList).' events scheduled for today.'
+                'alert' => 'Some changes in '. $dataRequest['detail'] . ' Event'
             );
-        }
+            // Encode the payload as JSON
+            $payload = json_encode($body);
+
+            $result = $this->sendIosNotification($registrationIds, $payload, $passphrase);
+
+            if($result){
+                $response->message = 'Notification send successfully..';
+                $response->messageType = 'success';
+                $response->messageTitle = 'Sucess..!';
+                die(json_encode($response));
+            }
+        }else{
+            $eventList = new \App\Event();
+            $eventRowsets = $eventList->getEvent($filterData,'ASC','api');
+
+            if($eventRowsets){
+                $eventList = $eventRowsets->toArray();
+            }else{
+                die('No Event Found');
+            }
+
+            $device = new \App\DeviceDetail();
+            $deviceRowSets = $device->deviceList('IOS');
+
+            $registrationIds = array();
+            if($deviceRowSets){
+                foreach($deviceRowSets as $data){
+                    $registrationIds[] = $data['device_token'];
+                }
+            }else{
+                die('No IOS Device found');
+            }
+
+            // Put your private key's passphrase here:
+            $passphrase = 'test';
+
+            if(count($eventList) == 0){
+                die('No Event Found');
+            }else if(count($eventList) == 1){
+                foreach($eventList as $event){
+                    $time = explode(':',$event['event_time']);
+                    $day = '';
+
+                    if($time[0] <= 11){
+                        $time[0] = $time[0];
+                        $day = 'AM';
+                    }else if($time[0] == 12){
+                        $time[0] = 12;
+                        $day = 'PM';
+                    }else{
+                        $time[0] = $time[0] - 12;
+                        $day = 'PM';
+                    }
+
+                    $timenew = $time[0] ? ($time[0].":".$time[1]." " . $day) : '';
+
+                    $body['aps'] = array(
+                        'alert' => $event['title'] . ' at '.date('d/m/Y', strtotime($event['event_date'])) . " " . $timenew ." ."
+                    );
+
+                }
+                // Create the payload body
+            }else{
+                // Create the payload body
+                $body['aps'] = array(
+                    'alert' => 'You have ' . count($eventList).' events scheduled for today.'
+                );
+            }
 
             // Encode the payload as JSON
             $payload = json_encode($body);
@@ -251,12 +284,14 @@ class ApiController extends Controller
             $result = $this->sendIosNotification($registrationIds, $payload, $passphrase);
 
             if($result){
-                    $response->message = 'Notification send successfully..';
-                    $response->messageType = 'success';
-                    $response->messageTitle = 'Sucess..!';
-                    die(json_encode($response));
+                $response->message = 'Notification send successfully..';
+                $response->messageType = 'success';
+                $response->messageTitle = 'Sucess..!';
+                die(json_encode($response));
 
             }
+        }
+
 
     }
 

@@ -416,7 +416,21 @@ function EventController($scope, $rootScope, $state, $timeout, requestHandler) {
 
                         }
                     }).then(function (response) {
-                        
+
+                    }).catch(function () {
+
+                    })
+
+                    requestHandler.preparePostRequest({
+
+                        url: 'api',
+                        data : {
+                            requestFor :'eventNotificationIOS',
+                            detail:event_detail['title']
+
+                        }
+                    }).then(function (response) {
+
                     }).catch(function () {
 
                     })
