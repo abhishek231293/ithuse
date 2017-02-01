@@ -182,7 +182,7 @@ class ApiController extends Controller
 
     }
 
-    function eventNotificationIOS(){
+    function eventNotificationIOS($dataRequest){
 
         $filterData['time'] = date('d/m/Y');
         $filterData['end_time'] = date('d/m/Y');
