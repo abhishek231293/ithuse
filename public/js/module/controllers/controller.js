@@ -234,6 +234,7 @@ function EventController($scope, $rootScope, $state, $timeout, requestHandler) {
                 status:$scope.searchFields.event_status
             }
         }).then(function (response) {
+            $scope.loader = false;
             var pending = 0;
             var complete = 0;
 
@@ -404,6 +405,9 @@ function EventController($scope, $rootScope, $state, $timeout, requestHandler) {
                 data: event_detail
             }).then(function (response) {
                 if(response){
+
+
+
                     swal({
                         title: 'Congratulation!',
                         text: 'Event Successfully Edited!',
