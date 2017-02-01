@@ -75,7 +75,6 @@ class HomeController extends Controller
         $subCategory = ($request->input('subcategory_name'));
 
         $pdfpath = addPdf($category,$subCategory);
-        dd($pdfpath);
         $title = ($request->input('document_title'));
         $document = new \App\Document();
 
