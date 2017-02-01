@@ -7,7 +7,7 @@ function DocumentController($scope, $rootScope, requestHandler, $timeout, $http)
     $scope.login = false;
     $scope.addTitleFilter = false;
     $scope.filterFor = 'documentList';
-
+    $scope.total = 0;
     $scope.setLoginText = function (value) {
         if($scope.login){
             $scope.loadValue = value;
