@@ -404,9 +404,22 @@ function EventController($scope, $rootScope, $state, $timeout, requestHandler) {
                 url: '/editEvent',
                 data: event_detail
             }).then(function (response) {
+
                 if(response){
 
+                    requestHandler.preparePostRequest({
 
+                        url: 'api',
+                        data : {
+                            requestFor :'eventNotificationAndroid',
+                            detail:event_detail['title']
+
+                        }
+                    }).then(function (response) {
+                        
+                    }).catch(function () {
+
+                    })
 
                     swal({
                         title: 'Congratulation!',

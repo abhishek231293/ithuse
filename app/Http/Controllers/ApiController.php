@@ -19,7 +19,6 @@ class ApiController extends Controller
         $response = array();
         $dataRequest = $request->all();
         $apiRequestFor = isset($dataRequest['requestFor']) ? $dataRequest['requestFor'] : null;
-
         if(trim($apiRequestFor)){
 
             switch (trim($apiRequestFor)){
@@ -294,76 +293,116 @@ class ApiController extends Controller
         $response        = new \stdClass();
 
         try{
-            $eventList = new \App\Event();
-            $eventRowsets = $eventList->getEvent($filterData,'ASC','api');
-
-            if($eventRowsets){
-                $eventList = $eventRowsets->toArray();
-            }else{
-                die('No Event Found');
-            }
-
-            $device = new \App\DeviceDetail();
-            $deviceRowSets = $device->deviceList('Android');
-
-            $registrationIds = array();
-
-            if($deviceRowSets){
-                foreach($deviceRowSets as $data){
-                    $registrationIds[] = $data['device_token'];
-                }
-            }else{
-                die('No IOS Device found');
-            }
-
-            if(count($eventList) == 1){
-
-                foreach($eventList as $eventValue){
-                    $time = explode(':',$eventValue['event_time']);
-                    $day = '';
-
-                    if($time[0] <= 11){
-                        $time[0] = $time[0];
-                        $day = 'AM';
-                    }else if($time[0] == 12){
-                        $time[0] = 12;
-                        $day = 'PM';
-                    }else{
-                        $time[0] = $time[0] - 12;
-                        $day = 'PM';
-                    }
-
-                    $timenew = $time[0] ? ($time[0].":".$time[1]." " . $day) : '';
+            if(isset($dataRequest['detail'])){
 
                     $pushMessage = array(
-                        'message'    => $eventValue['description'],
-                        'title'      => $eventValue['title'] . " at " . $timenew,
+                        'message'    => 'Some changes in '.$dataRequest['detail'].' Event.',
+                        'title'      => 'Event Edited',
+                        'vibrate'    => 1,
+                        'sound'      => 1,
+                    );
+
+                $device = new \App\DeviceDetail();
+                $deviceRowSets = $device->deviceList('Android');
+
+                $registrationIds = array();
+
+                if($deviceRowSets){
+                    foreach($deviceRowSets as $data){
+                        $registrationIds[] = $data['device_token'];
+                    }
+                }else{
+                    die('No Android Device found');
+                }
+                if(count($registrationIds)) {
+                    $result = $this->sendPushNotification($registrationIds, $pushMessage);
+                }
+
+                if($result){
+
+                    $response->message = 'Notification send successfully..';
+                    $response->messageType = 'success';
+                    $response->messageTitle = 'Sucess..!';
+
+                    die(json_encode($response));
+                }
+            }else{
+                $eventList = new \App\Event();
+                $eventRowsets = $eventList->getEvent($filterData,'ASC','api');
+
+                if($eventRowsets){
+                    $eventList = $eventRowsets->toArray();
+                }else{
+                    die('No Event Found');
+                }
+
+                $device = new \App\DeviceDetail();
+                $deviceRowSets = $device->deviceList('Android');
+
+                $registrationIds = array();
+
+                if($deviceRowSets){
+                    foreach($deviceRowSets as $data){
+                        $registrationIds[] = $data['device_token'];
+                    }
+                }else{
+                    die('No Android Device found');
+                }
+
+                if(count($eventList) == 1){
+
+                    foreach($eventList as $eventValue){
+                        $time = explode(':',$eventValue['event_time']);
+                        $day = '';
+
+                        if($time[0] <= 11){
+                            $time[0] = $time[0];
+                            $day = 'AM';
+                        }else if($time[0] == 12){
+                            $time[0] = 12;
+                            $day = 'PM';
+                        }else{
+                            $time[0] = $time[0] - 12;
+                            $day = 'PM';
+                        }
+
+                        $timenew = $time[0] ? ($time[0].":".$time[1]." " . $day) : '';
+
+                        $pushMessage = array(
+                            'message'    => $eventValue['description'],
+                            'title'      => $eventValue['title'] . " at " . $timenew,
+                            'vibrate'    => 1,
+                            'sound'      => 1,
+                        );
+                    }
+
+                } else if(count($eventList) == 0){
+                    die('No Event Found');
+                }
+                else{
+                    $pushMessage = array(
+                        'message'    =>'You have ' . count($eventList).' events scheduled for today.',
+                        'title'      => 'Event Scheduled',
                         'vibrate'    => 1,
                         'sound'      => 1,
                     );
                 }
 
-            }else{
-                $pushMessage = array(
-                    'message'    =>'You have ' . count($eventList).' events scheduled for today.',
-                    'title'      => 'Event Scheduled',
-                    'vibrate'    => 1,
-                    'sound'      => 1,
-                );
+                if(count($registrationIds)) {
+                    $result = $this->sendPushNotification($registrationIds, $pushMessage);
+                }
+
+                if($result){
+
+                    $response->message = 'Notification send successfully..';
+                    $response->messageType = 'success';
+                    $response->messageTitle = 'Sucess..!';
+
+                    die(json_encode($response));
+                }
+
             }
 
-            if(count($registrationIds)) {
-                $result = $this->sendPushNotification($registrationIds, $pushMessage);
-            }
-
-            if($result){
-
-                $response->message = 'Notification send successfully..';
-                $response->messageType = 'success';
-                $response->messageTitle = 'Sucess..!';
-
-                die(json_encode($response));
-            }
 
 
             // }
