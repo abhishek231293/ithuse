@@ -163,8 +163,10 @@ function DocumentController($scope, $rootScope, requestHandler, $timeout, $http)
 
     $scope.changePage = function(){
 
-        $scope.currentPage = $scope.currentPage;
-        //console.log($scope.currentPage);return;
+        // $scope.currentPage = $scope.currentPage;
+        $scope.currentPage = parseInt($("#currentPage").val())+1;
+
+        console.log($scope.currentPage);
         $scope.getPageRequest();
 
     }
@@ -183,7 +185,7 @@ function DocumentController($scope, $rootScope, requestHandler, $timeout, $http)
     $scope.getPageRequest = function(){
 
         $scope.loader = true;
-        console.log($scope);
+
         requestHandler.preparePostRequest({
 
             url: '/'+$scope.route,
@@ -191,11 +193,10 @@ function DocumentController($scope, $rootScope, requestHandler, $timeout, $http)
                 page :$scope.currentPage
             }
         }).then(function (response) {
-
             $scope.loader = false;
             $scope.documentData = response.paginate.data;
             $scope.paginate = response.paginate;
-            $scope.getPages($scope.paginate.last_page);
+            //$scope.getPages($scope.paginate.last_page);
 
         }).catch(function () {
 
