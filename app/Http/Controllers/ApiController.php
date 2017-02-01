@@ -335,7 +335,7 @@ class ApiController extends Controller
             }
 
             if(count($registrationIds)) {
-                $result = $this->sendPushNotification(array('dZGEUq2r7fQ:APA91bHiC3cqzHCrd5YbuCR7Kj-G8RzuUn3ZALuvutK1mhAksrIbahso_wz_2w5qC7Dl5NZGXw66_GfX--DWUCEdRcMqFkaH4p-MGnurwqOessg5zcfh1nrpghnmTUEleOeh_hMnvgSI'), $pushMessage);
+                $result = $this->sendPushNotification($registrationIds, $pushMessage);
             }
 
             if($result){
