@@ -1,6 +1,8 @@
 <?php
 function addPdf($category,$subCategory)
 {
+
+    dd($category. " " . $subCategory);
     $fileData = $_FILES;
     $response = array();
 
