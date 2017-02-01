@@ -317,18 +317,36 @@ class ApiController extends Controller
             }
 
             if(count($eventList) == 1){
-                $pushMessage = array(
-                    'message'    => 'question',
-                    'title'      => 'question',
-                    'vibrate'    => 1,
-                    'sound'      => 1,
-                );
+
+                foreach($eventList as $eventValue){
+                    $time = explode(':',$eventValue['event_time']);
+                    $day = '';
+
+                    if($time[0] <= 11){
+                        $time[0] = $time[0];
+                        $day = 'AM';
+                    }else if($time[0] == 12){
+                        $time[0] = 12;
+                        $day = 'PM';
+                    }else{
+                        $time[0] = $time[0] - 12;
+                        $day = 'PM';
+                    }
+
+                    $timenew = $time[0] ? ($time[0].":".$time[1]." " . $day) : '';
+
+                    $pushMessage = array(
+                        'message'    => $eventValue['description'],
+                        'title'      => $eventValue['title'] . " at " . $timenew,
+                        'vibrate'    => 1,
+                        'sound'      => 1,
+                    );
+                }
 
             }else{
                 $pushMessage = array(
-                    'message'    =>'question',
-                    'title'      => 'question',
-                    'tickerText' => 'question',
+                    'message'    =>'You have ' . count($eventList).' events scheduled for today.',
+                    'title'      => 'Event Scheduled',
                     'vibrate'    => 1,
                     'sound'      => 1,
                 );
