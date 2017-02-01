@@ -19,7 +19,7 @@ Route::get('/home', 'HomeController@index');
 Route::get('/', 'HomeController@index');
 Route::post('/getFilter', 'HomeController@getFilter');
 Route::post('/getDocumentLists', 'HomeController@getDocumentLists');
-Route::post('/addDocument', 'HomeController@addDocument');
+Route::post('addDocument', 'HomeController@addDocument');
 Route::post('deleteDocument', 'HomeController@deleteDocument');
 Route::post('/fileExistance', 'HomeController@getDocumentLists');
 
