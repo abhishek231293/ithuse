@@ -194,6 +194,7 @@ class ApiController extends Controller
             $deviceRowSets = $device->deviceList('IOS');
 
             $registrationIds = array();
+
             if($deviceRowSets){
                 foreach($deviceRowSets as $data){
                     $registrationIds[] = $data['device_token'];
@@ -207,7 +208,7 @@ class ApiController extends Controller
 
             // Create the payload body
             $body['aps'] = array(
-                'alert' => 'Some changes in '. $dataRequest['detail'] . ' Event'
+                'alert' => 'Their is a change in "'. $dataRequest['detail'] . '"'
             );
             // Encode the payload as JSON
             $payload = json_encode($body);
@@ -215,7 +216,7 @@ class ApiController extends Controller
             $result = $this->sendIosNotification($registrationIds, $payload, $passphrase);
 
             if($result){
-                $response->message = 'Notification send successfully..';
+                $response->message = 'Notification Edited successfully..';
                 $response->messageType = 'success';
                 $response->messageTitle = 'Sucess..!';
                 die(json_encode($response));
@@ -331,7 +332,7 @@ class ApiController extends Controller
             if(isset($dataRequest['detail'])){
 
                     $pushMessage = array(
-                        'message'    => 'Some changes in '.$dataRequest['detail'].' Event.',
+                        'message'    => 'Their is a change in "'. $dataRequest['detail'] . '"',
                         'title'      => 'Event Edited',
                         'vibrate'    => 1,
                         'sound'      => 1,
