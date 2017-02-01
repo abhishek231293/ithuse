@@ -471,7 +471,8 @@ function EventController($scope, $rootScope, $state, $timeout, requestHandler) {
             }
         }).then(function (response) {
             if(response){
-                $scope.eventEditDetail = response['detail'];
+                
+                $scope.eventEditDetail = response['allData'];
                 console.log($scope.eventEditDetail);
             }
 
