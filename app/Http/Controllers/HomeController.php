@@ -70,10 +70,12 @@ class HomeController extends Controller
 
     public function addDocument(Request $request){
         $data = $request->all();
-        dd($data);
+
         $category = ($request->input('category_name'));
         $subCategory = ($request->input('subcategory_name'));
+
         $pdfpath = addPdf($category,$subCategory);
+        dd($pdfpath);
         $title = ($request->input('document_title'));
         $document = new \App\Document();
 
