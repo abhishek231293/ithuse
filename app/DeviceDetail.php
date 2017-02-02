@@ -27,12 +27,13 @@ class DeviceDetail extends Authenticatable
 
         if($imeiExisit){
             $device = $this->whereRaw('imei = "'.$dataRequest['imei'].'"');
-            $returnStatus = $device->update(['device_token' =>$dataRequest['device_token']]);
+            $returnStatus = $device->update(['device_token' =>$dataRequest['device_token'],'updation_date'=>date('Y-m-d H:i:s')]);
             return $returnStatus;
         }else{
             $this->device_token = $dataRequest['device_token'];
             $this->imei = $dataRequest['imei'];
             $this->device_type = trim($dataRequest['device_type']);
+            $this->register_date = date('Y-m-d H:i:s');
             $this->save();
             return $this->id;
         }
