@@ -810,6 +810,11 @@ function ManageController($scope, $rootScope, $state, $timeout, requestHandler){
             return;
         }
 
+        if($rootScope.fileSizeCheck == false){
+            sweetAlert('Error..', 'File size must be less than 20 Mb', 'error');
+            return;
+        }
+
         $scope.spinLoader = true;
         var userData = {};
         if(!$scope.isFileExistCheck){

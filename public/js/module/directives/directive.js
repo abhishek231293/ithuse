@@ -210,11 +210,19 @@
                     scope.validateImageFile = function(element){
 
                         scope.$root.isFileExistCheck = true;
-
+                        scope.$root.fileSizeCheck = true;
                         var item = $(element).attr("item");
 
                         if(!scope.$root.imageCheck){
                             scope.$root.imageCheck = -1;
+                        }
+                        if($(element)[0].files[0] != undefined){
+                            if($(element)[0].files[0]['size'] > 20000000){
+                                sweetAlert("Error..!", 'File size must be less than 20 Mb', 'warning');
+                                scope.$root.fileSizeCheck = false;
+                                $(element)[0].files[0] = {};
+                                return ;
+                            }
                         }
 
                         imageFormData.append('pdf'+item, $(element)[0].files[0]);
